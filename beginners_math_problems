@@ -137,10 +137,63 @@ Solution.armstrong(123)
 # =============================================================================
 # =============================================================================
 # Check palindrome of number(Use the techniques you learnt so far solving above probs and solve this by yourself)
+class Solution():
+    def palindrome(n):
+        x=str(n)
+        if x==x[::-1]:
+            return "Palindrome"
+        else:
+            return "Not Palindrome" 
+    
+Solution.palindrome(100)
+# also palindrom of negative number 
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x<0:
+            return False
+        div = 1
+        while x >= 10 * div:
+            div*=10
+
+        while x:
+            if x // div != x % 10:return False 
+            x = (x % div) // 10 
+            div = div/100
+
+        return True
 # =============================================================================
 # =============================================================================
 # Square root of a number(Try to first figure out algo to solve this)
+class Solution():
+    def squareRoot(n):
+        if n>0: flag=1
+        else: flag=-1
+        return flag*(abs(n)**(1/2) )
+    
+Solution.squareRoot(-100)
 # =============================================================================
 # =============================================================================
 # Perfect number
+class Solution():
+    def perfectNumber(n):
+        total=0
+        for i in range(1,n//2+1):
+            if n%i==0: 
+                total=total+i
+                print(i,"i")
+                print(total,"total")
+            else: 
+                i+=1
+        print(total)
+        if total == n:
+            print(n , "is a perfect number")
+            return "Perfect number" 
+        else: 
+            return "Not perfect number"
+    
+Solution.perfectNumber(61)
 # =============================================================================
