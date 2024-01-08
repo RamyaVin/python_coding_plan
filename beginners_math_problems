@@ -48,6 +48,28 @@ Solution.reverse(345345601)
 # =============================================================================
 # =============================================================================
 # Find power of a number
+#12**21/(10**9+7)
+class Solution():
+    def powerOfNumber( x):
+        if x > 2 ** 31 - 1 or x < -(2 ** 31):
+            return 0
+        
+        reverse = 0
+        sign = -1 if x < 0 else 1
+        temp=x
+        x = abs(x)
+        while x:
+            digit = x % 10
+            reverse = reverse * 10 + digit
+            x //= 10
+        result = sign * reverse
+        mod=10**9 + 7
+        print(temp,result,mod)
+        return print(pow(temp,result,mod))
+    
+    
+Solution.powerOfNumber(12)
+
 # =============================================================================
 # =============================================================================
 # GCD
