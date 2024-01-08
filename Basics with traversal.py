@@ -3,6 +3,17 @@
 # =============================================================================
 # =============================================================================
 # Find the maximum and minimum element in array(After solving the search , you can solve all probs in this basics by yourself)
+class Solution():
+    def maxMinArray(s):
+        max_array=s[0]
+        min_array=s[0]
+        for i in range(0,len(s),1):
+            max_array=max(max_array,s[i])
+            min_array=min(min_array,s[i])
+        return  max_array,min_array
+
+Solution.maxMinArray([11,2,3,4,21])
+
 # =============================================================================
 # =============================================================================
 # Find third largest element in array
