@@ -9,12 +9,42 @@ print(Solution.evenOdd(4))
 # =============================================================================
 # =============================================================================
 # Find last digit in a number
+class Solution:
+    def lastDigit(x):
+        return abs(x%10)
+        
+print(Solution.lastDigit(40190))
 # =============================================================================
 # =============================================================================
 # Count digits in a number(Solving above last digit prob wil make this easy for you)
+class Solution:
+    def countDigits(x):
+        count=0
+        while x!=0:
+            x//=10
+            count+=1
+        return count
+
+print(Solution.countDigits(4090))
 # =============================================================================
 # =============================================================================
 # Reverse a number(Try thinking how you can use above logic in solving this)
+class Solution():
+    def reverse( x):
+        if x > 2 ** 31 - 1 or x < -(2 ** 31):
+            return 0
+        
+        reverse = 0
+        sign = -1 if x < 0 else 1
+        x = abs(x)
+        while x:
+            digit = x % 10
+            reverse = reverse * 10 + digit
+            x //= 10
+        result = sign * reverse
+        return result
+    
+Solution.reverse(345345601)
 # =============================================================================
 # =============================================================================
 # Find power of a number
