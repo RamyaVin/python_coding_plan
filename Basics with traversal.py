@@ -49,11 +49,34 @@ class Solution(object):
 # =============================================================================
 # =============================================================================
 # Find repeating number in array
-
-
+class Solution():
+    def repeatingNumber(nums):
+        
+        n = len(nums)-2
+        return sum(nums)-((n * (n+1)) // 2 ) 
+    
+Solution.repeatingNumber([0,2,3,4,3,1])
 # =============================================================================
 # =============================================================================
 # Sort an array of 0s , 1s and 2s (You dont need to know any sorting algo, just using basics, once solved, definitely learn the optimal algo)
+class Solution():
+    def sortArray(nums):
+        n=len(nums)
+        low,mid,high=0,0,n-1
+        while (mid<=high):
+            if(nums[mid]==0):
+                nums[low],nums[mid]=nums[mid],nums[low]
+                mid+=1
+                low+=1
+            elif (nums[mid]==1):
+                mid+=1
+            else:
+                #nums[mid]=2
+                nums[mid],nums[high]=nums[high],nums[mid]
+                high-=1
+        return nums
+    
+Solution.sortArray([0,2,1,2,0,1])
 
 # =============================================================================
 # =============================================================================
