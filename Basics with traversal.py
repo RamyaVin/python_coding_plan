@@ -17,18 +17,44 @@ Solution.maxMinArray([11,2,3,4,21])
 # =============================================================================
 # =============================================================================
 # Find third largest element in array
+class Solution():
+    def max3Array(s):
+        s=sorted(s)
+        print(s[2])
+        
+Solution.max3Array([11,2,3,4,21])
+
 # =============================================================================
 # =============================================================================
 # Search an element in array(Understand how to traverse through the array and how to access the elements)
+class Solution():
+    def Array(s,target):
+        n = len(s)
+        for i in range(0,n,1):
+            if s[i]==target:
+                print("Number in array at location", i )
+Solution.Array([11,2,3,4,21],3)
 # =============================================================================
 # =============================================================================
 # Find missing number in array
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        return ((n * (n+1)) // 2 ) - sum(nums)
+
 # =============================================================================
 # =============================================================================
 # Find repeating number in array
+
+
 # =============================================================================
 # =============================================================================
 # Sort an array of 0s , 1s and 2s (You dont need to know any sorting algo, just using basics, once solved, definitely learn the optimal algo)
+
 # =============================================================================
 # =============================================================================
 # Check if two arrays are equal or not
