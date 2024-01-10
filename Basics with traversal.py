@@ -81,15 +81,75 @@ Solution.sortArray([0,2,1,2,0,1])
 # =============================================================================
 # =============================================================================
 # Check if two arrays are equal or not
+class Solution():
+    def equalArray(x,y):
+        flag=0
+        if len(x) == len(y):
+            for i in range(0,len(x),1):
+                if x[i] != y[i]:flag=1
+                break
+            return True if flag ==0 else False
+        else:
+            return False
+    
+Solution.equalArray([1,2,1,2,0,1],[1,2,1,2,0])
 # =============================================================================
 # =============================================================================
 # Rotate the array by 1
+class Solution():
+    def rorateArray_1(nums):
+        nums.append(nums[0])
+        nums.pop(0)
+        return nums
+    
+Solution.rorateArray_1([3,2,1,2,0,1])
 # =============================================================================
 # =============================================================================
 # Rotate the array by k
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) == 0:
+            return []
+        if k == 0:
+            return nums
+        if len(nums)<k:
+            nums[:] = Solution.rorateArray_k(nums,len(nums))
+            nums[:] = Solution.rorateArray_k(nums,k-len(nums))
+ 
+        nums.reverse()
+        nums[:k] = reversed(nums[:k])
+        nums[k:] = reversed(nums[k:])
+        return nums
+
 # =============================================================================
 # =============================================================================
 # Array subset of another array
+class Solution():
+    def arraySubset(a,b):
+        d={}
+        for i in a:
+            if i not in d:
+                d[i]=1
+            else:
+                d[i]+=1
+        for i in b:
+            if i not in d:
+                return "No"
+            elif i in d and d[i]==0:
+                return "No"
+            else:
+                d[i]-=1
+        return "Yes"
+            
+                
+            
+Solution.arraySubset([5,2,3,1],[1,0,3])
+
 # =============================================================================
 # =============================================================================
 # Learn what is map and how its represented before moving forward
