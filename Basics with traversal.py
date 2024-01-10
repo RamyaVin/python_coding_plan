@@ -145,17 +145,27 @@ class Solution():
             else:
                 d[i]-=1
         return "Yes"
-            
-                
-            
+        
 Solution.arraySubset([5,2,3,1],[1,0,3])
-
 # =============================================================================
 # =============================================================================
 # Learn what is map and how its represented before moving forward
+
 # =============================================================================
 # =============================================================================
 # Count frequency of elements in array(Solve efficiently, try applying what you learnt about map)
+class Solution():
+    def arrayFreq(a):
+        d={}
+        for i in a:
+            if i not in d:
+                d[i]=1
+            else:
+                d[i]+=1
+        return d
+                
+Solution.arrayFreq([5,2,3,1,1,2])
+
 # =============================================================================
 # =============================================================================
 
