@@ -302,6 +302,35 @@ Solution.countTriplet([1, 5, 3, 2],4)
 # =============================================================================
 # =============================================================================
 # Union of two arrays(Learn the brute force & optimal soln, you will learn about set datastructure, which will be super useful in many probs in brute force)
+brute force union of 2 arrays is creating a set and adding array elements to that set
+# Python program for the union of two arrays using Set
+def getUnion(a, n, b, m):
+
+	# Defining set container s
+	s = set()
+
+	# Inserting array elements in s
+	for i in range(n):
+		s.add(a[i])
+
+	for i in range(m):
+		s.add(b[i])
+	print("Number of elements after union operation: ", len(s), "")
+	print("The union set of both arrays is :" + "")
+
+	print(s, end="") # s will contain only distinct
+	# elements from array a and b
+
+
+# Driver Code
+if __name__ == '__main__':
+	a = [1, 2, 5, 6, 2, 3, 5, 7, 3]
+	b = [2, 4, 5, 6, 8, 9, 4, 6, 5, 4]
+
+	getUnion(a, 9, b, 10)
+
+#### hashing
+
 class Solution:
     def printUnion(a, n, b, m):
     	mp = {}
@@ -325,17 +354,114 @@ b = [2, 4, 5, 6, 8, 9, 4, 6, 5]
 
 Solution.printUnion(a, 7, b, 9)
 
-# This code is contributed by shinjanpatra
-
 # =============================================================================
 # =============================================================================
 # Intersection of two arrays
+ def ArrayIntersection(self,a, b, n, m):
+        #return: expected length of the intersection array.
+        comon=set(a)&set(b)
+        return(len(comon))
+ArrayIntersection([1,2,3],[1,2],3,2)
+#####
+class Solution:
+    def printIntersection(arr1, arr2, m, n):
+        arr1.sort()
+        arr2.sort()
+        i = 0
+        j = 0
+        while(i < m and j < n):
+            if(arr1[i] < arr2[j]):
+                i += 1
+            elif(arr2[j] < arr1[i]):
+                j += 1
+            else:
+                print(arr2[j])
+                j += 1
+                i += 1
+               
+# Driver Code
+a = [1, 2, 5, 6, 2, 3, 5]
+b = [2, 4, 5, 6, 8, 9, 4, 6, 5]
+
+Solution.printIntersection(a, b,7,9)
 # =============================================================================
 # =============================================================================
 # Remove duplicates from array(Quite diff from above, try to solve on own, this actually shows that not always you will have pointers at start and end)
+class Solution:
+    def printIntersection(a,  n):
+        a.sort()
+        print(a)
+        s=list()
+        duplicate=[]
+        for i in range (0,n-1,1):
+            if a[i]!=a[i+1]:
+                s.append(a[i])
+            elif a[i]==a[i+1]:
+                duplicate.append(a[i])
+        return s,duplicate
+         
+    
+# Driver Code
+a = [1, 2, 5, 6, 2, 3, 5]
+
+Solution.printIntersection(a, 7)
+###########
+
+def binary_search(nums, low, high, val):
+	n = len(nums)
+	res = -1
+	while low <= high:
+		mid = low + (high - low) // 2
+		if nums[mid] <= val:
+			low = mid + 1
+		else:
+			res = mid
+			high = mid - 1
+	if res == -1:
+		return n
+	return res
+
+def remove_duplicates(nums):
+	n = len(nums)
+	idx = 0 # It stores the indexing of unique elements.
+
+	while idx != n:
+		i = binary_search(nums, idx + 1, n - 1, nums[idx]) # It finds the upper bound of the element.
+
+		if i == n: # Means we are not able to find the upper bound of the element.
+			return idx + 1
+		idx += 1
+		nums[idx] = nums[i]
+	
+	return idx + 1
+
+# Driver code
+if __name__ == "__main__":
+	arr = [1, 2, 2, 3, 4, 4, 4, 5, 5]
+
+	# remove_duplicates() returns the new size of the array.
+	n = remove_duplicates(arr)
+
+	# Print the updated array
+	for i in range(n):
+		print(arr[i], end=" ")
 # =============================================================================
 # =============================================================================
 # kth element of 2 sorted arrays
+class Solution:
+    def kElement(a,b,k):
+        a.sort()
+        b.sort()
+        print(a,b)
+        print(a[k],b[k])
+         
+    
+# Driver Code
+a = [1, 2, 5, 6, 2, 3, 5]
+b = [1, 2, 5, 6, 2, 3, 5]
+k=3
+
+Solution.kElement(a,b,k)
 # =============================================================================
 # =============================================================================
 # Length of longest subarray with sum k
