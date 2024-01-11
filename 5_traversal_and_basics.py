@@ -208,10 +208,9 @@ class Solution():
 # Driven source
 arr = [0, -1, 5, -3, 2]
 n = len(arr)
-Solution.findTriplets(arr, n)                  
-# =============================================================================
-# =============================================================================
-# Find count of triplets
+Solution.findTriplets(arr, n) 
+
+###triples print sum =0 in array 
 class Solution():
         
         # Python3 program to find four 
@@ -281,10 +280,53 @@ class Solution():
     
     # Function call 
     fourSum(X, arr, Map, n)
-#Solution.findTriplets(arr, n)               
+# =============================================================================
+# =============================================================================
+# Find count of triplets
+class Solution:
+    def countTriplet(arr, n):
+        # code here
+        count=0
+        s=set(arr)
+        for i in arr:
+            s.add(i)
+        for i in range(len(arr)-1):
+            for j in range(i+1,len(arr)):
+                if (arr[i]+arr[j]) in s:
+                    count+=1
+
+        return count
+                    
+
+Solution.countTriplet([1, 5, 3, 2],4)          
 # =============================================================================
 # =============================================================================
 # Union of two arrays(Learn the brute force & optimal soln, you will learn about set datastructure, which will be super useful in many probs in brute force)
+class Solution:
+    def printUnion(a, n, b, m):
+    	mp = {}
+    
+    	# Inserting array elements in mp
+    	for i in range(n):
+    		mp[a[i]] = i
+    
+    	for i in range(m):
+    		mp[b[i]] = i
+    
+    	print("The union set of both arrays is : ")
+    	for key in mp.keys():
+    
+    		print(key, end=" ")
+    
+
+# Driver Code
+a = [1, 2, 5, 6, 2, 3, 5]
+b = [2, 4, 5, 6, 8, 9, 4, 6, 5]
+
+Solution.printUnion(a, 7, b, 9)
+
+# This code is contributed by shinjanpatra
+
 # =============================================================================
 # =============================================================================
 # Intersection of two arrays
