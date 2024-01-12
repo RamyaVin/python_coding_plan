@@ -205,7 +205,7 @@ class Solution():
     		print(" No Triplet Found")
     
 
-# Driven source
+# Driver code
 arr = [0, -1, 5, -3, 2]
 n = len(arr)
 Solution.findTriplets(arr, n) 
