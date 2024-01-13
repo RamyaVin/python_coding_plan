@@ -450,10 +450,10 @@ if __name__ == "__main__":
 # kth element of 2 sorted arrays
 class Solution:
     def kElement(a,b,k):
-        a.sort()
-        b.sort()
-        print(a,b)
-        print(a[k],b[k])
+        c=a+b 
+        c.sort()
+        print(c)
+        print(c[k-1])
          
     
 # Driver Code
@@ -465,7 +465,50 @@ Solution.kElement(a,b,k)
 # =============================================================================
 # =============================================================================
 # Length of longest subarray with sum k
+class Solution:
+    def lenOfLongSubarr (self, arr, nums, k) : 
+        #Complete the function
+        currsum = 0
+        ans = 0
+        prefix = {}
+        prefix[0] = 0
+        
+        for i in range(n):
+            currsum += arr[i]
+            diff = currsum - k
+            if diff in prefix:
+                size = prefix[diff]
+                ans = max(ans,i+1-size)
+            if currsum in prefix:
+                continue
+            else:
+                prefix[currsum] = i + 1
+        return ans
 # =============================================================================
 # =============================================================================
 # Trapping rain water
+class Solution:
+    def rainTrap(height):
+        if not height: return 0
+        l, r = 0, len(height)-1 
+        leftMax, rightMax = height[l], height[r]
+        res =  0 
+        
+        while l < r:
+            if leftMax < rightMax:
+               l += 1
+               leftMax = max(leftMax, height[l])
+               res +=  leftMax - height[l]
+            else:
+                r -= 1
+                rightMax = max(rightMax , height[r])
+                res +=  rightMax - height[r]
+            
+            return res
+   
+# Driver Code
+height = [10,0, 9]
+
+Solution.rainTrap(height)
+
 # =============================================================================
