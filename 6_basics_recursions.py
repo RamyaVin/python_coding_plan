@@ -151,9 +151,39 @@ Solution.mergeIntervals([[1,3],[8,10],[15,18],[3,6]])
 # =============================================================================
 # =============================================================================
 # 41	Maximum product subarray	https://practice.geeksforgeeks.org/problems/maximum-product-subarray3604/1
+class Solution:
+    def maxProduct(arr, n):
+        lis=[]
+        if n==1:
+            return arr[0]
+        for i in range(n):
+            k=1
+            for j in range(i,n):
+                k=k*arr[j]
+                lis.append(k)
+                if arr[j]==0:
+                  break
+        return max(lis) 
+                
+Solution.maxProduct([6, -3, -10, 0, 2],5)
 # =============================================================================
 # =============================================================================
 # 42	Next permutation	https://leetcode.com/problems/next-permutation/
+class Solution:
+    def nextPermutation(nums):
+       for i in range(len(nums)-1, 0, -1):
+           # find the index of the last peak
+           if nums[i - 1] < nums[i]:
+               nums[i:] = sorted(nums[i:])
+               
+               # get the index before the last peak
+               j = i - 1
+               # swap the pre-last peak index with the value just large than it
+               for k in range(i, len(nums)):
+                   if nums[j] < nums[k]:
+                       nums[k], nums[j] = nums[j], nums[k]
+                       return nums
+       return nums.reverse()
 # =============================================================================
 # =============================================================================
 # 43	Seive of eranthoses(Popular algo for prime numbers)	https://www.geeksforgeeks.org/problems/sieve-of-eratosthenes5242/1
