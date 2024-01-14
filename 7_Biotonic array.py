@@ -103,4 +103,38 @@ Solution.matrixDiagonally([[1,11,14],[10,31,40],[60,15,50]])
 # =============================================================================
 # =============================================================================
 # Set matrix zeros	https://leetcode.com/problems/set-matrix-zeroes/
+class Solution:
+    def setZeroes(matrix):
+
+        m = len(matrix)
+        n = len(matrix[0])
+		
+        first_row_has_zero = False
+        first_col_has_zero = False
+        # iterate through matrix to mark the zero row and cols
+        for row in range(m): #1st element of row 0
+            for col in range(n):
+                if matrix[row][col] == 0:
+                    if row == 0:
+                        first_row_has_zero = True
+                    if col == 0:
+                        first_col_has_zero = True
+                    matrix[row][0] = matrix[0][col] = 0
+        print(matrix)
+        # iterate through matrix to update the cell to be zero if it's in a zero row or col
+        for row in range(1, m):  #1st element of col = 0 then entire col =0
+            for col in range(1, n):
+                matrix[row][col] = 0 if matrix[0][col] == 0 or matrix[row][0] == 0 else matrix[row][col]
+        print(matrix)
+        # update the first row and col if they're zero
+        print(first_row_has_zero,"first_row_has_zero")
+        if first_row_has_zero: # if True "0"
+            for col in range(n):
+                matrix[0][col] = 0
+        
+        if first_col_has_zero:
+            for row in range(m):
+                matrix[row][0] = 0
+        return matrix
+Solution.setZeroes([[1,0,14],[10,31,40],[60,15,50]])
 # =============================================================================
