@@ -187,5 +187,25 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 43	Seive of eranthoses(Popular algo for prime numbers)	https://www.geeksforgeeks.org/problems/sieve-of-eratosthenes5242/1
+class Solution:
+    def sieveOfEratosthenes(N):
+        #code here
+    
+        def prime(k):
+            l=[1 for i in range(N+1)] #setting everything as true
+            for i in range(2,int(N**0.5)+1):
+                if l[i]==1:
+                    for j in range(i*i,N+1,i):
+                        l[j]=0 #square of i is false
+            return l
+        m=[]
+        primes=prime(N)
+        for k in range(2,N+1):
+            if primes[k]==1: #check if true then append that number
+                m.append(k)
+        return m
+      
+        
+Solution.sieveOfEratosthenes(10)
 # =============================================================================
 # =============================================================================
