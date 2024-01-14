@@ -134,6 +134,20 @@ def getNumOfInversions(A):
 # =============================================================================
 # =============================================================================
 # 40	Merge intervals	https://leetcode.com/problems/merge-intervals/
+class Solution:
+    def mergeIntervals(intervals):
+        intervals = sorted(intervals, key=lambda x:x[0])
+        merged = [intervals[0]]
+        for interval in intervals:
+            # Normal case not overlaping
+                print(merged[-1][1],interval[0], intervals)
+                if merged[-1][1] < interval[0]:
+                    merged.append(interval)
+                else:
+                    merged[-1][1] = max(merged[-1][1], interval[1])
+        return merged
+
+Solution.mergeIntervals([[1,3],[8,10],[15,18],[3,6]])
 # =============================================================================
 # =============================================================================
 # 41	Maximum product subarray	https://practice.geeksforgeeks.org/problems/maximum-product-subarray3604/1
