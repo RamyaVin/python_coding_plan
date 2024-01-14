@@ -5,6 +5,34 @@
 # =============================================================================
 
 # Search in a matrix	https://leetcode.com/problems/search-a-2d-matrix/
+def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        for i in range(m):
+            if target > matrix[i][n - 1]:
+                continue
+            if target < matrix[i][0]:
+                return False
+            # for j in range(n):
+            #     if target == matrix[i][j]:
+            #         return True
+            start = 0
+            end = n - 1
+            mid = -1
+            while start <= end:
+                mid = start + (end - start) // 2
+                if matrix[i][mid] > target:
+                    end = mid - 1
+                if matrix[i][mid] == target:
+                    return True
+                if matrix[i][mid] < target:
+                    start = mid + 1
+        return False
 # =============================================================================
 # =============================================================================
 # Rotate by 90 degree	https://www.geeksforgeeks.org/problems/rotate-by-90-degree-1587115621/1
