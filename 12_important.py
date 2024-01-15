@@ -2,6 +2,28 @@
 # Must solve other probs(Try to solve these probs on own, brute force atleast you can come up for most of them after solving above)		
 # =============================================================================
 # 74	Aggressive cows	https://www.geeksforgeeks.org/problems/aggressive-cows/1?page=1&category=Binary%20Search&sortBy=submissions
+    def solve(self,n,k,stalls):
+        pass
+        stalls.sort()
+        l , h = 1 , stalls[-1] - stalls[0]
+        def cowsAccomodated(m): #m no. of cows
+            prev = stalls[0]
+            temp = 1
+            for i in range(1,len(stalls)):
+                if stalls[i] - prev >= m:
+                    temp += 1
+                    prev = stalls[i]
+                if temp == k: return True
+            return False
+      
+        ret = 0
+        while l <= h:
+            m = (l + h) // 2
+            if(cowsAccomodated(m)):
+                ret = m
+                l = m + 1
+            else: h = m - 1
+        return ret
 # =============================================================================
 # =============================================================================
 # 75	Allocate minimum pages	https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
