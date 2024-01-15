@@ -70,5 +70,31 @@ def insertionSort(self, alist, n):
 # =============================================================================
 
 # Quick sort	https://www.geeksforgeeks.org/problems/quick-sort/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+#User function Template for python3
+import random
+class Solution:
+    def quickSort(self,arr,low,high):
+        if low<high:
+            p = self.partition(arr,low,high)
+            self.quickSort(arr,low,p)
+            self.quickSort(arr,p+1, high)
+        return
+    
+    def partition(self,arr,low,high):
+        rand = random.randint(low,high)
+        pivot = arr[rand]
+        arr[low],arr[rand] = arr[rand],arr[low]
+        l=low-1
+        r=high+1
+        while True:
+            l+=1
+            while arr[l]<pivot:
+                l+=1
+            r-=1
+            while arr[r]>pivot:
+                r-=1
+            if l>=r:
+                return r
+            arr[l],arr[r] = arr[r],arr[l]
 # # =============================================================================
 # =============================================================================
