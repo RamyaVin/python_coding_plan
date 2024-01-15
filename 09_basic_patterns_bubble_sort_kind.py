@@ -123,6 +123,19 @@ find(arr, n, x)
 # =============================================================================
 # 61	Find missing num from 1 to N	https://leetcode.com/problems/missing-number/
 
+def missingNumber(self, nums):
+    n = len(nums)
+    return ((n * (n+1)) // 2 ) - sum(nums)
+# =============================================================================
+# =============================================================================
+# 62	Find square root	https://www.geeksforgeeks.org/problems/square-root/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+def p(x):
+    return pow(x,0.5
+
+p(4)
+# =============================================================================
+# =============================================================================
+# 63	Search for element in infinite array	https://www.codingninjas.com/studio/problems/search-in-infinite-sorted-0-1-array_696193
 def firstOne(get):
     # Write your code here.
     # This function returns the first index of the occurence of 1
@@ -134,11 +147,4 @@ def firstOne(get):
         if get(mid) == 1:high = mid - 1
         else:low = mid + 1
     return low
-# =============================================================================
-# =============================================================================
-# 62	Find square root	https://www.geeksforgeeks.org/problems/square-root/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
-# =============================================================================
-# =============================================================================
-# 63	Search for element in infinite array	https://www.codingninjas.com/studio/problems/search-in-infinite-sorted-0-1-array_696193
-# 
 # =============================================================================
