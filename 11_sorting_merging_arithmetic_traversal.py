@@ -99,9 +99,30 @@ main()
 # =============================================================================
 # =============================================================================
 # 70	Find row with maximum number of 1's	https://www.geeksforgeeks.org/problems/binary-matrix-having-maximum-number-of-1s--170647/1?page=2&category=Binary%20Search&sortBy=submissions
+#User function Template for python3
+   def findMaxRow(self, mat, N):
+            # Code here
+        max=0
+        row=0
+        for i in range(N):
+            if max<sum(mat[i]):
+               max=sum(mat[i])
+               row=i
+        if row==0 and max==0:
+            row=0
+            max=0
+            
+            return row,max
+        else:
+            return row,max
 # =============================================================================
 # =============================================================================
 # 71	Search in row wise column wise sorted matrix	https://www.geeksforgeeks.org/problems/search-in-a-matrix-1587115621/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+def search(self,matrix, n, m, x): 	
+        for n in matrix:
+                if x in n:
+                    return 1
+        return 0
 # =============================================================================
 # =============================================================================
 # 72	Search in sorted matrix II	https://leetcode.com/problems/search-a-2d-matrix-ii/
