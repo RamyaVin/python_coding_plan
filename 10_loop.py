@@ -83,10 +83,7 @@ class Solution(object):
 # =============================================================================
 # 65	Minimum element in sorted rotated array(With and without duplicate)A twist in normal BS is needed, once you learnt this, solve the below by yourself,even try to solve this also by yourself	https://www.geeksforgeeks.org/problems/minimum-number-in-a-sorted-rotated-array-1587115620/1?page=1&category=Binary%20Search&sortBy=submissions
 #User function Template for python3
-
-
 class Solution:
-    
     #Function to find the minimum element in sorted and rotated array.
     def minNumber(self, arr,low,high):
         #Your code here
@@ -106,7 +103,50 @@ return arr[0]
 # =============================================================================
 # =============================================================================
 # 66	Number of times array is sorted	https://www.geeksforgeeks.org/problems/rotation4723/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+def findKRotation(arr, n):
+        # code here
+    low= 0
+    high = n-1
+    while (low<high):
+        mid= low+(high-low)//2
+        if (arr[mid]>arr[high]):
+            low=mid+1
+        else:
+            high=mid
+    return low 
+
+n = 4
+arr = [4, 5, 2, 3]
+findKRotation(arr, n)
 # =============================================================================
 # =============================================================================
 # 67	Maximum element in sorted rotated array	
+# Function to return the maximum element
+def findMax(arr, low, high):
+
+	# If there is only one element left
+	if (high == low):
+		return arr[low]
+
+	# Find mid
+	mid = low + (high - low) // 2
+	# Check if mid reaches 0 ,it is greater than next element or not
+	if(mid==0 and arr[mid]>arr[mid+1]):
+		return arr[mid]
+
+	# Check if mid itself is maximum element
+	if (mid < high and arr[mid + 1] < arr[mid] and mid>0 and arr[mid]>arr[mid-1]):
+		return arr[mid]
+	
+# Decide whether we need to go to
+	# the left half or the right half
+	if (arr[low] > arr[mid]):
+		return findMax(arr, low, mid - 1)
+	else:
+		return findMax(arr, mid + 1, high)
+
+# Driver code
+arr = [6,5,4,3,2,1]
+n = len(arr)
+print(findMax(arr, 0, n - 1))
 # =============================================================================
