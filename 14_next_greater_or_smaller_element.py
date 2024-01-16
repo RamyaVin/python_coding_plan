@@ -46,9 +46,40 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 93	Check if LL is a Palindrome(Once reversing is learnt, this should be easy)	https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?page=1&category=Linked%20List&sortBy=submissions
+    def isPalindrome(self, head):
+        #code here
+        temp=head
+        # length=0
+        lst=[]
+        while(temp):
+            lst.append(temp.data)
+            temp=temp.next
+        
+        n= len(lst)
+        for i in range(int(n/2)):
+            if lst[i]!=lst[n-i-1]:
+                return False
+        
+        # print(length)
+        return True
 # =============================================================================
 # =============================================================================
 # 94	Middle element of LL (Learn efficient approach)	https://www.geeksforgeeks.org/problems/insert-in-middle-of-linked-list/1?page=2&category=Linked%20List&sortBy=submissions
+
+def insertInMid(head,node):
+    #code here
+    if not head:
+        head = node
+        return head
+    slow = fast = head
+    
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    node.next = slow.next
+    slow.next = node
+    
+    return head
 # =============================================================================
 # =============================================================================
 # 95	Find the intersection point of Y LL(Once you know traversal, apply node logic to solve this)	https://www.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1?page=1&category=Linked%20List&sortBy=submissions
