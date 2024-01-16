@@ -53,13 +53,11 @@ class Solution:
         lst=[]
         while(temp):
             lst.append(temp.data)
-            temp=temp.next
-        
+            temp=temp.next    
         n= len(lst)
         for i in range(int(n/2)):
             if lst[i]!=lst[n-i-1]:
                 return False
-        
         # print(length)
         return True
 # =============================================================================
@@ -142,13 +140,9 @@ this code is timed out in Geek4geeks, but code is working need to find optimal s
 			tail=ll1
 			ll1=ll1.next
 	if ll1 is not None:
-		tail.next=ll1
-		
-	
+		tail.next=ll1			
 	if ll2 is not None:
 		tail.next=ll2
-		
-
 	return head
 
 def mid_point_2(head):
@@ -159,8 +153,7 @@ def mid_point_2(head):
 	while fast.next is not None and fast.next.next is not None:
 		slow=slow.next
 		fast=fast.next.next
-	return slow 
-	
+	return slow 	
 def merge_sort(head):
 	if head is None or head.next is None:
 		return head
@@ -170,21 +163,13 @@ def merge_sort(head):
 	head1=merge_sort(head)
 	final_head=merge(head1,head2)
 	return final_head
-	
-
-
 def union(head1,head2):
 	# code here
-	# return head of resultant linkedlist
-	
+	# return head of resultant linkedlist	
 	head1=merge_sort(head1)
 	head2=merge_sort(head2)
 	return merge(head1,head2)
 	
-	
-	
-
-
 # Driver Code Starts
 #Initial Template for Python 3
 class Node:
@@ -199,7 +184,6 @@ def print_ll(head):
 	print('None')
 	
 def take_input(l):
-	
 	if len(l)==0 or l[0]==-1:
 		return
 	head,tail=None,None
@@ -214,18 +198,51 @@ def take_input(l):
 			tail.next=new_node
 			tail=new_node
 	return head
-
 head1=take_input([10,20,30,40,50,60,70])
 head2=take_input([10,30,50,80,90])
 print_ll(union(head1,head2))
 # =============================================================================
 # =============================================================================
 # 97	Delete without head pointer	https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1?page=1&category=Linked%20List&sortBy=submissions
+def deleteNode(self,curr_node):
+        #code here
+        curr_node.data=curr_node.next.data
+        curr_node.next=curr_node.next.next
 # =============================================================================
 # =============================================================================
 # 98	Count pairs with given sum	https://www.geeksforgeeks.org/problems/count-pairs-whose-sum-is-equal-to-x/1?page=2&category=Linked%20List&sortBy=submissions
+class Solution:
+    def countPair(self,h1,h2,n1,n2,x):
+        res=0
+        d={}
+        for i in range(n1):
+            if h1.data in d:
+                d[h1.data]+=1
+            else:
+                d[h1.data]=1
+            h1=h1.next
+        #print(d)
+        for j in range(n2):
+            if x-h2.data in d:
+                res+=1
+            h2=h2.next
+        return res
 # =============================================================================
 # =============================================================================
 # 99	Reverse LL in groups of given size(Once you learn reverse of LL's efficient approach, you can try this)	https://www.geeksforgeeks.org/problems/reverse-a-linked-list-in-groups-of-given-size/1?page=1&category=Linked%20List&sortBy=submissions
 # 
+    def reverse(self,head, k):
+        # Code here
+        current = head
+        previous = None
+        count = 0
+        while current and count<k:
+            following = current.next
+            current.next = previous
+            previous = current
+            current = following
+            count+=1
+        if current!=None:
+            head.next=self.reverse(current, k)
+        return previous
 # =============================================================================
