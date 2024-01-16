@@ -65,27 +65,159 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 94	Middle element of LL (Learn efficient approach)	https://www.geeksforgeeks.org/problems/insert-in-middle-of-linked-list/1?page=2&category=Linked%20List&sortBy=submissions
-
+##tortoise and hare algo
 def insertInMid(head,node):
     #code here
-    if not head:
-        head = node
-        return head
-    slow = fast = head
-    
-    while fast.next and fast.next.next:
-        slow = slow.next
-        fast = fast.next.next
-    node.next = slow.next
-    slow.next = node
-    
+    slow=head
+    fast=head
+    while fast.next!=None and fast.next.next!=None:
+        slow=slow.next
+        fast=fast.next.next # fast travels 2 times more than fast 
+    node.next=slow.next
+    slow.next=node
     return head
 # =============================================================================
 # =============================================================================
 # 95	Find the intersection point of Y LL(Once you know traversal, apply node logic to solve this)	https://www.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1?page=1&category=Linked%20List&sortBy=submissions
+def intersetPoint(head1,head2):
+    #code here
+    a,b = head1,head2
+    while a != b:
+        a = a.next if a is not None else head2
+        b = b.next if b is not None else head1
+    if a is not None:
+        return a.data
+    return -1
 # =============================================================================
 # =============================================================================
 # 96	Union and Intersection of LL	https://www.geeksforgeeks.org/problems/union-of-two-linked-list/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+
+###create a set and add both lists there and then createa ll and move data from set to LL 
+    def union(self, head1,head2):
+        # code here
+        # return head of resultant linkedlist
+        u = set()
+        while head1:
+            u.add(head1.data)
+            head1 = head1.next
+        while head2:
+            u.add(head2.data)
+            head2 = head2.next
+        l =  linkedList()
+        v = sorted(u)
+        for i in v:
+            l.insert(i
+    ###
+this code is timed out in Geek4geeks, but code is working need to find optimal solution
+    def merge(ll1,ll2):
+	if ll1 is None:
+		return ll2
+	if ll2 is None:
+		return ll1
+	if ll1.data==ll2.data:
+		head=ll1
+		tail=ll1
+		ll1=ll1.next
+		ll2=ll2.next
+	elif ll1.data>ll2.data:
+		head=ll2
+		tail=ll2
+		ll2=ll2.next
+	else:
+		head=ll1
+		tail=ll1
+		ll1=ll1.next
+	while ll1 is not None and ll2 is not None:
+		if ll1.data==ll2.data:
+			tail.next=ll1
+			tail=ll1
+			ll1=ll1.next
+			ll2=ll2.next
+		elif ll1.data>ll2.data:
+			tail.next=ll2
+			tail=ll2
+			ll2=ll2.next
+		else:
+			tail.next=ll1
+			tail=ll1
+			ll1=ll1.next
+	if ll1 is not None:
+		tail.next=ll1
+		
+	
+	if ll2 is not None:
+		tail.next=ll2
+		
+
+	return head
+
+def mid_point_2(head):
+	if head is None:
+		return None
+	slow=head
+	fast=head
+	while fast.next is not None and fast.next.next is not None:
+		slow=slow.next
+		fast=fast.next.next
+	return slow 
+	
+def merge_sort(head):
+	if head is None or head.next is None:
+		return head
+	mid=mid_point_2(head)
+	head2=merge_sort(mid.next)
+	mid.next=None
+	head1=merge_sort(head)
+	final_head=merge(head1,head2)
+	return final_head
+	
+
+
+def union(head1,head2):
+	# code here
+	# return head of resultant linkedlist
+	
+	head1=merge_sort(head1)
+	head2=merge_sort(head2)
+	return merge(head1,head2)
+	
+	
+	
+
+
+# Driver Code Starts
+#Initial Template for Python 3
+class Node:
+	def __init__(self,data):
+		self.data=data
+		self.next=None
+		
+def print_ll(head):
+	while head is not None:
+		print(head.data,end='-->')
+		head=head.next
+	print('None')
+	
+def take_input(l):
+	
+	if len(l)==0 or l[0]==-1:
+		return
+	head,tail=None,None
+	for i in l:
+		if i ==-1:
+			break
+		new_node=Node(i)
+		if head is None:
+			head=new_node
+			tail=new_node
+		else:
+			tail.next=new_node
+			tail=new_node
+	return head
+
+head1=take_input([10,20,30,40,50,60,70])
+head2=take_input([10,30,50,80,90])
+print_ll(union(head1,head2))
 # =============================================================================
 # =============================================================================
 # 97	Delete without head pointer	https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1?page=1&category=Linked%20List&sortBy=submissions
