@@ -39,19 +39,61 @@ def countNodesinLoop(head):
     return size
 # =============================================================================
 # =============================================================================
-# 102	Find the starting point of loop	https://www.geeksforgeeks.org/problems/# =============================================================================
-# =============================================================================
-# =============================================================================
-# find-the-first-node-of-loop-in-linked-list--170645/1
+# 102	Find the starting point of loop	https://www.geeksforgeeks.org/problems/find-the-first-node-of-loop-in-linked-list--170645/1
+    def findFirstNode(self, head):
+        #code here
+        slow = head
+        fast = head
+        while slow and fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                slow = head
+                while slow != fast:
+                    slow = slow.next
+                    fast = fast.next
+                return slow.data
+        return -1
 # =============================================================================
 # =============================================================================
 # 103	Remove the loop	https://www.geeksforgeeks.org/problems/remove-loop-in-linked-list/1?page=1&category=Linked%20List&sortBy=submissions
+
+    def removeLoop(self, head):
+        # remove the loop without losing any nodes
+        if not head:
+            return head
+        
+        # It has to be in this order only
+        slow = head
+        fast = head
+        prev = None
+        
+        # checking for loop
+        while fast and fast.next:
+            prev = slow
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                break
+        
+        if fast and fast.next:
+            fast = head
+            
+            while slow != fast:
+                prev = slow
+                slow = slow.next
+                fast = fast.next
+            
+            prev.next = None
+            
+        return head
 # =============================================================================
 # =============================================================================
 # Reversing stack		
 # =============================================================================
 # =============================================================================
 # 104	Sort 0s, 1s, 2s in LL	https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1?page=1&category=Linked%20List&sortBy=submissions
+
 # =============================================================================
 # =============================================================================
 # 105	Pairwise swap elements	https://www.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1?page=2&category=Linked%20List&sortBy=submissions
