@@ -78,6 +78,46 @@ def subLinkedList(l1, l2):
 # =============================================================================
 # =============================================================================
 # 114	Rotate LL	https://www.geeksforgeeks.org/problems/reorder-list/1?page=3&category=Linked%20List&sortBy=submissions
+def reverse(head):
+    cur = head
+    prev = None
+    while cur:
+        temp = cur.next
+        cur.next = prev
+        prev = cur
+        cur = temp
+    return prev
+
+def merge(head1, head2):
+    h1 = head1
+    h2 = head2
+    while h1 and h2:
+        temp1 = h1.next
+        h1.next = h2
+        temp2 = h2.next
+        h2.next = temp1
+        h1 = temp1
+        h2 = temp2
+    return head1
+
+def find_middle(head):
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return [slow.next, slow]
+
+#Back-end complete function Template for Python 3
+class Solution:
+    def reorderList(self,head):
+        if head.next == None:
+            return head
+        cur = head
+        mid = find_middle(cur)
+        mid[1].next = None
+        rev = reverse(mid[0])
+        head = merge(cur, rev)
 # =============================================================================
 # =============================================================================
 # 115	Flattening a LL(make sure to learn the efficient approach)	https://www.geeksforgeeks.org/problems/flattening-a-linked-list--170645/1?page=4&category=Linked%20List&sortBy=submissions
