@@ -121,9 +121,34 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 115	Flattening a LL(make sure to learn the efficient approach)	https://www.geeksforgeeks.org/problems/flattening-a-linked-list--170645/1?page=4&category=Linked%20List&sortBy=submissions
+# bottom pointer to a linked list where this node is head.
+def merge(self, a, b):
+        if a is None :
+            return b
+        if b is None :
+            return a
+        ans = None
+        if a.data<b.data:
+            ans = a
+            a.bottom = self.merge(a.bottom, b)
+        else:
+            ans = b
+            b.bottom = self.merge(a, b.bottom)
+        return ans
+        
+    def flatten(self,root):
+        #Your code here
+        if root is None:
+            return None
+        mergedll = None
+        mergedll = self.merge(root,self.flatten(root.next))
+        return mergedll
+
 # =============================================================================
 # =============================================================================
 # 116	Delete nodes having greater value on right	https://practice.geeksforgeeks.org/problems/delete-nodes-having-greater-value-on-right/1
+#leaders in an array 
+
 # =============================================================================
 # =============================================================================
 # 117	Delete N nodes after M nodes	https://www.geeksforgeeks.org/problems/delete-n-nodes-after-m-nodes-of-a-linked-list/1?page=3&category=Linked%20List&sortBy=submissions
