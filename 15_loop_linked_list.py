@@ -124,9 +124,42 @@ def segregate(self, head):
 # =============================================================================
 # =============================================================================
 # 105	Pairwise swap elements	https://www.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1?page=2&category=Linked%20List&sortBy=submissions
+    def pairWiseSwap(self, head):
+        current = head
+        previous = None
+        count = 0
+        while current and count<2:
+            following = current.next
+            current.next = previous
+            previous = current
+            current = following
+            count+=1
+        if current!=None:
+            head.next=self.pairWiseSwap(current)
+        return previous
 # =============================================================================
 # =============================================================================
 # 106	Merge k sorted LL(Merge two sorted is easy version of this ques, if you are finding it diff to come up with logic, first solve that)	https://www.geeksforgeeks.org/problems/merge-two-sorted-linked-lists/1?page=1&category=Linked%20List&sortBy=submissions
+def sortedMerge(head1, head2):
+    dummyNode = Node(0)
+    tail = dummyNode
+    while True:
+        if head1 is None:
+            tail.next = head2
+            break
+        if head2 is None:
+            tail.next = head1
+            break
+        
+        if head1.data <= head2.data:
+            tail.next = head1
+            head1 = head1.next
+        else:
+            tail.next = head2
+            head2 = head2.next
+        
+        tail = tail.next
+    return dummyNode.next
 # =============================================================================
 # =============================================================================
 # 107	Merge sort in LL	https://www.geeksforgeeks.org/problems/sort-a-linked-list/1?page=2&category=Linked%20List&sortBy=submissions
