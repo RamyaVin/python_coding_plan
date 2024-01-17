@@ -163,14 +163,128 @@ def sortedMerge(head1, head2):
 # =============================================================================
 # =============================================================================
 # 107	Merge sort in LL	https://www.geeksforgeeks.org/problems/sort-a-linked-list/1?page=2&category=Linked%20List&sortBy=submissions
+class Solution:
+    def mergeSort(self, head):
+        if head is None or head.next is None:
+            return head
+        mid = self.find_middle(head)
+        next_to_mid = mid.next
+        mid.next = None
+        left_sorted = self.mergeSort(head)
+        right_sorted = self.mergeSort(next_to_mid)
+        sorted_list = self.merge(left_sorted, right_sorted)
+        return sorted_list
+    def find_middle(self, head):
+        slow = head
+        fast = head.next
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+    def merge(self, left, right):
+        dummy = Node(0)
+        current = dummy
+        while left is not None and right is not None:
+            if left.data < right.data:
+                current.next = left
+                left = left.next
+            else:
+                current.next = right
+                right = right.next
+            current = current.next
+        if left is not None:
+            current.next = left
+        elif right is not None:
+            current.next = right
+        return dummy.next
 # =============================================================================
 # =============================================================================
 # 108	Quick sort in LL	https://www.geeksforgeeks.org/problems/quick-sort-on-linked-list/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+def quickSort(head):
+#return head after sorting
+#User function Template for python3
+    if not head or not head.next:
+        return head
+    pivot = head
+    smallhead = small = Node(-1)
+    largehead = large = Node(-1)
+    curr = head.next#because head is pivot
+    while curr:
+        if curr == pivot:
+            curr = curr.next
+        elif curr.data<pivot.data:
+            small.next = curr
+            curr = curr.next
+            small = small.next
+        else:
+            large.next = curr
+            curr = curr.next
+            large = large.next
+    small.next = None
+    large.next = None
+    small = quickSort(smallhead.next)
+    pivot.next = None#after sorting the half of linked list
+    large = quickSort(largehead.next)
+    temp = small
+    while temp and temp.next:
+        temp = temp.next
+    if temp:
+        temp.next =pivot#for more elements in linked list
+    else:
+        small = pivot#for less elements in the linked list
+    pivot.next = large#joining both the list
+    return small
 # =============================================================================
 # =============================================================================
-# 109	Remove occurence of duplicates in sorted & unsorted LL	https://www.geeksforgeeks.org/problems/remove-duplicate-element-from-sorted-linked-list/1?page=1&category=Linked%20List&difficulty=Easy&sortBy=submissions https://www.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1?page=1&category=Linked%20List&difficulty=Easy&sortBy=submissions
+# 109	Remove occurence of duplicates in sorted & unsorted LL	https://www.geeksforgeeks.org/problems/remove-duplicate-element-from-sorted-linked-list/1?page=1&category=Linked%20List&difficulty=Easy&sortBy=submissions 
+
+#Function to remove duplicates from sorted linked list.
+def removeDuplicates(head):
+    #code here
+    curr=head
+    while(curr and curr.next):
+        if curr.data==curr.next.data:
+            curr.next=curr.next.next
+        else:
+            curr=curr.next
+    return head
+#https://www.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1?page=1&category=Linked%20List&difficulty=Easy&sortBy=submissions
+    def removeDuplicates(self, head):
+        # return head after editing list
+         dict1={}
+         dummy_node=Node(-1)
+         curr1=dummy_node
+         if head is None or head.next is None:
+             return head
+         curr=head
+         while curr is not None:
+             if curr.data not in dict1:
+                 dict1[curr.data]=1
+                 new_node=Node(curr.data)
+                 curr1.next=new_node
+                 curr1=curr1.next
+             curr=curr.next
+         return dummy_node.next
 # =============================================================================
 # =============================================================================
 # 110	Seggregate even and odd nodes in LL	https://practice.geeksforgeeks.org/problems/segregate-even-and-odd-nodes-in-a-linked-list5035/1
 # 
+def divide(self, N, head):
+        # code here
+        head1 = even = node()
+        head2 = odd = node()
+        
+        while head :
+            if head.data % 2 == 0 :
+                even.next = head
+                even = even.next
+            else :
+                odd.next = head
+                odd = odd.next
+            
+            head = head.next
+        
+        odd.next = None
+        even.next = head2.next
+        return head1.next
 # =============================================================================
