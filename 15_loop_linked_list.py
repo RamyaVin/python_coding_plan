@@ -89,11 +89,38 @@ def countNodesinLoop(head):
         return head
 # =============================================================================
 # =============================================================================
-# Reversing stack		
+# Reversing stack	
+
 # =============================================================================
 # =============================================================================
 # 104	Sort 0s, 1s, 2s in LL	https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1?page=1&category=Linked%20List&sortBy=submissions
-
+def segregate(self, head):
+        #code here
+        dummyZero = Node(-1)
+        zero = dummyZero
+        dummyOne = Node(-1)
+        one = dummyOne
+        dummyTwo = Node(-1)
+        two = dummyTwo
+        temp = head
+        while temp != None:
+            if temp.data == 0:
+                zero.next = temp
+                zero = temp
+            elif temp.data == 1:
+                one.next = temp
+                one = temp
+            elif temp.data == 2:
+                two.next = temp
+                two = temp
+            temp = temp.next
+        if dummyOne.next != None:
+            zero.next = dummyOne.next
+        else:
+            zero.next = dummyTwo.next
+        one.next = dummyTwo.next
+        two.next = None
+        return dummyZero.next
 # =============================================================================
 # =============================================================================
 # 105	Pairwise swap elements	https://www.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1?page=2&category=Linked%20List&sortBy=submissions
