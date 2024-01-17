@@ -148,13 +148,64 @@ def merge(self, a, b):
 # =============================================================================
 # 116	Delete nodes having greater value on right	https://practice.geeksforgeeks.org/problems/delete-nodes-having-greater-value-on-right/1
 #leaders in an array 
-
+#reverse --> left is greater than right --> reverse
+def compute(self,head):
+        head = self.reverse(head)
+        max_ptr = head
+        ptr = head.next
+        while ptr:
+            if ptr.data >= max_ptr.data:
+                max_ptr.next = ptr
+                max_ptr = max_ptr.next
+            else:
+                max_ptr.next = None
+            ptr = ptr.next
+            
+        return self.reverse(head)
+        
+    def reverse(self,head):
+        prev = None        #previous
+        curr = head        #current
+        n = head.next   #Next
+        while n:
+            curr.next = prev
+            prev = curr
+            curr = n
+            n = n.next
+        curr.next = prev
+        return curr
 # =============================================================================
 # =============================================================================
 # 117	Delete N nodes after M nodes	https://www.geeksforgeeks.org/problems/delete-n-nodes-after-m-nodes-of-a-linked-list/1?page=3&category=Linked%20List&sortBy=submissions
+#copy next node data to current node and point to next.next
+    def skipMdeleteN(self, head, M, N):
+        # Code here
+        if not head or not head.next:
+            return       
+        i = M
+        j = N       
+        if N == 0:
+            return        
+        curr = head
+        prev = None
+        while curr != None:
+            if i > 0 and j > 0:
+                prev = curr
+                i -=1
+                curr = curr.next
+            elif i == 0 and j > 0: # skip Mth LL
+                curr = curr.next
+                j -=1
+            else:
+                prev.next = curr # restart counter 
+                i = M
+                j = N
+        prev.next = None
+        return head
 # =============================================================================
 # =============================================================================
-# 118	Delete all occurence of node	
+# 118	Delete all occurence of node
+
 # =============================================================================
 # =============================================================================
 # 119	Clone a LL	https://www.geeksforgeeks.org/problems/clone-a-linked-list-with-next-and-random-pointer/1?page=1&category=Linked%20List&difficulty=Hard&sortBy=submissions
