@@ -209,12 +209,61 @@ def compute(self,head):
 # =============================================================================
 # =============================================================================
 # 119	Clone a LL	https://www.geeksforgeeks.org/problems/clone-a-linked-list-with-next-and-random-pointer/1?page=1&category=Linked%20List&difficulty=Hard&sortBy=submissions
+    def copyList(self, head):
+        # code here
+        curr = head                      
+        while curr:                             # First while loop to insert clone nodes
+            next = curr.next
+            curr.next = Node(curr.data)
+            curr.next.next = next
+            curr = next
+        
+        curr = head
+        while curr:                             # Second while loop to connect arb
+            curr.next.arb = None if (curr.arb == None ) else curr.arb.next
+            curr = curr.next.next
+        
+        head2 = head.next                       # Head of clone LL
+        clone = head2                           # Temp of clone LL
+        curr = head
+        while curr:
+            curr.next = curr.next.next
+            clone.next = None if (clone.next == None) else clone.next.next
+            clone = clone.next
+            curr = curr.next
+        
+        return head2
 # =============================================================================
 # =============================================================================
 # 120	Length of longest palindrome in LL	https://www.geeksforgeeks.org/problems/length-of-longest-palindrome-in-linked-list/1?page=2&category=Linked%20List&difficulty=Medium&sortBy=submissions
+def maxPalindrome(self,head):
+        # Code here
+        prev = None
+        cur = head
+        maxi = 0
+        while cur:
+            temp = cur.next
+            cur.next = prev 
+            x = self.checkmax(prev,temp)+1 # pal len = 2 * common+1 eg 25452 
+            y = self.checkmax(cur,temp)
+            maxi=max(x,y,maxi)
+            prev = cur
+            cur = temp
+        return maxi
+    def checkmax(self,h1,h2):
+        # Code here
+        count = 0
+        while h1 and h2:
+            if h1.data == h2.data:
+                count += 1
+            else:
+                break
+            h1 = h1.next
+            h2 = h2.next
+        return 2*count
 # =============================================================================
 # =============================================================================
-# 121	Learn the basics of circular LL	
+# 121	Learn the basics of circular LL	https://www.geeksforgeeks.org/circular-linked-list/
 # =============================================================================
 # =============================================================================
 # Implementation probs		
@@ -224,8 +273,48 @@ def compute(self,head):
 # =============================================================================
 # =============================================================================
 # 123	Insert, Delete, Reverse DLL	https://www.geeksforgeeks.org/problems/reverse-a-doubly-linked-list/1?page=1&category=doubly-linked-list&sortBy=submissions
+ def reverseDLL(self, head):
+        if not head:
+            return None
+        curr = head
+        while curr:
+            temp = curr.prev
+            curr.prev = curr.next
+            curr.next = temp
+            curr = curr.prev
+        if temp:
+            head = temp.prev
+        return head
 # =============================================================================
 # =============================================================================
 # 124	Pairs with given sum in DLL	https://www.geeksforgeeks.org/problems/find-pairs-with-given-sum-in-doubly-linked-list/1?page=1&category=doubly-linked-list&difficulty=Easy&sortBy=submissions
+    def findPairsWithGivenSum(self, target : int, head : Optional['Node']) -> List[List[int]]:
+        # code here
+        ans = []
+        if head is None:
+            return ans
+    
+        left = head
+        right = self.findTail(head)
+    
+        while left.data < right.data:
+            if left.data + right.data == target:
+                ans.append((left.data, right.data))
+                left = left.next
+                right = right.prev
+            elif left.data + right.data < target:
+                left = left.next
+            else:
+                right = right.prev
+    
+        return ans
+    
+            
+    def findTail(self,head):
+        tail = head
+        while tail.next is not None:
+            tail = tail.next
+        return tail
+
 # =============================================================================
 # =============================================================================
