@@ -124,6 +124,7 @@ Solution.prime(139)
 # =============================================================================
 # =============================================================================
 # Armstrong number(Solving power of number, will make this easy for you)
+#1^3 + 5^3 + 3^3 equals 153
 class Solution():
     def armstrong(n):
         result=0
