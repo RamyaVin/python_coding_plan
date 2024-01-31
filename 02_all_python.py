@@ -651,8 +651,11 @@ class Solution:
         # code here
         count=0
         s=set(arr)
+        '''
+        or
         for i in arr:
             s.add(i)
+        '''
         for i in range(len(arr)-1):
             for j in range(i+1,len(arr)):
                 if (arr[i]+arr[j]) in s:
