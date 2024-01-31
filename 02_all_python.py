@@ -365,22 +365,19 @@ Solution.arrayFreq([5,2,3,1,1,2])
 # =============================================================================
 # =============================================================================
 # =============================================================================
-# Find pair with given sum
-class Solution():
-   def arraySum(nums,k):
-       sumdict={0:1}
-       count=0
-       s=0
-       for num in nums:
-           s+=num
-           if s-k in sumdict:
-               count+=sumdict[s-k]
-           if s in sumdict:
-               sumdict[s]+=1
-           else:
-               sumdict[s]=1
-       return count
-Solution.arraySum([1,2,3,2],4)
+#find pair with given sum
+class Solution:
+	def hasArrayTwoCandidates(self,arr, n, x):
+		# code here
+        temp = set()
+        for i in range(n//2+1):
+            diff1 = x - arr[i]
+            diff2 = x - arr[n-i-1]
+            if diff1 in temp or diff2 in temp:
+                return True
+            temp.add(arr[i])
+            temp.add(arr[n-i-1])
+        return False
 # =============================================================================
 # =============================================================================
 # 2 Sum
