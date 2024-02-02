@@ -5,30 +5,22 @@
 # =============================================================================
 
 # 125	What is stack? Leam how to represent the data structure and working of it	https://www.geeksforgeeks.org/problems/implement-stack-using-array/1?page=1&category=Stack&sortBy=submissions	
-
-class MyStack:
-    
+class MyStack:    
     def __init__(self):
-        self.arr=[]
-    
+        self.arr=[]    
     #Function to push an integer into the stack.
     def push(self,data):
         #add code here
         self.arr.append(data)
-
     #Function to remove an item from top of the stack.
     def pop(self):
         #add code here
         if len(self.arr)<1:
             return -1
-        return self.arr.pop()
-        
+        return self.arr.pop()      
 # =============================================================================
 # =============================================================================
 # 126	Implement 2 stack using array	https://www.geeksforgeeks.org/problems/implement-two-stacks-in-an-array/1?page=1&category=Stack&sortBy=submissions	
-
-#User function Template for python3
-
 class TwoStacks:
     def __init__(self, n=100):
         self.p1=0
@@ -69,15 +61,10 @@ class TwoStacks:
             self.p2-=1
             return t
         pass
-
-
 # =============================================================================
 # =============================================================================
 # 127	Check for balanced paranthesis	https://www.geeksforgeeks.org/problems/parenthesis-checker2744/1?page=1&category=Stack&sortBy=submissions	
-
-class Solution:
-    
-    #Function to check if brackets are balanced or not.
+   #Function to check if brackets are balanced or not.
     def ispar(self,x):
         
        stack = []
@@ -107,7 +94,6 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 128	Get min from stack in O(1) space and time	https://www.geeksforgeeks.org/problems/get-minimum-element-from-stack/1?page=1&category=Stack&sortBy=submissions	
-
 class stack:
     class Node:
         def __init__(self,val,mini):
@@ -140,15 +126,12 @@ class stack:
             return self.s[-1].mini
         else:
             return -1
-     
 # =============================================================================
 # =============================================================================
 # Traversals	Understand the basic of how tree data structure is represented			
 # =============================================================================
 # =============================================================================
 # 129	Next greater element 	https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1?page=1&category=Stack&sortBy=submissions	
-
-class Solution:
     def nextLargerElement(self,arr,n):
         stack = [0]
         res = [None]*n
@@ -165,7 +148,7 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 130	Next greater element II	https://leetcode.com/problems/next-greater-element-ii/	
-class Solution:
+
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         n = len(nums)
         st = []
@@ -225,7 +208,7 @@ def nextSmallerElement(arr,n):
 # =============================================================================
 # =============================================================================
 # 134	Trapping rainwater	https://www.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article	
-class Solution:
+
     def trappingWater(self, arr,n):
         if n <= 1:
             return 0
@@ -258,16 +241,87 @@ class Solution:
             
             for i in range(n):
                 res += min(left_max[i], right_max[i]) - arr[i]
-            
             return res
+arr = [10,0, 9]
 # =============================================================================
 # =============================================================================
 # 135	Maximum rectangular area on histogram(Once next greater and next smallest pattern is covered, this can be solved easily)	https://www.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1?page=1&category=Stack&sortBy=submissions	
+    #Function to find largest rectangular area possible in a given histogram.
+    def getMaxArea(self,histogram):
+        st, res = [], 0
+        for height in histogram + [0]:
+            step = 0
+            while st and st[-1][1] >= height:
+                w, h = st.pop()
+                step += w
+                res = max(res, step * h)
+            st.append((step + 1, height))
+        return res
+N = 7
+arr[] = {6,2,5,4,5,1,6}
+Output: 12
 # =============================================================================
 # =============================================================================
 # 136	Max rectangle(Same as above, just a small twist)	https://www.geeksforgeeks.org/problems/max-rectangle/1?page=1&category=Stack&sortBy=submissions	
+
+def maxArea(self, M, n, m):
+        def maxHistArea(hist):
+            stack = []
+            max_area = 0
+            i = 0
+            while i < m:
+                if not stack or hist[stack[-1]] <= hist[i]:
+                    stack.append(i)
+                    i += 1
+                else:
+                    top = stack.pop()
+                    if stack:
+                        width = i - stack[-1] - 1
+                    else:
+                        width = i
+                    max_area = max(max_area, hist[top] * width)
+            while stack:
+                top = stack.pop()
+                if stack:
+                    width = i - stack[-1] - 1
+                else:
+                    width = i
+                max_area = max(max_area, hist[top] * width)
+            return max_area
+        for i in range(1, n):
+            for j in range(m):
+                if M[i][j] == 1:
+                    M[i][j] += M[i - 1][j]
+        max_area = 1
+        for i in range(n):
+            max_area = max(max_area, maxHistArea(M[i]))
+        return max_area
 # Path and Distance				
 # 137	Infix to postfix	https://www.geeksforgeeks.org/problems/infix-to-postfix-1587115620/1?page=2&category=Stack&sortBy=submissions	
+Input: str = "A*(B+C)/D"
+Output: ABC+*D/
+    def InfixtoPostfix(self, exp):
+        s=[]
+        out=''
+        op={'(':0,')':0,'+':1,'-':1,'*':2,'/':2,'^':3}
+        for i in exp:
+            if i not in op.keys():
+                out=out+i
+            else:
+                if i=='(': s.append(i)
+                elif i==')':
+                    while s[-1]!='(':
+                        out=out+s.pop()
+                    s.pop()
+                elif len(s)==0 or op[i]>op[s[-1]]:
+                    s.append(i)
+                else:
+                    while len(s)!=0 and (op[i]<=op[s[-1]] or s[-1]!='('):
+                        out=out+s.pop()
+                    s.append(i)
+        while len(s)!=0:
+            out=out+s.pop()
+        return out             
 # =============================================================================
 # =============================================================================
 # 138	Evaluation of postfix expression	https://www.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1?page=2&category=Stack&sortBy=submissions	
