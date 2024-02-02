@@ -325,9 +325,49 @@ Output: ABC+*D/
 # =============================================================================
 # =============================================================================
 # 138	Evaluation of postfix expression	https://www.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1?page=2&category=Stack&sortBy=submissions	
+    def evaluatePostfix(self, s):
+        stack=[]
+        for i in s:
+            if i in ["+","*","/","-"]:
+                y,x=stack.pop(),stack.pop()
+                if i=="+":stack.append(x+y)
+                elif i=="*":stack.append(x*y)
+                elif i=="-":stack.append(x-y)
+                else:stack.append(x//y)
+            else:stack.append(int(i))
+        return stack[-1]
 # =============================================================================
 # =============================================================================
-# 139	Prefix to postfix	https://practice.geeksforgeeks.org/problems/infix-to-postfix-1587115620/1	
+# 139	Prefix to postfix	https://www.geeksforgeeks.org/postfix-to-infix/	
+# Python3 program to find infix for  a given postfix. 
+def isOperand(x):
+    return ((x >= 'a' and x <= 'z') or
+            (x >= 'A' and x <= 'Z')) 
+ 
+# Get Infix for a given postfix  expression 
+def getInfix(exp) :
+    s = [] 
+    for i in exp:              
+        # Push operands 
+        if (isOperand(i)) :         
+            s.insert(0, i) 
+             
+        # We assume that input is a valid postfix and expect  an operator. 
+        else:         
+            op1 = s[0] 
+            s.pop(0) 
+            op2 = s[0] 
+            s.pop(0) 
+            s.insert(0, "(" + op2 + i +
+                             op1 + ")") 
+             
+    # There must be a single element in     # stack now which is the required     # infix. 
+    return s[0]
+ 
+# Driver Code 
+if __name__ == '__main__': 
+    exp = "ab*c+"
+    print(getInfix(exp.strip()))
 # =============================================================================
 # =============================================================================
 # 140	Arithmetic expression evaluation	https://www.codingninjas.com/studio/problems/arithmetic-expression-evaluation_1170517	
