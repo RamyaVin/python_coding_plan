@@ -366,53 +366,63 @@ def pre_to_post(s):
 
 # =============================================================================
 # =============================================================================
+
+# Get Infix for a given postfix  expression 
+def getInfix(exp) :
+    s = [] 
+    for i in exp:              
+        # Push operands 
+        if (isOperand(i)) :         
+            s.insert(0, i)              
+        # We assume that input is a valid postfix and expect  an operator. 
+        else:         
+            op1 = s[0] 
+            s.pop(0) 
+            op2 = s[0] 
+            s.pop(0) 
+            s.insert(0, "(" + op2 + i + op1 + ")")              
+    # There must be a single element in     # stack now which is the required     # infix. 
+    return s[0]
+ 
+# Driver Code 
+if __name__ == '__main__': 
+    exp = "ab*c+"
+    print(getInfix(exp.strip()))
+# =============================================================================
+# =============================================================================
 #140	Arithmetic expression evaluation	https://www.codingninjas.com/studio/problems/arithmetic-expression-evaluation_1170517	
 def isLowerPrecedence(ops1, ops2):
-    
     # Check whether ops1 has lower precedence than ops2.
     if((ops1 == '+' or ops1 == '-') and (ops2 == '*' or ops2 == '/')):
         return True
-
     return False
-
-
+    
 def evaluateArithmeticExpression(expression):
     stk = []
-
     postfixExp = ""
     operand = ""
-
     # Convert given infix expression to postfix/ Reverse Polish Notation.
     for i in range(len(expression)):
         if (expression[i] >= '0' and expression[i] <= '9'):
-            
             # Append digit to operand.
             operand += expression[i]
             continue
-
-        if (operand != ""):
-            
+        if (operand != ""):            
             # Append operand in string 'postfix'
             postfixExp += operand
             postfixExp += ' '
             operand = ""
-
-        if (expression[i] == '('):
-            
+        if (expression[i] == '('):            
             # Push opening bracket
-            stk.append('(')
-        
-        elif (expression[i] == ')'):
-            
+            stk.append('(')        
+        elif (expression[i] == ')'):            
             # Append operators between current paranthesis pair in string postfixExp and discard paranthesis.
             while (stk[-1] != '('):
                 postfixExp += stk[-1]
                 stk.pop()
-            stk.pop()
-        
+            stk.pop()        
         else:
-            while (stk[-1] != '(' and isLowerPrecedence(expression[i], stk[-1]) == False):
-                
+            while (stk[-1] != '(' and isLowerPrecedence(expression[i], stk[-1]) == False):                
                 # Pop operator with greater or equal precedence.
                 postfixExp += stk[-1]
                 stk.pop()
@@ -425,94 +435,29 @@ def evaluateArithmeticExpression(expression):
 
     # Evaluating equivalent postfix expression.
     for i in range(len(postfixExp)):
-        if (postfixExp[i] >= '0' and postfixExp[i] <= '9'):
-            
+        if (postfixExp[i] >= '0' and postfixExp[i] <= '9'):            
             # Append digit to operand.
-            operand += postfixExp[i]
-        
-        elif (postfixExp[i] == ' '):
-            
+            operand += postfixExp[i]        
+        elif (postfixExp[i] == ' '):            
             # Push operand in stack 'values'.
             values.append(int(operand))
-            operand = ""
-        
-        else:
-            
+            operand = ""        
+        else:            
             # Pop two operand and push their result after applying operator back to the stack 'values'.
             operand2 = values[-1]
             values.pop()
             operand1 = values[-1]
             values.pop()
             if (postfixExp[i] == '+'):
-                values.append(operand1 + operand2)
-            
+                values.append(operand1 + operand2)        
             if (postfixExp[i] == '-'):
-                values.append(operand1 - operand2)
-            
+                values.append(operand1 - operand2)            
             if (postfixExp[i] == '*'):
-                values.append(operand1 * operand2)
-            
+                values.append(operand1 * operand2)            
             if (postfixExp[i] == '/'):
                 values.append(int(operand1 / operand2))
-
     # Result of Expression
     return values[-1]
-def pre_to_post(s):
-    stack = []
-    operators = set(['+', '-', '*', '/', '^'])
-    # Reversing the order
-    s = s[::-1]
-    # iterating through individual tokens
-    for i in s:
-        # if token is operator
-        if i in operators: 
-            # pop 2 elements from stack
-            a = stack.pop()
-            b = stack.pop()
-            # concatenate them as operand1 +
-            # operand2 + operator
-            temp = a+b+i
-            stack.append(temp) 
-        # else if operand
-        else:
-            stack.append(i) 
-    # printing final output
-    print(*stack)
+# =============================================================================
+# =============================================================================
 
-#https://www.geeksforgeeks.org/postfix-to-infix/	
-# Python3 program to find infix for  a given postfix. 
-def isOperand(x):
-    return ((x >= 'a' and x <= 'z') or
-            (x >= 'A' and x <= 'Z')) 
- 
-# Get Infix for a given postfix  expression 
-def getInfix(exp) :
-    s = [] 
-    for i in exp:              
-        # Push operands 
-        if (isOperand(i)) :         
-            s.insert(0, i) 
-             
-        # We assume that input is a valid postfix and expect  an operator. 
-        else:         
-            op1 = s[0] 
-            s.pop(0) 
-            op2 = s[0] 
-            s.pop(0) 
-            s.insert(0, "(" + op2 + i +
-                             op1 + ")") 
-             
-    # There must be a single element in     # stack now which is the required     # infix. 
-    return s[0]
- 
-# Driver Code 
-if __name__ == '__main__': 
-    exp = "ab*c+"
-    print(getInfix(exp.strip()))
-# =============================================================================
-# =============================================================================
-# 140	Arithmetic expression evaluation	https://www.codingninjas.com/studio/problems/arithmetic-expression-evaluation_1170517	
-# =============================================================================
-# =============================================================================
-# 
-# =============================================================================
