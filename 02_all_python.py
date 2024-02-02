@@ -853,29 +853,46 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # Trapping rain water
+
 class Solution:
-    def rainTrap(height):
-        if not height: return 0
-        l, r = 0, len(height)-1 
-        leftMax, rightMax = height[l], height[r]
-        res =  0 
+    def trappingWater(self, arr,n):
+        if n <= 1:
+            return 0
+            
+        left_max = self.calculate_left_max(arr, n)
+        right_max = self.calculate_right_max(arr, n)
         
-        while l < r:
-            if leftMax < rightMax:
-               l += 1
-               leftMax = max(leftMax, height[l])
-               res +=  leftMax - height[l]
-            else:
-                r -= 1
-                rightMax = max(rightMax , height[r])
-                res +=  rightMax - height[r]
+        return self.calculate_trapped_water(arr, left_max, right_max, n)
+        
+    def calculate_left_max(self, arr, n):
+            left_max = [0] * n
+            left_max[0] = arr[0]
+            
+            for i in range(1, n):
+                left_max[i] = max(left_max[i-1], arr[i])
+            
+            return left_max
+            
+    def calculate_right_max(self, arr, n):
+            right_max = [0] * n
+            right_max[n-1] = arr[n-1]
+            
+            for i in range(n-2, -1, -1):
+                right_max[i] = max(right_max[i+1], arr[i])
+            
+            return right_max
+        
+    def calculate_trapped_water(self,arr,left_max,right_max,n):
+            res = 0
+            
+            for i in range(n):
+                res += min(left_max[i], right_max[i]) - arr[i]
             
             return res
-   
 # Driver Code
-height = [10,0, 9]
+arr = [10,0, 9]
 
-Solution.rainTrap(height)
+Solution.rainTrap(arr)
 
 # =============================================================================
 # =============================================================================
