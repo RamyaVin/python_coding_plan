@@ -2,18 +2,72 @@
 # =============================================================================
 # Binary Search Tree(Once the above patterns are covered, BST probs will become easy, but make sure to learn what BST is in general before starting with probs)	Understand what BST is?	
 # 141	Insert at bottom of stack	https://www.geeksforgeeks.org/problems/insert-an-element-at-the-bottom-of-a-stack/1?page=4&category=Stack&sortBy=submissions
+def insertAtBottom(self,St,X):
+    St.insert(0,X)
+    return St
+For Input: 
+3 4 N, X
+2 1 5
+Your Output: 
+4 2 1 5
 # =============================================================================
 # =============================================================================
 # 142	Reverse a stack	https://www.geeksforgeeks.org/problems/reverse-a-stack/1?page=2&category=Stack&sortBy=submissions
+def reverse(self,St): 
+        i=0
+        j=len(St)-1
+        while i<=j:
+            St[i],St[j]=St[j],St[i]
+            i+=1
+            j-=1
+        return St
 # =============================================================================
 # =============================================================================
 # 143	Sort stack(Solving above two can give you hint for this)	https://www.geeksforgeeks.org/problems/sort-a-stack/1?page=1&category=Stack&sortBy=submissions
+    # function sort the stack such that top element is max
+    # funciton should return nothing
+    # s is a stack
+    def Sorted(self, s):
+        def quicksort(arr,left,right):
+            if left<right:
+                partition_pos = partition(arr,left,right)
+                #print(partition_pos,arr)
+                quicksort(arr,left,partition_pos-1)
+                quicksort(arr,partition_pos+1,right)
+                
+        def partition(arr,left,right):
+            i=left
+            j= right-1
+            pivot = arr[right]
+            
+            while i<j:
+                while i<right and arr[i]<pivot:
+                    i+=1
+                while j>left and arr[j]>=pivot:
+                    j-=1
+                if i<j:
+                    arr[i],arr[j]= arr[j],arr[i]
+            if arr[i]> pivot:
+                arr[i],arr[right] = arr[right],arr[i]
+                    
+            return i
+        quicksort(s,0,len(s)-1)
 # =============================================================================
 # =============================================================================
 # Construct from given		
 # =============================================================================
 # =============================================================================
 # 144	Celebrity problem	https://www.geeksforgeeks.org/problems/the-celebrity-problem/1?page=1&category=Stack&sortBy=submissions
+def celebrity(self, M, n):
+        while left < right:
+            if M[left][right] == 1:
+                left += 1
+            else:
+                right -= 1
+        for i in range(n):
+            if i != left and (M[left][i] == 1 or M[i][left] == 0):
+                return -1 
+        return left 
 # =============================================================================
 # =============================================================================
 # 145	Restrictive candy crush	https://www.geeksforgeeks.org/problems/restrictive-candy-crush--141631/1?page=2&category=Stack&sortBy=submissions
