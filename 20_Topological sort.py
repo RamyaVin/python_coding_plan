@@ -18,6 +18,21 @@ def preorder(root):
     if not root:
         return []
     return [root.data] + preorder(root.left) + preorder(root.right)
+####reduce the memory usage by using an iterative approach instead of recursion.
+def preorder(root):
+    if not root:
+        return []
+    stack = [root]
+    result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.data)
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+    return result
+
 # =============================================================================
 # =============================================================================
 # 181	InOrder Traversal	https://www.geeksforgeeks.org/problems/inorder-traversal/1?page=2&category=Tree&sortBy=submissions
