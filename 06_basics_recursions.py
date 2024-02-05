@@ -1,16 +1,38 @@
 # =============================================================================
 # 37	Majority element	https://leetcode.com/problems/majority-element/
 
+### using counter ##O(n)
+
+        frequency_dict = Counter(nums)
+        return max(frequency_dict, key = frequency_dict.get)
+##################3
+#better code than below O(N)
+class Solution:
+    def majority(nums):
+        count = {}
+        max_count = 0
+        majority_element = None
+        
+        for num in nums:
+            if num not in count:
+                count[num] = 1
+            else:
+                count[num] += 1
+                
+            if count[num] > max_count:
+                max_count = count[num]
+                majority_element = num
+        
+        return majority_element
+	    
+############### O(N)**2
 class Solution:
     def majority(nums):
         return max(set(nums), key = nums.count)
 # Driver Code
 nums = [10,0, 1,2,1,1,10,10,10,1,1,1,3,7,8]
 Solution.majority(nums)
-### using counter
 
-        frequency_dict = Counter(nums)
-        return max(frequency_dict, key = frequency_dict.get)
 # =============================================================================
 # =============================================================================
 # 38	Kadane's algo(super imp)	https://practice.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/1
@@ -32,7 +54,12 @@ Solution.maxSubArraySum(arr,4)
 # =============================================================================
 # =============================================================================
 # 39	Count inversions	https://practice.geeksforgeeks.org/problems/inversion-of-array-1587115620/1
+"""
+The time complexity of the code is O(n log n), where n is the length of the input array arr. This is because the code uses the merge sort algorithm, which has a time complexity of O(n log n) for sorting the array and counting the inversions.
 
+
+The space complexity of the code is O(n), where n is the length of the input array. This is because the code uses additional space to store the merged subarrays during the merge process. In the worst case, when each element is a separate subarray, the space required is proportional to the length of the array
+"""
 class Solution:
     #User function Template for python3
     
@@ -88,13 +115,50 @@ class Solution:
                 
         ans = merge_sort(arr, 0, len(arr) - 1)
         return ans
-        
-
- 
-
 arr = [2, 4, 1, 3, 5]
-
 Solution.inversionCount(arr,5)
+
+###########same 
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr, 0
+    
+    mid = len(arr) // 2
+    left, inv_left = merge_sort(arr[:mid])
+    right, inv_right = merge_sort(arr[mid:])
+    
+    merged, inv_merge = merge(left, right)
+    
+    return merged, inv_left + inv_right + inv_merge
+
+def merge(left, right):
+    merged = []
+    inversions = 0
+    i, j = 0, 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+            inversions += len(left) - i
+    
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+    
+    return merged, inversions
+
+def getNumOfInversions(A):
+    _, inversions = merge_sort(A)    #_ as a variable name, it is a convention to indicate that the value is not being used or referenced 					further in the code. In this case, it is used to discard the sorted list and only capture the 						count of inversions in the given list A.
+    return inversions
+
+# Driver Code
+A = [4, 3, 2, 1]
+num_of_inversions = getNumOfInversions(A)
+print("Number of inversions:", num_of_inversions)
+
 ###
 
 from heapq import heappush, heappop
@@ -148,9 +212,64 @@ class Solution:
         return merged
 
 Solution.mergeIntervals([[1,3],[8,10],[15,18],[3,6]])
+##############3merge intervals using stack 
+class Solution:
+    def mergeIntervals(intervals):
+        intervals = sorted(intervals, key=lambda x: x[0])
+        merged = []
+        
+        for interval in intervals:
+            if not merged or merged[-1][1] < interval[0]:
+                merged.append(interval)
+            else:
+                merged[-1][1] = max(merged[-1][1], interval[1])
+        
+        return merged
+
+# Driver Code
+intervals = [[1, 3], [8, 10], [15, 18], [3, 6]]
+merged_intervals = Solution.mergeIntervals(intervals)
+print("Merged intervals:", merged_intervals)
+"""
+Time complexity:
+Original code: The time complexity of the original code is O(n log n), where n is the number of intervals. This is because the code uses the sorted() function to sort the intervals based on their start times, which has a time complexity of O(n log n). The subsequent loop to merge the intervals has a linear time complexity of O(n).
+Optimized code: The time complexity of the optimized code is O(n log n), where n is the number of intervals. This is because the code also uses the sorted() function to sort the intervals based on their start times, resulting in a time complexity of O(n log n). The subsequent loop to merge the intervals has a linear time complexity of O(n).
+Space complexity:
+Original code: The space complexity of the original code is O(n), where n is the number of intervals. This is because the code creates a new list merged to store the merged intervals, which can potentially contain all the intervals from the input list.
+Optimized code: The space complexity of the optimized code is O(n), where n is the number of intervals. This is because the code creates a new list merged to store the merged intervals, which will contain at most the same number of intervals as the input list.
+"""
 # =============================================================================
 # =============================================================================
 # 41	Maximum product subarray	https://practice.geeksforgeeks.org/problems/maximum-product-subarray3604/1
+
+"""dynamic programming approach: Instead of calculating the product of all possible subarrays, you can use a dynamic programming approach to keep track of the maximum product at each index."""
+class Solution:
+    def maxProduct(arr, n):
+        if n == 0:
+            return 0
+        
+        max_product = arr[0]
+        min_product = arr[0]
+        result = arr[0]
+        
+        for i in range(1, n):
+            if arr[i] < 0:
+                max_product, min_product = min_product, max_product
+            
+            max_product = max(arr[i], max_product * arr[i])
+            min_product = min(arr[i], min_product * arr[i])
+            
+            result = max(result, max_product)
+        
+        return result
+
+# Driver Code
+arr = [6, -3, -10, 0, 2]
+n = len(arr)
+max_product = Solution.maxProduct(arr, n)
+print("Maximum product:", max_product)
+
+###############
 class Solution:
     def maxProduct(arr, n):
         lis=[]
@@ -175,7 +294,6 @@ class Solution:
            # find the index of the last peak
            if nums[i - 1] < nums[i]:
                nums[i:] = sorted(nums[i:])
-               
                # get the index before the last peak
                j = i - 1
                # swap the pre-last peak index with the value just large than it
@@ -187,10 +305,45 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 43	Seive of eranthoses(Popular algo for prime numbers)	https://www.geeksforgeeks.org/problems/sieve-of-eratosthenes5242/1
+"""Use a boolean array instead of an integer array: Instead of using an integer array l to store whether each number is prime or not, you can use a boolean array. This optimization reduces the memory usage and simplifies the code.
+Time complexity:
+
+The initialization of the is_prime list takes O(N) time.
+The loop to set multiples of 2 as non-prime takes O(N/2) = O(N) time.
+The outer loop of the Sieve of Eratosthenes runs up to sqrt(N) and the inner loop runs N/i times for each prime number i. So, the total time complexity for the Sieve of Eratosthenes part is O(sqrt(N) + N/3 + N/5 + ...), which is approximately O(N log log N).
+The loop to collect prime numbers takes O(N) time.
+Therefore, the overall time complexity of the code is O(N log log N).
+Space complexity:
+The is_prime list requires O(N) space.
+The primes list requires O(N) space in the worst case when all numbers are prime.
+Therefore, the overall space complexity of the code is O(N).
+"""
 class Solution:
     def sieveOfEratosthenes(N):
-        #code here
-    
+        def generate_primes():
+            is_prime = [True] * (N + 1)  # Initialize boolean array
+            # Set multiples of 2 as non-prime
+            for i in range(4, N + 1, 2):
+                is_prime[i] = False
+            # Sieve of Eratosthenes
+            for i in range(3, int(N**0.5) + 1, 2):
+                if is_prime[i]:
+                    for j in range(i*i, N + 1, i):
+                        is_prime[j] = False   
+            primes = []
+            # Collect prime numbers
+            for k in range(2, N + 1):
+                if is_prime[k]:
+                    primes.append(k)
+            return primes
+        return generate_primes()
+
+# Driver Code
+primes = Solution.sieveOfEratosthenes(10)
+print("Prime numbers:", primes)
+#########################################
+class Solution:
+    def sieveOfEratosthenes(N):
         def prime(k):
             l=[1 for i in range(N+1)] #setting everything as true
             for i in range(2,int(N**0.5)+1):
@@ -204,8 +357,6 @@ class Solution:
             if primes[k]==1: #check if true then append that number
                 m.append(k)
         return m
-      
-        
 Solution.sieveOfEratosthenes(10)
 # =============================================================================
 # =============================================================================
