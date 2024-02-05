@@ -3,18 +3,13 @@
 # =============================================================================
 # =============================================================================
 # 19_Shortest Path Find shortest path in UG(Once you learn this, try to solve other probs in this pattern by yourself)	https://www.codingninjas.com/studio/problems/shortest-path-in-an-unweighted-graph_981297
-"""
-	Time Complexity : O(N + M)
+"""	Time Complexity : O(N + M)
 	Space Complexity : O( N + M ),
-
-	where N is the number of nodes and M is number of edges.
-"""
+	where N is the number of nodes and M is number of edges."""
 from queue import Queue
-
 def shortestPath(edges, n, m, s, t):
     # We will store graph in an adjecency list.
     ADJ = [[] for _ in range(n + 1)]
-
     # Making adjacency list ADJ from edges.
     for i in range(m):
         X = edges[i][0]
@@ -75,7 +70,7 @@ def shortestPath(edges, n, m, s, t):
 # =============================================================================
 # =============================================================================
 # 164	Subarray with given sum	https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&category=sliding-window&sortBy=submissions
-#Function to find a continuous sub-array which adds up to a given number.
+#Function to find a continuous sub-array which adds up to a given number. O(N),O(1)
 class Solution:
     def subArraySum(self,arr, n, s): 
         if((s == 0) and s in arr):  
@@ -95,7 +90,8 @@ class Solution:
         return [-1]
 # =============================================================================
 # =============================================================================
-# 165	Longest subarray with given sum k(Same as above with slight modification)	https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?page=1&category=sliding-window&sortBy=submissions
+# 165	Longest subarray with given sum k(Same as above with slight modification)	https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?page=1&category=sliding-window&sortBy=submissions 
+#O(N),O(N)
 class Solution:
     def lenOfLongSubarr (self, arr, nums, k) : 
         #Complete the function
@@ -118,7 +114,7 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 166	Subarray with 0 sum	https://www.geeksforgeeks.org/problems/subarray-with-0-sum-1587115621/1?page=1&category=sliding-window&sortBy=submissions
-  #Function to check whether there is a subarray present with 0-sum or not.
+  #Function to check whether there is a subarray present with 0-sum or not. O(N),O(N)
     def subArrayExists(self,arr,n):
         set_sum=set()
         curr_sum=0
@@ -126,12 +122,11 @@ class Solution:
             curr_sum+=arr[i]
             if curr_sum == 0 or curr_sum in set_sum:
                 return 1
-            set_sum.add(curr_sum)
-                
+            set_sum.add(curr_sum) 
         return 0
 # =============================================================================
 # =============================================================================
-# 167	Smallest window of distinct elements	https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?page=1&category=sliding-window&sortBy=submissions
+# 167	Smallest window of distinct elements	https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?page=1&category=sliding-window&sortBy=submissions O(N),O(1)
 def findSubString(self, s):
         i=0
         j=0
@@ -162,6 +157,8 @@ def findSubString(self, s):
 # =============================================================================
 # =============================================================================
 # 168	Smallest window containing 0,1,2	https://www.geeksforgeeks.org/problems/smallest-window-containing-0-1-and-2--170637/1?page=2&category=sliding-window&sortBy=submissions
+#The time complexity of the smallestSubstring method is O(n^2), where n is the length of the input string S. This is because the code iterates through the string using two pointers, i and j, which move towards the right. The code checks if each substring between the two pointers contains the characters "0", "1", and "2". The check is performed using the in operator, which has a time complexity of O(m), where m is the length of the substring. As the pointers move, the code generates all possible substrings, resulting in a nested loop and a quadratic time complexity.
+#The space complexity of the code is O(1), 
     def smallestSubstring(self, S):
         i=0
         j=3
@@ -178,6 +175,8 @@ def findSubString(self, s):
 # =============================================================================
 # =============================================================================
 # 169	Smallest window in string containing all chars of another string	https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?page=1&category=sliding-window&sortBy=submissions
+#The time complexity of the smallestSubstring method is O(n), where n is the length of the input string s. This is because the code iterates through the string using two pointers, i and j, which move towards the right. The code uses a dictionary d to keep track of the count of each distinct character in the current window. The while loop inside the if condition and the while loop at the end both move the pointers i and j and update the dictionary d. Each character in the string is visited at most twice, once by each pointer.
+#The space complexity of the code is O(1)
     def smallestSubstring(self, s):
         # Code here
         d = {}
@@ -196,6 +195,8 @@ def findSubString(self, s):
 # =============================================================================
 # =============================================================================
 # 170	Length of longest substring	https://www.geeksforgeeks.org/problems/length-of-the-longest-substring3036/1?page=1&category=sliding-window&sortBy=submissions
+#The time complexity of the longestUniqueSubsttr method is O(n), where n is the length of the input string s. This is because the code iterates through the string using two pointers, l and r, which move towards the right. The code uses a set charSet to keep track of the unique characters in the current window. The while loop inside the main for loop checks if the current character is already present in the set, and if so, it removes the leftmost character from the set until the current character is no longer present. This ensures that the window only contains unique characters. The set operations, such as adding and removing elements, take constant time on average. Each character in the string is visited at most twice, once by each pointer.
+#The space complexity of the code is O(k), where k is the number of unique characters in the input string s. This is because the code uses a set charSet to store the unique characters. The size of the set 
 class Solution:
     def longestUniqueSubsttr(self, s):
         l = 0 
@@ -214,6 +215,8 @@ class Solution:
 # =============================================================================
 # 171	Largest subarray of 0s and 1s	https://www.geeksforgeeks.org/problems/largest-subarray-of-0s-and-1s/1?page=1&category=sliding-window&sortBy=submissions
 #maximum length of subarray having equal number of 0's and 1's is 4.
+#The time complexity of the maxLen method is O(n), where n is the length of the input array arr. This is because the code iterates through the array once, calculating the cumulative sum at each index. For each cumulative sum, it checks if the sum exists in the dictionary dic and updates the length of the longest subarray if necessary. The dictionary operations, such as checking for existence and adding elements, take constant time on average.
+#The space complexity of the code is O(n), where n is the length of the input array arr. 
     def maxLen(self,arr, N):
         dic = {0:-1}
     
@@ -232,6 +235,8 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 172	Count of anagram occurence(Super imp)	https://www.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1?page=1&category=sliding-window&sortBy=submissions
+#The time complexity of the search method is O(n + m), where n is the length of the pattern pat and m is the length of the text txt. This is because the code iterates through the text once, performing constant-time operations for each character. The Counter class is used to count the occurrences of each character in the pattern, which takes O(n) time. The code then compares the data dictionary, which contains the character counts of the current window in the text, with the c dictionary, which contains the character counts of the pattern. This comparison takes constant time. The code also updates the data dictionary when moving the window, which again takes constant time. Overall, the time complexity is linear with respect to the length of the text.
+#The space complexity of the code is O(n), where n is the length of the pattern pat.
 from collections import Counter
 class Solution:
     def search(self,pat, txt):
@@ -263,7 +268,8 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 174	Fruit into basket	https://leetcode.com/problems/fruit-into-baskets
-
+#The time complexity of the totalFruit method is O(n), where n is the length of the input list fruits. This is because the code iterates through the list using a single pointer. The code keeps track of the two types of fruits in variables fruit1 and fruit2, and their corresponding counts in variables count1 and count2. The code also keeps track of the length of the latest streak of the same fruit in the variable latest_streak. The for loop iterates through each element in the list, and the code updates the variables accordingly. Each element in the list is visited exactly once.
+#The space complexity of the code is O(1), as it uses a constant amount of extra space to store the variables res, fruit1, fruit2, count1, count2, and latest_streak.
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         res = 0
@@ -289,6 +295,8 @@ class Solution:
         res = max(res, count1 + count2)
         return res
 #############
+#The time complexity of the totalFruit method is O(n), where n is the length of the input list fruits. This is because the code iterates through the list once, using a single pointer i. The code keeps track of the two types of fruits in variables f1 and f2, and their corresponding start and end pointers in variables s1, e1, s2, and e2. The code also updates the maximum count of fruits in the variable m. The for loop iterates through each element in the list, and the code updates the variables accordingly. Each element in the list is visited exactly once.
+#The space complexity of the code is O(1), as it uses a constant amount of extra space to store the variables m, f1, f2, s1, e1, s2, and e2.
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         m, l = 0, len(fruits)
@@ -323,32 +331,26 @@ class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
         ans = 0
         helper = [-1] + [i for i, el in enumerate(nums) if el % 2] + [len(nums)]
-
-        for i in range(1, len(helper) - k):
+	n = len(helper)
+        for i in range(1, n - k):
             ans += (helper[i] - helper[i - 1]) * (helper[i + k] - helper[i + k - 1])
 
         return ans
 #############
+from typing import List
 class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
-        total_count = 0
-        current_count = 0
-        L,R = 0,0
         n = len(nums)
         res = 0
+        odd_count = 0
+        odd_indices = [-1] + [i for i, num in enumerate(nums) if num % 2 == 1] + [n]
+        m = len(odd_indices)
 
-        for R in range(n):
-            if nums[R] % 2 != 0:
-                current_count += 1
-                total_count = 0
-            if current_count == k:
-                while L < n and nums[L] % 2 == 0:
-                    total_count += 1
-                    L += 1
-                total_count += 1
-                current_count -= 1
-                L += 1
-            res += total_count    
+        for i in range(k, m - 1):
+            left = odd_indices[i - k]
+            right = odd_indices[i + 1]
+            res += (left - odd_indices[i - k - 1]) * (right - odd_indices[i])
+
         return res
 # =============================================================================
 # =============================================================================
@@ -358,20 +360,45 @@ class Solution:
 #Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 #The substring "BBBB" has the longest repeating letters, which is 4.
 #There may exists other ways to achieve this answer too.
+from collections import defaultdict
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         counter = defaultdict(int)
         maxCount = 0
-        l = 0
-        for r, ch in enumerate(s):
+        maxLength = 0
+        start = 0
+
+        for end, ch in enumerate(s):
             counter[ch] += 1
-            if counter[ch] > maxCount:
-                maxCount = counter[ch]
-            elif maxCount + k < r - l + 1:
-                counter[s[l]] -= 1
+            maxCount = max(maxCount, counter[ch])
+
+            if end - start + 1 - maxCount > k:
+                counter[s[start]] -= 1
+                start += 1
+
+            maxLength = max(maxLength, end - start + 1)
+
+        return maxLength
+###################################  remove visited dictionary and instead use a simpler array to store the count of characters.
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        count = [0] * 26
+        res = 0
+        l = 0
+        freq = 0
+
+        for r in range(len(s)):
+            count[ord(s[r]) - ord('A')] += 1
+            freq = max(freq, count[ord(s[r]) - ord('A')])
+
+            while (r - l + 1) - freq > k:
+                count[ord(s[l]) - ord('A')] -= 1
                 l += 1
-        return min(maxCount + k, len(s))
-###################################
+
+            res = max(res, r - l + 1)
+
+        return res
+####################
 class Solution:
 	def characterReplacement(self, s: str, k: int) -> int:
 		visited = {}
@@ -393,6 +420,7 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 177	Minimum window substring	https://leetcode.com/problems/minimum-window-substring/description/
+##### optimised version as per leetcode
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         if len(s) < len(t):
@@ -420,15 +448,40 @@ class Solution:
                 needcnt += 1
                 start += 1
         return '' if res[1] > len(s) else s[res[0]:res[1]+1]
+
+#### optimised version as per flowgpt
+import collections
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(s) < len(t):
+            return ""
+        needstr = collections.Counter(t)
+        needcnt = len(t)
+        res = (0, float('inf'))
+        left = 0
+
+        for right, ch in enumerate(s):
+            if needstr[ch] > 0:
+                needcnt -= 1
+            needstr[ch] -= 1
+
+            while needcnt == 0:
+                if right - left < res[1] - res[0]:
+                    res = (left, right)
+                needstr[s[left]] += 1
+                if needstr[s[left]] > 0:
+                    needcnt += 1
+                left += 1
+
+        return '' if res[1] > len(s) else s[res[0]:res[1]+1]
 # =============================================================================
 # =============================================================================
 # 178	Minimum window subsequence(Understand the diff between subarray and subsequence before starting this prob)	https://leetcode.com/problems/minimum-window-subsequence/
- 
 # Input: 
 # str1: geeksforgeeks
 # str2: eksrg
 # eksforg
-
 class Solution:
     def minWindow(self, str1, str2):
         window = ""
@@ -439,23 +492,45 @@ class Solution:
         while i < len(str1):
             if str1[i] == str2[j]:
                 j += 1
-            if j == len(str2):
-                j -= 1
-                end = i + 1
-                while j >= 0:
-                    if(str1[i] == str2[j]):
-                        j -= 1
-                    i -= 1
-                    if(j < 0):
-                        i += 1
-                        current_window = str1[i:end]
-                        if len(current_window) < min_window_length:
-                            window = current_window
-                            min_window_length = len(window)
-                j +=1
+                if j == len(str2):
+                    end = i + 1
+                    while j > 0:
+                        if str1[i] == str2[j-1]:
+                            j -= 1
+                        i -= 1
+                    i += 1
+                    current_window = str1[i:end]
+                    if len(current_window) < min_window_length:
+                        window = current_window
+                        min_window_length = len(window)
             i += 1
 
         return window
+###############
+class Solution:
+    def minWindow(self, str1, str2):
+        window = ""
+        i = 0
+        j = 0
+        min_window_length = len(str1) + 1
+
+        while i < len(str1):
+            if str1[i] == str2[j]:
+                j += 1
+                if j == len(str2):
+                    end = i + 1
+                    while j > 0:
+                        if str1[i] == str2[j-1]:
+                            j -= 1
+                        i -= 1
+                    i += 1
+                    current_window = str1[i:end]
+                    if len(current_window) < min_window_length:
+                        window = current_window
+                        min_window_length = len(window)
+            i += 1
+
+        return window	    
 # =============================================================================
 # =============================================================================
 # 179	Subarray with k diff integers	https://leetcode.com/problems/subarrays-with-k-different-integers/
@@ -475,5 +550,23 @@ class Solution:
                     yield high - low + 1
 
         return sum(f())     
+
+#############################3
+class Solution:
+    def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
+        def f(counts=[0] * (len(nums) + 1), low=0, high=0, k=k):
+            for num in nums:
+                if not counts[num]:
+                    if (k := k - 1) < 0:
+                        counts[nums[high]] = 0
+                        low = high = high + 1
+                counts[num] += 1
+                if k <= 0:
+                    while counts[(a := nums[high])] > 1:
+                        counts[a] -= 1
+                        high += 1
+                    yield high - low + 1
+
+        return sum(f())  
 # =============================================================================
 # =============================================================================
