@@ -130,10 +130,9 @@ def findMax(arr, low, high):
 
 	# Find mid
 	mid = low + (high - low) // 2
-	# Check if mid reaches 0 ,it is greater than next element or not
-	if(mid==0 and arr[mid]>arr[mid+1]):
-		return arr[mid]
-
+	# Check if mid reaches 0 ,it is greater than next element or not (removed in flowgpt optimisation - remove below step he code is missing a return statement for the case when none of the conditions are met. )
+	#if(mid==0 and arr[mid]>arr[mid+1]):
+	#	return arr[mid]
 	# Check if mid itself is maximum element
 	if (mid < high and arr[mid + 1] < arr[mid] and mid>0 and arr[mid]>arr[mid-1]):
 		return arr[mid]
