@@ -20,6 +20,21 @@ class Solution:
                 return 0
             return max(solve(root.left) , solve(root.right)) + 1
         return solve(root)
+
+#### using memoization to avoid redundant calculations.
+class Solution:
+    def height(self, root):
+        memo = {}
+        
+        def solve(root):
+            if not root:
+                return 0
+            if root in memo:
+                return memo[root]
+            memo[root] = max(solve(root.left) , solve(root.right)) + 1
+            return memo[root]
+        
+        return solve(root)
 # =============================================================================
 # =============================================================================
 # 193	Diameter of the tree	https://www.geeksforgeeks.org/problems/diameter-of-binary-tree/1?page=1&category=Tree&sortBy=submissions
@@ -32,19 +47,30 @@ Input:
    40   60
 Output: 4
 class Solution:
-    def diameter(self,root):
-        def findht(root):
-            nonlocal maxi
+    def diameter(self, root):
+        def findht(root, memo):
             if root is None:
                 return 0
-            lh = findht(root.left)
-            rh = findht(root.right)
-            maxi = max(maxi, lh + rh+1)
-            return 1 + max(lh, rh)
+            if root in memo:
+                return memo[root]
+            lh = findht(root.left, memo)
+            rh = findht(root.right, memo)
+            memo[root] = 1 + max(lh, rh)
+            return memo[root]
         
-        maxi = float("-inf")
-        findht(root)
-        return maxi
+        def finddiameter(root, memo):
+            if root is None:
+                return 0
+            lh = findht(root.left, memo)
+            rh = findht(root.right, memo)
+            diameter = lh + rh
+            left_diameter = finddiameter(root.left, memo)
+            right_diameter = finddiameter(root.right, memo)
+            return max(diameter, left_diameter, right_diameter)
+        
+        memo = {}
+        findht(root, memo)
+        return finddiameter(root, memo)
 # =============================================================================
 # =============================================================================
 # 194	Check if 2 trees are identical	https://www.geeksforgeeks.org/problems/determine-if-two-trees-are-identical/1?page=1&category=Tree&sortBy=submissions
