@@ -1,7 +1,20 @@
 # =============================================================================
 # Basics	Bubble sort(very basic sorting technique)	https://www.geeksforgeeks.org/problems/bubble-sort/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
 #User function Template for python3
-
+"""Add an early termination condition: Bubble sort continues iterating until the end of the array, even if the array is already sorted. By adding a flag to track whether any swaps were made during each pass, you can terminate the sorting process early if no swaps were made, indicating that the array is already sorted.
+Reduce the number of iterations in the inner loop: Since the largest element is guaranteed to "bubble" to the end of the array after each pass, you can reduce the number of iterations in the inner loop by i. This avoids unnecessary comparisons for the already sorted elements at the end of the array."""
+class Solution:
+    def bubbleSort(self, arr, n):
+        n = len(arr)
+        for i in range(n):
+            swapped = False  # Flag to track if any swaps were made
+            for j in range(0, n - i - 1):
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                    swapped = True
+            if not swapped:  # If no swaps were made, the array is already sorted
+                break
+##############
 class Solution:
     #Function to sort the array using bubble sort algorithm.
     def bubbleSort(self,arr, n):
@@ -15,17 +28,13 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # Basic patterns	Completely understand how Node in linkedList is represented and then go ahead with the patterns	
-
-
 # =============================================================================
 # =============================================================================
 # 58	Search in a sorted array(Efficiently -> So learn binary search for this)	https://www.geeksforgeeks.org/problems/who-will-win-1587115621/1?page=1&category=Binary%20Search&sortBy=submissions
-#User function Template for python3
-
+#binary search algorithm. It efficiently narrows down the search space by halving it at each step, resulting in a time complexity of O(log N), where N is the size of the array.
+#The space complexity of the code is O(1) since it does not utilize any additional data structures that grow with the input size.
 class Solution:
-    ##Complete this function
     def searchInSorted(self,arr, N, K):
-        #Your code here
         l=0
         h=N-1
         while(l<=h):
@@ -37,7 +46,6 @@ class Solution:
             elif arr[mid]<K:
                 l=mid+1
         return -1
-        
 # =============================================================================
 # =============================================================================
 # 59	Find floor and ceil in sorted array	https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1
@@ -70,8 +78,6 @@ findFloor(A, N, K)
 # =============================================================================
 # 60	Find first and last occurence of element in sorted array	https://www.geeksforgeeks.org/problems/first-and-last-occurrences-of-x3116/1?page=1&category=Binary%20Search&sortBy=submissions
 #User function Template for python3
-
-
 class Solution:
     def f1(self,arr,l,h,x):
         ans=-1
@@ -131,15 +137,12 @@ def missingNumber(self, nums):
 # 62	Find square root	https://www.geeksforgeeks.org/problems/square-root/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
 def p(x):
     return pow(x,0.5
-
 p(4)
 # =============================================================================
 # =============================================================================
 # 63	Search for element in infinite array	https://www.codingninjas.com/studio/problems/search-in-infinite-sorted-0-1-array_696193
 def firstOne(get):
-    # Write your code here.
     # This function returns the first index of the occurence of 1
-    pass
     low = 0
     high = int(1e18) #10**18+1
     while low <= high:
