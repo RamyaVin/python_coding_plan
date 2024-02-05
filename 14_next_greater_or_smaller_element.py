@@ -95,9 +95,9 @@ def intersetPoint(head1,head2):
         l =  linkedList()
         v = sorted(u)
         for i in v:
-            l.insert(i
+            l.insert(i)
     ###
-this code is timed out in Geek4geeks, but code is working need to find optimal solution
+#this code is timed out in Geek4geeks, but code is working need to find optimal solution
     def merge(ll1,ll2):
 	if ll1 is None:
 		return ll2
