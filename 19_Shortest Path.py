@@ -66,50 +66,81 @@ def shortestPath(edges, n, m, s, t):
     # We got path in from T to S , so we will reverse it and return it.
     path.reverse()
     return path
+####################
+from collections import deque
+def shortestPath(edges, n, m, s, t):
+    # We will store the graph in an adjacency list.
+    adj = [[] for _ in range(n + 1)]
+    
+    # Making adjacency list from edges.
+    for i in range(m):
+        x = edges[i][0]
+        y = edges[i][1]
+        adj[x].append(y)
+        adj[y].append(x)
+    
+    visited = [False] * (n + 1)
+    distance = [float('inf')] * (n + 1)
+    
+    queue = deque()
+    queue.append(s)
+    visited[s] = True
+    distance[s] = 0
+    
+    while queue:
+        node = queue.popleft()
 
+        for neighbor in adj[node]:
+            if not visited[neighbor]:
+                queue.append(neighbor)
+                visited[neighbor] = True
+                distance[neighbor] = distance[node] + 1
+                if neighbor == t:
+                    return distance[t]
+    
+    return -1
 # =============================================================================
 # =============================================================================
 # 164	Subarray with given sum	https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&category=sliding-window&sortBy=submissions
 #Function to find a continuous sub-array which adds up to a given number. O(N),O(1)
 class Solution:
-    def subArraySum(self,arr, n, s): 
-        if((s == 0) and s in arr):  
-            return [arr.index(0)+1,arr.index(0)+1]
+    def subArraySum(self, arr, n, s):
+        if s == 0 and 0 in arr:
+            idx = arr.index(0) + 1
+            return [idx, idx]
 
-        if(sum(arr) == s):
-            return [1,n]
-        start=0
-        sum_c=0
-        for i in range(0,n):
-            sum_c=sum_c+arr[i]
-            while(sum_c>s and i>start):
-               sum_c=sum_c-arr[start]
-               start=start+1
-            if(sum_c==s):
-                return (start+1,i+1)
+        cumulative_sum = {0: 0}
+        current_sum = 0
+
+        for i in range(n):
+            current_sum += arr[i]
+            if current_sum - s in cumulative_sum:
+                start = cumulative_sum[current_sum - s] + 1
+                end = i + 1
+                return [start, end]
+            cumulative_sum[current_sum] = i + 1
+
         return [-1]
 # =============================================================================
 # =============================================================================
 # 165	Longest subarray with given sum k(Same as above with slight modification)	https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?page=1&category=sliding-window&sortBy=submissions 
 #O(N),O(N)
 class Solution:
-    def lenOfLongSubarr (self, arr, nums, k) : 
-        #Complete the function
-        currsum = 0
-        ans = 0
+    def lenOfLongSubarr(self, arr, n, k):
+        curr_sum = 0
+        ans = -1
         prefix = {}
         prefix[0] = 0
-        
+
         for i in range(n):
-            currsum += arr[i]
-            diff = currsum - k
+            curr_sum += arr[i]
+            diff = curr_sum - k
             if diff in prefix:
                 size = prefix[diff]
-                ans = max(ans,i+1-size)
-            if currsum in prefix:
-                continue
-            else:
-                prefix[currsum] = i + 1
+                ans = max(ans, i + 1 - size)
+            if curr_sum not in prefix:
+                prefix[curr_sum] = i + 1
+
         return ans
 # =============================================================================
 # =============================================================================
@@ -127,51 +158,59 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 167	Smallest window of distinct elements	https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?page=1&category=sliding-window&sortBy=submissions O(N),O(1)
-def findSubString(self, s):
-        i=0
-        j=0
-        min1=1000000
-        dict1={}
-        for k in range(len(s)):
-            if s[k] not in dict1:
-                dict1[s[k]]=1
-        count = len(dict1)
-        # print(dict1)
+from collections import Counter
+
+class Solution:
+    def findSubString(self, s):
+        i = 0
+        j = 0
+        min_len = float('inf')
+        char_count = Counter(s)
+        distinct_chars = len(char_count)
+        
         while j < len(s):
-            if s[j] in dict1:
-                dict1[s[j]]-=1
-                if dict1[s[j]]==0:
-                    count-=1
-            if count==0:
-                while s[i] not in dict1 or dict1[s[i]]<0 :
-                    if s[i] in dict1:
-                        dict1[s[i]]+=1
-                    i+=1
-                # print(f"i -> {i} and j -> {j}")
-                min1=min(min1,j-i+1)
-                dict1[s[i]]+=1
-                count+=1
-                i+=1
-            j+=1
-        return min1
+            if s[j] in char_count:
+                char_count[s[j]] -= 1
+                if char_count[s[j]] == 0:
+                    distinct_chars -= 1
+            
+            if distinct_chars == 0:
+                while s[i] not in char_count or char_count[s[i]] < 0:
+                    if s[i] in char_count:
+                        char_count[s[i]] += 1
+                    i += 1
+                
+                min_len = min(min_len, j - i + 1)
+                char_count[s[i]] += 1
+                distinct_chars += 1
+                i += 1
+            
+            j += 1
+        
+        return min_len
 # =============================================================================
 # =============================================================================
 # 168	Smallest window containing 0,1,2	https://www.geeksforgeeks.org/problems/smallest-window-containing-0-1-and-2--170637/1?page=2&category=sliding-window&sortBy=submissions
 #The time complexity of the smallestSubstring method is O(n^2), where n is the length of the input string S. This is because the code iterates through the string using two pointers, i and j, which move towards the right. The code checks if each substring between the two pointers contains the characters "0", "1", and "2". The check is performed using the in operator, which has a time complexity of O(m), where m is the length of the substring. As the pointers move, the code generates all possible substrings, resulting in a nested loop and a quadratic time complexity.
 #The space complexity of the code is O(1), 
+   class Solution:
     def smallestSubstring(self, S):
-        i=0
-        j=3
-        res=-1
-        # main loop with index updates
-        while j<=len(S):
-            st=S[i:j]
-            if ("0" in st) and ("1" in st) and ("2" in st):
-                if res==-1: res=len(st)
-                else: res=min(res,len(st))
-                i+=1
-            else: j+=1
-        return res
+        i = 0
+        j = 0
+        res = float('inf')
+        found = set()
+        
+        while j < len(S):
+            found.add(S[j])
+            
+            while len(found) == 3:
+                res = min(res, j - i + 1)
+                found.remove(S[i])
+                i += 1
+            
+            j += 1
+        
+        return res if res != float('inf') else -1
 # =============================================================================
 # =============================================================================
 # 169	Smallest window in string containing all chars of another string	https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?page=1&category=sliding-window&sortBy=submissions
