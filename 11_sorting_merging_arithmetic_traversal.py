@@ -54,15 +54,16 @@ def descendingBinarySearch(arr, low, high, key):
 
 # Find bitonic point
 def findBitonicPoint(arr, n, l, r):
-	bitonicPoint = 0
-	mid = (r + l) // 2
-	if arr[mid] > arr[mid-1] and arr[mid] > arr[mid+1]:
-		return mid
-	elif arr[mid] > arr[mid-1] and arr[mid] < arr[mid+1]:
-		bitonicPoint = findBitonicPoint(arr, n, mid, r)
-	else:
-		bitonicPoint = finsBitonicPoint(arr, n, l, mid)
-	return bitonicPoint
+    mid = (r + l) // 2
+    if arr[mid] > arr[mid-1] and arr[mid] > arr[mid+1]:
+        return mid
+    elif arr[mid] > arr[mid-1] and arr[mid] < arr[mid+1]:
+        return findBitonicPoint(arr, n, mid, r)
+    else:
+        return findBitonicPoint(arr, n, l, mid)
+
+# Usage:
+bitonicPoint = findBitonicPoint(arr, n, 0, n-1)
 
 # Function to search key in bitonic array
 def searchBitonic(arr, n, key, index):
@@ -101,29 +102,44 @@ main()
 # 70	Find row with maximum number of 1's	https://www.geeksforgeeks.org/problems/binary-matrix-having-maximum-number-of-1s--170647/1?page=2&category=Binary%20Search&sortBy=submissions
 #User function Template for python3
    def findMaxRow(self, mat, N):
-            # Code here
-        max=0
-        row=0
-        for i in range(N):
-            if max<sum(mat[i]):
-               max=sum(mat[i])
-               row=i
-        if row==0 and max==0:
-            row=0
-            max=0
-            
-            return row,max
-        else:
-            return row,max
+    max_sum = 0
+    max_row = 0
+    for i in range(N):
+        row_sum = sum(mat[i])
+        if row_sum > max_sum:
+            max_sum = row_sum
+            max_row = i
+    return max_row, max_sum
 # =============================================================================
 # =============================================================================
 # 71	Search in row wise column wise sorted matrix	https://www.geeksforgeeks.org/problems/search-in-a-matrix-1587115621/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
+"""
+However, there are a few issues with the code:
+The variable n is used as both the loop variable and the parameter for the number of rows. This can lead to confusion and incorrect results. It is recommended to use a different variable name for the loop variable to avoid conflicts.
+The code uses nested loops to iterate over each element of the matrix and check if it matches the target value x. This approach has a time complexity of O(n * m), where n is the number of rows and m is the number of columns. For large matrices, this can be inefficient.
+The code returns 1 if the target value is found in the matrix and 0 otherwise. It is better to return a boolean True or False to indicate the presence or absence of the target value. both  have a space complexity of O(1)
+""" 
+######better ##########time complexity of O(n + m) compared
+def search(self, matrix, n, m, x):
+    row = 0
+    col = m - 1
+
+    while row < n and col >= 0:
+        if matrix[row][col] == x:
+            return True
+        elif matrix[row][col] > x:
+            col -= 1
+        else:
+            row += 1
+
+    return False
+	############
 def search(self,matrix, n, m, x): 	
         for n in matrix:
                 if x in n:
                     return 1
         return 0
-###
+### to the initial code's time complexity of O(n * m).
 class Solution:
     #Function to search a given number in row-column sorted matrix.
     def search(self,matrix, n, m, x): 
@@ -149,7 +165,6 @@ class Solution:
 \# =============================================================================
 # =============================================================================
 # 72	Search in sorted matrix II	https://leetcode.com/problems/search-a-2d-matrix-ii/
-
 def searchMatrix(self, matrix, target):       
 	n = len(matrix) ## better runtime than using row and col code alone 
 	m = len(matrix[0])
@@ -167,7 +182,6 @@ def searchMatrix(self, matrix, target):
 # =============================================================================
 # =============================================================================
 # 73	Find peak in sorted matrix	https://leetcode.com/problems/find-a-peak-element-ii/
-# 
 class Solution(object):
     def getMaxElement(self, matrix, mid):
         index = -1
