@@ -15,7 +15,7 @@ class MyStack:
     #Function to remove an item from top of the stack.
     def pop(self):
         #add code here
-        if len(self.arr)<1:
+        if not self.arr: #check if stack is empty
             return -1
         return self.arr.pop()      
 # =============================================================================
@@ -23,48 +23,50 @@ class MyStack:
 # 126	Implement 2 stack using array	https://www.geeksforgeeks.org/problems/implement-two-stacks-in-an-array/1?page=1&category=Stack&sortBy=submissions	
 class TwoStacks:
     def __init__(self, n=100):
-        self.p1=0
-        self.p2=n//2
-        self.twostack=[0]*(n+1)
-        self.size=n
-    # Function to push an integer into stack 1
+        self.p1 = 0
+        self.p2 = n // 2
+        self.twostack = [0] * (n + 1)
+        self.size = n
+
     def push1(self, x):
-        self.twostack[self.p1]=x
-        self.p1+=1
-        pass
+        self.twostack[self.p1] = x
+        self.p1 += 1
 
-    # Function to push an integer into stack 2
     def push2(self, x):
-        self.twostack[self.p2]=x
-        self.p2+=1
-        pass
+        self.twostack[self.p2] = x
+        self.p2 += 1
 
-    # Function to remove an element from top of stack 1
     def pop1(self):
-        if self.p1==0:
+        if self.p1 == 0:
             return -1
-        else:
-            t=self.twostack[self.p1-1]
-            #self.twostack[self.p1-1]=0
-            self.p1-=1
-            return t
-        pass
+        self.p1 -= 1
+        return self.twostack[self.p1]
 
-    # Function to remove an element from top of stack 2
     def pop2(self):
-        if self.p2==self.size//2:
+        if self.p2 == self.size // 2:
             return -1
-        else:
-            
-            t=self.twostack[self.p2-1]
-            #self.twostack[self.p2-1]=0
-            self.p2-=1
-            return t
-        pass
+        self.p2 -= 1
+        return self.twostack[self.p2]
 # =============================================================================
 # =============================================================================
 # 127	Check for balanced paranthesis	https://www.geeksforgeeks.org/problems/parenthesis-checker2744/1?page=1&category=Stack&sortBy=submissions	
    #Function to check if brackets are balanced or not.
+def ispar(self, x):
+    stack = []
+    opening = ['{', '[', '(']
+    closing = ['}', ']', ')']
+    pairs = {'{': '}', '[': ']', '(': ')'}
+
+    for char in x:
+        if char in opening:
+            stack.append(char)
+        elif char in closing:
+            if len(stack) == 0 or pairs[stack[-1]] != char:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+    #############
     def ispar(self,x):
         
        stack = []
@@ -132,6 +134,33 @@ class stack:
 # =============================================================================
 # =============================================================================
 # 129	Next greater element 	https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1?page=1&category=Stack&sortBy=submissions	
+   class Stack:
+    class Node:
+        def __init__(self, val, mini):
+            self.val = val
+            self.mini = mini
+
+    def __init__(self):
+        self.s = []
+        self.minEle = float('inf')
+
+    def push(self, x):
+        if not self.s:
+            self.minEle = x
+        else:
+            self.minEle = min(self.minEle, x)
+        self.s.append(self.Node(x, self.minEle))
+
+    def pop(self):
+        if self.s:
+            return self.s.pop().val
+        return -1
+
+    def getMin(self):
+        if self.s:
+            return self.s[-1].mini
+        return -1
+        #############################
     def nextLargerElement(self,arr,n):
         stack = [0]
         res = [None]*n
@@ -149,17 +178,19 @@ class stack:
 # =============================================================================
 # 130	Next greater element II	https://leetcode.com/problems/next-greater-element-ii/	
 
-    def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-        st = []
-        ans = [-1] * n
-        for i in range(n * 2 - 1, -1, -1):
-            while st and st[-1] <= nums[i % n]:
-                st.pop()
-            if i < n:
-                ans[i] = st[-1] if st else -1
-            st.append(nums[i % n])
-        return ans
+def nextGreaterElements(self, nums: List[int]) -> List[int]:
+    n = len(nums)
+    stack = []
+    ans = [-1] * n
+
+    for i in range(2 * n - 1, -1, -1):
+        while stack and stack[-1] <= nums[i % n]:
+            stack.pop()
+        if i < n:
+            ans[i] = stack[-1] if stack else -1
+        stack.append(nums[i % n])
+
+    return ans
 # =============================================================================
 # =============================================================================
 # Basic and Easy patterns(Try to solve these once you learnt traversals)				
@@ -167,96 +198,91 @@ class stack:
 # =============================================================================
 # 131	Next smallest element on left	https://www.geeksforgeeks.org/problems/help-classmates--141631/1?itm_source=geeksforgeeks	
         # Return the list
-        stack = []
-        res = [-1]*n
-        for i in range(n):
-            while(stack and arr[i] < arr[stack[-1]]):
-                res [stack.pop()]=arr[i]
-            stack.append(i)
-        return res
+def nextSmallerElements(arr: List[int]) -> List[int]:
+    n = len(arr)
+    stack = []
+    res = [-1] * n
+
+    for i in range(n):
+        while stack and arr[i] < arr[stack[-1]]:
+            res[stack.pop()] = arr[i]
+        stack.append(i)
+
+    return res
 # =============================================================================
 # =============================================================================
 # 132	Next smallest element on right	https://www.codingninjas.com/studio/problems/next-smaller-element_1112581	
-def nextSmallerElement(arr,n):
-    # Write your code here.
-    pass
-    
+def nextSmallerElement(arr, n):
     stack = [0]
-    res = [None]*n
-    i=1
-    #print(res)
-    while(i<n):
-        while(stack and arr[i]<arr[stack[-1]]):
-            res[stack.pop()]=arr[i]
+    res = [-1] * n
+
+    for i in range(1, n):
+        while stack and arr[i] < arr[stack[-1]]:
+            res[stack.pop()] = arr[i]
         stack.append(i)
-        i=i+1
-    while(stack):
-        res[stack.pop()]=-1
+
     return res
 # =============================================================================
 # =============================================================================
 # 133	Stock span problem(Implementation prob - Try to figure out the pattern from above next greater and smaller)	https://www.geeksforgeeks.org/problems/stock-span-problem-1587115621/1?page=1&category=Stack&sortBy=submissions	
     #Function to calculate the span of stock price for all n days.
-    def calculateSpan(self,a,n):
-        res = [1]*n
-        stack = []
-        for i in range(n):
-            while(stack and a[i]>=a[stack[-1]]):
-                res [i] = res[i]+res[stack.pop()]
-            stack.append(i)
-        return res
+def calculateSpan(self, a, n):
+    res = [1] * n
+    stack = []
+
+    for i in range(n):
+        while stack and a[i] >= a[stack[-1]]:
+            res[i] += res[stack.pop()]
+        stack.append(i)
+
+    return res
 # =============================================================================
 # =============================================================================
 # 134	Trapping rainwater	https://www.geeksforgeeks.org/problems/trapping-rain-water-1587115621/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article	
+def trappingWater(self, arr, n):
+    if n <= 1:
+        return 0
+    left_max = self.calculate_left_max(arr, n)
+    right_max = self.calculate_right_max(arr, n)
+    return self.calculate_trapped_water(arr, left_max, right_max, n)
+    
+def calculate_left_max(self, arr, n):
+    left_max = [0] * n
+    left_max[0] = arr[0]
+    for i in range(1, n):
+        left_max[i] = max(left_max[i-1], arr[i])
+    return left_max
+    
+def calculate_right_max(self, arr, n):
+    right_max = [0] * n
+    right_max[n-1] = arr[n-1]
+    for i in range(n-2, -1, -1):
+        right_max[i] = max(right_max[i+1], arr[i])
+    return right_max
 
-    def trappingWater(self, arr,n):
-        if n <= 1:
-            return 0
-            
-        left_max = self.calculate_left_max(arr, n)
-        right_max = self.calculate_right_max(arr, n)
-        
-        return self.calculate_trapped_water(arr, left_max, right_max, n)
-        
-    def calculate_left_max(self, arr, n):
-            left_max = [0] * n
-            left_max[0] = arr[0]
-            
-            for i in range(1, n):
-                left_max[i] = max(left_max[i-1], arr[i])
-            
-            return left_max
-            
-    def calculate_right_max(self, arr, n):
-            right_max = [0] * n
-            right_max[n-1] = arr[n-1]
-            
-            for i in range(n-2, -1, -1):
-                right_max[i] = max(right_max[i+1], arr[i])
-            
-            return right_max
-        
-    def calculate_trapped_water(self,arr,left_max,right_max,n):
-            res = 0
-            
-            for i in range(n):
-                res += min(left_max[i], right_max[i]) - arr[i]
-            return res
+def calculate_trapped_water(self, arr, left_max, right_max, n):
+    res = 0
+    for i in range(n):
+        res += min(left_max[i], right_max[i]) - arr[i]
+    return res
 arr = [10,0, 9]
 # =============================================================================
 # =============================================================================
 # 135	Maximum rectangular area on histogram(Once next greater and next smallest pattern is covered, this can be solved easily)	https://www.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1?page=1&category=Stack&sortBy=submissions	
     #Function to find largest rectangular area possible in a given histogram.
-    def getMaxArea(self,histogram):
-        st, res = [], 0
-        for height in histogram + [0]:
-            step = 0
-            while st and st[-1][1] >= height:
-                w, h = st.pop()
-                step += w
-                res = max(res, step * h)
-            st.append((step + 1, height))
-        return res
+def getMaxArea(self, histogram):
+    stack = []
+    res = 0
+
+    for height in histogram + [0]:
+        step = 0
+        while stack and stack[-1][1] >= height:
+            w, h = stack.pop()
+            step += w
+            res = max(res, step * h)
+        stack.append((step + 1, height))
+
+    return res
 N = 7
 arr[] = {6,2,5,4,5,1,6}
 Output: 12
@@ -265,88 +291,95 @@ Output: 12
 # 136	Max rectangle(Same as above, just a small twist)	https://www.geeksforgeeks.org/problems/max-rectangle/1?page=1&category=Stack&sortBy=submissions	
 
 def maxArea(self, M, n, m):
-        def maxHistArea(hist):
-            stack = []
-            max_area = 0
-            i = 0
-            while i < m:
-                if not stack or hist[stack[-1]] <= hist[i]:
-                    stack.append(i)
-                    i += 1
-                else:
-                    top = stack.pop()
-                    if stack:
-                        width = i - stack[-1] - 1
-                    else:
-                        width = i
-                    max_area = max(max_area, hist[top] * width)
-            while stack:
+    def maxHistArea(hist):
+        stack = []
+        max_area = 0
+        i = 0
+        while i < m:
+            if not stack or hist[stack[-1]] <= hist[i]:
+                stack.append(i)
+                i += 1
+            else:
                 top = stack.pop()
-                if stack:
-                    width = i - stack[-1] - 1
-                else:
-                    width = i
+                width = i - stack[-1] - 1 if stack else i
                 max_area = max(max_area, hist[top] * width)
-            return max_area
-        for i in range(1, n):
-            for j in range(m):
-                if M[i][j] == 1:
-                    M[i][j] += M[i - 1][j]
-        max_area = 1
-        for i in range(n):
-            max_area = max(max_area, maxHistArea(M[i]))
+        while stack:
+            top = stack.pop()
+            width = i - stack[-1] - 1 if stack else i
+            max_area = max(max_area, hist[top] * width)
         return max_area
+    for i in range(1, n):
+        for j in range(m):
+            if M[i][j] == 1:
+                M[i][j] += M[i - 1][j]
+    max_area = 1
+    for i in range(n):
+        max_area = max(max_area, maxHistArea(M[i]))
+    return max_area
 # Path and Distance				
 # 137	Infix to postfix	https://www.geeksforgeeks.org/problems/infix-to-postfix-1587115620/1?page=2&category=Stack&sortBy=submissions	
 Input: str = "A*(B+C)/D"
 Output: ABC+*D/
-    def InfixtoPostfix(self, exp):
-        s=[]
-        out=''
-        op={'(':0,')':0,'+':1,'-':1,'*':2,'/':2,'^':3}
-        for i in exp:
-            if i not in op.keys():
-                out=out+i
+def InfixtoPostfix(self, exp):
+    stack = []
+    output = ''
+    operators = {'(': 0, ')': 0, '+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+    for char in exp:
+        if char not in operators:
+            output += char
+        else:
+            if char == '(':
+                stack.append(char)
+            elif char == ')':
+                while stack[-1] != '(':
+                    output += stack.pop()
+                stack.pop()
+            elif len(stack) == 0 or operators[char] > operators[stack[-1]]:
+                stack.append(char)
             else:
-                if i=='(': s.append(i)
-                elif i==')':
-                    while s[-1]!='(':
-                        out=out+s.pop()
-                    s.pop()
-                elif len(s)==0 or op[i]>op[s[-1]]:
-                    s.append(i)
-                else:
-                    while len(s)!=0 and (op[i]<=op[s[-1]] or s[-1]!='('):
-                        out=out+s.pop()
-                    s.append(i)
-        while len(s)!=0:
-            out=out+s.pop()
-        return out             
+                while len(stack) != 0 and (operators[char] <= operators[stack[-1]] or stack[-1] != '('):
+                    output += stack.pop()
+                stack.append(char)
+
+    while len(stack) != 0:
+        output += stack.pop()
+
+    return output    
 # =============================================================================
 # =============================================================================
 # 138	Evaluation of postfix expression	https://www.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1?page=2&category=Stack&sortBy=submissions	
-    def evaluatePostfix(self, s):
-        stack=[]
-        for i in s:
-            if i in ["+","*","/","-"]:
-                y,x=stack.pop(),stack.pop()
-                if i=="+":stack.append(x+y)
-                elif i=="*":stack.append(x*y)
-                elif i=="-":stack.append(x-y)
-                else:stack.append(x//y)
-            else:stack.append(int(i))
-        return stack[-1]
+def evaluatePostfix(self, s):
+    stack = []
+
+    for char in s:
+        if char in ["+", "*", "/", "-"]:
+            y, x = stack.pop(), stack.pop()
+
+            if char == "+":
+                stack.append(x + y)
+            elif char == "*":
+                stack.append(x * y)
+            elif char == "-":
+                stack.append(x - y)
+            else:
+                stack.append(x // y)
+        else:
+            stack.append(int(char))
+
+    return stack[-1]
 # =============================================================================
 # =============================================================================
 # 139	Prefix to postfix   https://www.geeksforgeeks.org/prefix-postfix-conversion/	
 s = "*-A/BC-/AKL"
 def pre_to_post(s):
-# Stack for storing operands
     stack = []
     operators = set(['+', '-', '*', '/', '^'])
-    
+    result = []
+
     # Reversing the order
     s = s[::-1]
+
     # iterating through individual tokens
     for i in s:
         # if token is operator
@@ -354,20 +387,46 @@ def pre_to_post(s):
             # pop 2 elements from stack
             a = stack.pop()
             b = stack.pop()
-            # concatenate them as operand1 +
-            # operand2 + operator
-            temp = a+b+i
+            # concatenate them as operand1 + operand2 + operator
+            temp = a + b + i
             stack.append(temp)
         # else if operand
         else:
-            stack.append(i) 
-    # printing final output
-    print(*stack)
+            stack.append(i)
+
+    # storing final output in result list
+    result = stack[::-1]
+    
+    # returning final output as a string
+    return ' '.join(result)
 
 # =============================================================================
 # =============================================================================
 
 # Get Infix for a given postfix  expression 
+def getInfix(exp):
+    stack = [] 
+    for char in exp:              
+        # Push operands 
+        if isOperand(char):         
+            stack.append(char)              
+        # We assume that input is a valid postfix and expect an operator. 
+        else:         
+            op1 = stack.pop() 
+            op2 = stack.pop() 
+            stack.append("(" + op2 + char + op1 + ")")              
+    # There must be a single element in stack now which is the required infix. 
+    return stack[0]
+ 
+# Helper function to check if a character is an operand
+def isOperand(char):
+    return char.isalpha()
+ 
+# Driver Code 
+if __name__ == '__main__': 
+    exp = "ab*c+"
+    print(getInfix(exp.strip()))
+###########3
 def getInfix(exp) :
     s = [] 
     for i in exp:              
@@ -390,7 +449,75 @@ if __name__ == '__main__':
     print(getInfix(exp.strip()))
 # =============================================================================
 # =============================================================================
-#140	Arithmetic expression evaluation	https://www.codingninjas.com/studio/problems/arithmetic-expression-evaluation_1170517	
+#140	Arithmetic expression evaluation	https://www.codingninjas.com/studio/problems/arithmetic-expression-evaluation_1170517
+def isLowerPrecedence(ops1, ops2):
+    # Check whether ops1 has lower precedence than ops2.
+    if (ops1 in ['+', '-']) and (ops2 in ['*', '/']):
+        return True
+    return False
+
+def evaluateArithmeticExpression(expression):
+    stack = []
+    postfixExp = ""
+    operand = ""
+    
+    # Convert given infix expression to postfix/ Reverse Polish Notation.
+    for char in expression:
+        if char.isdigit():
+            # Append digit to operand.
+            operand += char
+        else:
+            if operand:
+                # Append operand in string 'postfix'
+                postfixExp += operand + ' '
+                operand = ""
+            
+            if char == '(':
+                # Push opening bracket
+                stack.append(char)
+            elif char == ')':
+                # Append operators between current parenthesis pair in string postfixExp and discard parenthesis.
+                while stack[-1] != '(':
+                    postfixExp += stack.pop() + ' '
+                stack.pop()
+            else:
+                while stack and stack[-1] != '(' and not isLowerPrecedence(char, stack[-1]):
+                    # Pop operator with greater or equal precedence.
+                    postfixExp += stack.pop() + ' '
+                # Add operator to top of stack.
+                stack.append(char)
+    
+    if operand:
+        postfixExp += operand + ' '
+    
+    # Append remaining operators in stack to postfixExp.
+    while stack:
+        postfixExp += stack.pop() + ' '
+    
+    values = []
+    operand = ""
+    
+    # Evaluating equivalent postfix expression.
+    for token in postfixExp.strip().split():
+        if token.isdigit():
+            # Push operand in stack 'values'.
+            values.append(int(token))
+        else:
+            # Pop two operands and push their result after applying operator back to the stack 'values'.
+            operand2 = values.pop()
+            operand1 = values.pop()
+            if token == '+':
+                values.append(operand1 + operand2)        
+            elif token == '-':
+                values.append(operand1 - operand2)            
+            elif token == '*':
+                values.append(operand1 * operand2)            
+            elif token == '/':
+                values.append(int(operand1 / operand2))
+    
+    # Result of Expression
+    return values[-1]
+#####################
 def isLowerPrecedence(ops1, ops2):
     # Check whether ops1 has lower precedence than ops2.
     if((ops1 == '+' or ops1 == '-') and (ops2 == '*' or ops2 == '/')):
