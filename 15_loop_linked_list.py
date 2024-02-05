@@ -2,7 +2,6 @@
 # Expressions		
 # 100	Detect loop in LL(Once this is learnt, all the loop pattern probs below should be easy)	https://www.geeksforgeeks.org/problems/detect-loop-in-linked-list/1?page=1&category=Linked%20List&sortBy=submissions
     def detectLoop(self, head):
-        #code here
         slow=head
         fast=head
         x=0
@@ -41,7 +40,6 @@ def countNodesinLoop(head):
 # =============================================================================
 # 102	Find the starting point of loop	https://www.geeksforgeeks.org/problems/find-the-first-node-of-loop-in-linked-list--170645/1
     def findFirstNode(self, head):
-        #code here
         slow = head
         fast = head
         while slow and fast and fast.next:
@@ -62,7 +60,6 @@ def countNodesinLoop(head):
         # remove the loop without losing any nodes
         if not head:
             return head
-        
         # It has to be in this order only
         slow = head
         fast = head
@@ -95,7 +92,6 @@ def countNodesinLoop(head):
 # =============================================================================
 # 104	Sort 0s, 1s, 2s in LL	https://www.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1?page=1&category=Linked%20List&sortBy=submissions
 def segregate(self, head):
-        #code here
         dummyZero = Node(-1)
         zero = dummyZero
         dummyOne = Node(-1)
@@ -240,7 +236,6 @@ def quickSort(head):
 
 #Function to remove duplicates from sorted linked list.
 def removeDuplicates(head):
-    #code here
     curr=head
     while(curr and curr.next):
         if curr.data==curr.next.data:
@@ -270,7 +265,6 @@ def removeDuplicates(head):
 # 110	Seggregate even and odd nodes in LL	https://practice.geeksforgeeks.org/problems/segregate-even-and-odd-nodes-in-a-linked-list5035/1
 # 
 def divide(self, N, head):
-        # code here
         head1 = even = node()
         head2 = odd = node()
         
