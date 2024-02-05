@@ -59,6 +59,7 @@ def reverse(self,St):
 # =============================================================================
 # 144	Celebrity problem	https://www.geeksforgeeks.org/problems/the-celebrity-problem/1?page=1&category=Stack&sortBy=submissions
 def celebrity(self, M, n):
+        left, right = 0, n - 1
         while left < right:
             if M[left][right] == 1:
                 left += 1
@@ -71,32 +72,164 @@ def celebrity(self, M, n):
 # =============================================================================
 # =============================================================================
 # 145	Restrictive candy crush	https://www.geeksforgeeks.org/problems/restrictive-candy-crush--141631/1?page=2&category=Stack&sortBy=submissions
+
+    def Reduced_String(self, k, s):
+        stack = list()
+        crush = False
+        for char in s:
+            stack.append(char)
+            if len(stack) >= k:
+                for position in range(1,k+1):
+                    if stack[-position] == char:
+                        crush = True
+                    else:
+                        crush = False
+                        break
+            if crush:
+                for _ in range(k):
+                    stack.pop()
+                crush = False
+        return ''.join(stack)
+
 # =============================================================================
 # =============================================================================
 # 146	Count the reversals	https://www.geeksforgeeks.org/problems/count-the-reversals0401/1?page=1&category=Queue&sortBy=submissions
+def countRev (s):
+    n = len(s)
+    if n % 2 != 0:
+        return -1
+    left_count = right_count = 0
+    for i in range(n):
+        if s[i] == '{':
+            left_count += 1
+        else:
+            if left_count == 0:
+                right_count += 1
+            else:
+                left_count -= 1
+    return (left_count + 1) // 2 + (right_count + 1) // 2
 # =============================================================================
 # =============================================================================
 # Subtree & Other must do tree probs		
 # =============================================================================
 # =============================================================================
-# Basic patterns and must solve(Each prob in this pattern will teach you something and also as you solve, you will start mastering it though initially it takes sometime)	Understand the basics of backtracking and start solving	
+# Basic patterns and must solve(Each prob in this pattern will teach you something and also as you solve, you will start mastering it though initially it takes sometime)	
+#Understand the basics of backtracking and start solving	
 # =============================================================================
 # =============================================================================
 # 147	What is queue? Learn the basic representation and how its implemented?	https://www.geeksforgeeks.org/problems/implement-queue-using-array/1?page=1&category=Queue&sortBy=submissions
+Three 90 Challenge Extended On Popular Demand! Don't Miss Out Now 
+
+banner
+Implement a Queue using an Array. Queries in the Queue are of the following type:
+(i) 1 x   (a query of this type means  pushing 'x' into the queue)
+(ii) 2     (a query of this type means to pop element from queue and print the poped element)
+
+class MyQueue:
+    def __init__(self):
+        self.arr=[]
+    #Function to push an element x in a queue.
+    def push(self, x):
+        self.arr.append(x)
+         
+         #add code here
+     
+    #Function to pop an element from queue and return that element.
+    def pop(self): 
+        if self.arr:
+            return self.arr.pop(0)
+        else:
+            return -1
 # =============================================================================
 # =============================================================================
 # 148	Implement queue using linkedlist	https://www.geeksforgeeks.org/problems/implement-queue-using-linked-list/1?page=1&category=Queue&sortBy=submissions
+# A linked list (LL) node 
+# to store a queue entry 
+class Node: 
+      
+    def __init__(self, data): 
+        self.data = data 
+        self.next = None
+        
+class MyQueue:
+    def __init__(self):
+        self.head=None
+        self.tail=None
+    #Function to push an element into the queue.
+    def push(self, item): 
+        newnode=Node(item)
+        if self.head is None or self.tail is None:
+            self.head=newnode
+            self.tail=newnode
+        else:
+            self.tail.next=newnode
+            self.tail=self.tail.next
+            
+    def pop(self):
+        if self.head==None:
+            return -1
+        else:
+            item=self.head.data
+            self.head=self.head.next
+        return item
+
 # =============================================================================
 # =============================================================================
 # 149	Implement queue using stack(super imp)	https://www.geeksforgeeks.org/problems/queue-using-two-stacks/1?page=1&category=Queue&sortBy=submissions
-# =============================================================================
-# =============================================================================
+def Push(x,stack1,stack2):
+    while stack1:
+        stack2.append(stack1.pop())
+    stack2.append(x)
+    while stack2:
+        stack1.append(stack2.pop())
+#Function to pop an element from queue by using 2 stacks.
+def Pop(stack1,stack2):
+    if stack1:
+        return stack1.pop()
+    else: return -1
 # =============================================================================
 # =============================================================================
 # 150	Implement stack using queue(super imp)	https://www.geeksforgeeks.org/problems/stack-using-two-queues/1?page=1&category=Queue&sortBy=submissions
+# Function to push an element into stack using two queues.
+def push(x):
+    global queue_1
+    global queue_2
+    
+    # Adding the new element to queue_2
+    queue_2.put(x)
+    
+    # Moving all elements from queue_1 to queue_2
+    while not queue_1.empty():
+        queue_2.put(queue_1.get())
+        
+    # Swapping the names of the queues
+    queue_1, queue_2 = queue_2, queue_1
+
+# Function to pop an element from stack using two queues.
+def pop():
+    global queue_1
+    global queue_2
+    
+    # If queue_1 is empty, return -1
+    if queue_1.empty():
+        return -1
+    
+    # Otherwise, remove and return the front element of queue_1
+    return queue_1.get()
 # =============================================================================
 # =============================================================================
 # 151	Reverse a queue	https://www.geeksforgeeks.org/problems/queue-reversal/1?page=1&category=Queue&sortBy=submissions
+    #Function to reverse the queue.
+    def rev(self, q):
+        stack = []
+        while not q.empty():
+            x = q.get()
+            stack.append(x)
+            
+        while stack:
+            q.put(stack.pop())
+            
+        return q
 # =============================================================================
 # =============================================================================
 # Traversals & Basic	Understand how graph is represented?	
