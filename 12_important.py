@@ -28,6 +28,7 @@
 # =============================================================================
 # 75	Allocate minimum pages	https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
 #Function to find minimum number of pages.
+#Time complexity of the code is O(N * log(S)), where N is the number of books and S is the sum of all the pages in the books.
     def findPages(self,A, N, M):
         #code here
         if(M>N):
@@ -74,10 +75,11 @@
                 high = mid
             else:
                 low = mid + 1
-        return lo
+        return low
 # =============================================================================
 # =============================================================================
 # 77	Split array largest sum	https://www.geeksforgeeks.org/problems/split-array-largest-sum--141634/1?page=2&category=Binary%20Search&sortBy=submissions
+#The time complexity of the code is O(n log m), where n is the length of the arr array and m is the difference between start and runtotal. This is because the code uses a binary search algorithm, and the is_possible function iterates over the array once
     def splitArray(self, arr, N, k):
         # code here 
         start,runtotal=arr[0],0
@@ -104,6 +106,7 @@
 # =============================================================================
 # =============================================================================
 # 78	Minimum num of days to make m bouquets	https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/
+#O(N * log(D)), where N is the length of the bloomDay list and D is the range between the minimum and maximum bloom days. 
 def minDays(self, bloomDay, m, k):
         """
         :type bloomDay: List[int]
@@ -138,6 +141,7 @@ def minDays(self, bloomDay, m, k):
 # =============================================================================
 # =============================================================================
 # 79	Capacity to ship packages within D days	https://www.geeksforgeeks.org/problems/capacity-to-ship-packages-within-d-days/1?page=2&category=Binary%20Search&sortBy=submissions
+#O(n log m), where n is the length of the arr array and m is the difference between low and high
     def loaded(self,arr,mid):
         days=1
         load=0
@@ -162,6 +166,7 @@ def minDays(self, bloomDay, m, k):
 # =============================================================================
 # =============================================================================
 # 80	koko eating bananas	https://leetcode.com/problems/koko-eating-bananas/
+#O(n log m), where n is the number of food piles in the piles array and m is the difference between left and right.
 def minEatingSpeed(self, piles, h):
         left = 1
         right = max(piles)
@@ -185,6 +190,7 @@ def minEatingSpeed(self, piles, h):
 # =============================================================================
 # =============================================================================
 # 81	kth smallest number in matrix multiplication table	https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/
+#O(mlog(mn)), where m and n are the dimensions of the multiplication table. 
 def findKthNumber(self, m, n, k):        
         # Define binary search function to find the kth smallest element
         def binary_search(left, right):
@@ -207,7 +213,7 @@ def findKthNumber(self, m, n, k):
 # =============================================================================
 # =============================================================================
 # 82	kth smallest pair distance	https://leetcode.com/problems/find-k-th-smallest-pair-distance/
-
+#O(n log m), where n is the length of the nums array and m is the difference between the maximum and minimum values in the array
 def smallestDistancePair(nums, k):
     # Return: Is there k or more pairs with distance <= guess? i.e. are
     # there enough?
@@ -251,6 +257,7 @@ def smallestDistancePair(nums, k):
 # =============================================================================
 # =============================================================================
 # 83	Ugly number II	https://leetcode.com/problems/ugly-number-ii/   ## ugly number when multiple of 2 or 3 or 5
+# The time complexity of the code is O(1)
 class Solution:
     ugly = sorted(2**a * 3**b * 5**c
                   for a in range(32) for b in range(20) for c in range(14))
@@ -262,7 +269,8 @@ class Solution:
 # A Simple Merge based O(n) solution to find
 """ 
 Assumption in this function: 
-Both ar1[] and ar2[] are sorted arrays """
+Both ar1[] and ar2[] are sorted arrays 
+The time complexity of the code is O((n + m) / 2), where n and m are the lengths of the input arrays."""
 def getMedian(ar1, ar2, n, m):
 
 	i = 0 # Current index of input array ar1[]
@@ -295,7 +303,7 @@ print(getMedian(ar1, ar2, n1, n2))
 # =============================================================================
 # =============================================================================
 # 85	Find smallest divisor given threshold	Find the Smallest Divisor Given a Threshold - LeetCode
-
+#O(N * log(M)), where N is the length of the nums array and M is the maximum element in the array
     def smallestDivisor(self, nums, threshold):
         low = 1
         high = self.maxEl(nums)
