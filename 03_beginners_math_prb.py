@@ -112,7 +112,7 @@ Solution.sum_divs(45)
 class Solution():
     def prime(n):
         flag=0
-        for i in range(2, n//2, 1 ): 
+        for i in range(2, n**(1//2), 1 ): 
             if (n%i==0): 
                 flag=1               
                 break
@@ -181,16 +181,10 @@ Solution.squareRoot(-100)
 class Solution():
     def perfectNumber(n):
         total=0
-        for i in range(1,n//2+1):
+        for i in range(1,n**(1//2))+1):
             if n%i==0: 
                 total=total+i
-                print(i,"i")
-                print(total,"total")
-            else: 
-                i+=1
-        print(total)
         if total == n:
-            print(n , "is a perfect number")
             return "Perfect number" 
         else: 
             return "Not perfect number"
