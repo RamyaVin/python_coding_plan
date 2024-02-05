@@ -136,35 +136,47 @@ class Solution:
         if (abs(self.height(root.left)-self.height(root.right))<=1) and self.isBalanced(root.left) and self.isBalanced(root.right):
             return True
         return False
-
+############optimised
+class Solution:
+    def height(self, root, memo):
+        if root is None:
+            return 0
+        if root in memo:
+            return memo[root]
+        
+        left_height = self.height(root.left, memo)
+        if left_height == -1:
+            return -1
+        right_height = self.height(root.right, memo)
+        if right_height == -1:
+            return -1
+        if abs(left_height - right_height) > 1:
+            return -1
+        
+        memo[root] = max(left_height, right_height) + 1
+        return memo[root]
+            
+    def isBalanced(self, root):
+        memo = {}
+        return self.height(root, memo) != -1   
 # =============================================================================
 # =============================================================================
 # 197	Lowest common Ancestor in BT	https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1?page=1&category=Tree&sortBy=submissions
-'''
-class Node:
-    def __init__(self, value):
-        self.left = None
-        self.data = value
-        self.right = None
-'''
 class Solution:
-    #Function to return the lowest common ancestor in a Binary Tree.
-    def lca(self,root, n1, n2):
-        # Code here
-        if not root:
-            return None
-        if root.data == n1 or root.data == n2:
+    # Function to return the lowest common ancestor in a Binary Tree.
+    def lca(self, root, n1, n2):
+        # Base case: if the root is None or one of the nodes is found, return the root
+        if root is None or root.data == n1 or root.data == n2:
             return root
-        left = self.lca(root.left,n1,n2)
-        right = self.lca(root.right,n1,n2)
+        # Recursively find the LCA in the left and right subtrees
+        left = self.lca(root.left, n1, n2)
+        right = self.lca(root.right, n1, n2)
+        # If both left and right subtrees have a valid LCA, the current root is the LCA
         if left and right:
             return root
-        elif not left and right:
-            return right
-        elif left and not right:
-            return left
-        else:
-            return Non
+        # Return the non-null subtree as the LCA
+        return left if left else right
+
 # =============================================================================
 # =============================================================================
 # 198	Sum tree	https://www.geeksforgeeks.org/problems/sum-tree/1?page=1&category=Tree&sortBy=submissions
@@ -196,8 +208,37 @@ class Solution:
         ans = self.is_sum(root)
         if ans==float("-inf") or ans!=root.data:
             return 0
-        
         return 1
+
+###optimised 
+#Instead of calculating the sum of the left and right subtrees separately in the is_sum function, we can modify the function to return the sum of the subtree and the boolean value indicating if it is a Sum Tree. This way, we avoid redundant calculations of the sums.
+
+#We can remove the separate check for root.left and root.right in the is_sum function since it is covered by the calculation of left and right.
+class Solution:
+    def is_sum(self, root):
+        if root is None:
+            return (0, True)
+        
+        left_sum, left_is_sum = self.is_sum(root.left)
+        right_sum, right_is_sum = self.is_sum(root.right)
+        
+        current_sum = left_sum + right_sum
+        
+        if (root.left or root.right) and current_sum != root.data:
+            return (current_sum, False)
+        
+        return (current_sum + root.data, left_is_sum and right_is_sum)
+        
+    def isSumTree(self, root):
+        if root is None:
+            return 1
+        
+        _, is_sum_tree = self.is_sum(root)
+        
+        if is_sum_tree:
+            return 1
+        else:
+            return 0
 # =============================================================================
 # =============================================================================
 # 199	Symmetric tree	https://www.geeksforgeeks.org/problems/symmetric-tree/1?page=2&category=Tree&sortBy=submissions
