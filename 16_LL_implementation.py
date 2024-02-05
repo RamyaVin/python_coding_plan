@@ -17,9 +17,7 @@
 # =============================================================================
 # =============================================================================
 # 112	Add 2 numbers represented as LL	https://practice.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1
-
      def addTwoLists(self, first, second):
-      # code here
       # return head of sum list
       f=''
       s=''
