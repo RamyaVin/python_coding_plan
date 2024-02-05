@@ -578,7 +578,8 @@ class Solution:
         def f(counts=[0] * (len(nums) + 1), low=0, high=0, k=k):
             for num in nums:
                 if not counts[num]:
-                    if (k := k - 1) < 0:
+                    k -= 1
+                    if k < 0:
                         counts[nums[high]] = 0
                         low = high = high + 1
                 counts[num] += 1
