@@ -24,8 +24,7 @@ class Solution:
 #### using memoization to avoid redundant calculations.
 class Solution:
     def height(self, root):
-        memo = {}
-        
+        memo = {}        
         def solve(root):
             if not root:
                 return 0
