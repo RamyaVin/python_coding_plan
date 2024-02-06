@@ -1,20 +1,14 @@
 # =============================================================================
 # Find pair with given sum
-from collections import defaultdict
 
-def arraySum(nums, k):
-    sum_freq = defaultdict(int)
-    prefix_sum = 0
-    count = 0
-
-    for num in nums:
-        prefix_sum += num
-        if prefix_sum - k in sum_freq:
-            count += sum_freq[prefix_sum - k]
-        sum_freq[prefix_sum] += 1
-
-    return count
-
+def hasArrayTwoCandidates(self,nums, n, k):
+	num = {}
+	for e in nums:
+	    if e in num:
+		return 1
+	    else:
+		num[x - e] = e
+	return 0
 # =============================================================================
 # =============================================================================
 # 2 Sum
@@ -58,27 +52,7 @@ def threeSum(nums, target):
             else:
                 r -= 1
 
-    return res
-###############
-class Solution():
-    def threeSum(nums, target):
-        n=len(nums)
-        res=[]
-        nums.sort()
-        for i in range(n-2):
-            l=i+1
-            r=n-1
-            while l<r:
-                threeSum=nums[i]+nums[l]+nums[r]
-                if threeSum==target: 
-                    res.append([nums[i],nums[l],nums[r]])
-                    return res
-                elif threeSum<target:
-                    l+=1
-                else:
-                    r-=1
-            return res                  
-
+    return res             
 Solution.threeSum([1,2,1,5],4)
 # =============================================================================
 # =============================================================================
@@ -121,41 +95,13 @@ def fourSum(nums, target):
        #############
     # Python3 program to find four 
     # elements with the given sum
-    
-    # Function to find 4 elements that
-def fourSum(X, arr, Map, N):
-    quadruplets = []
-    
-    # Iterate from 0 to length of arr 
-    for i in range(N - 1):
-        # Iterate from i + 1 to length of arr
-        for j in range(i + 1, N):
-            # Store curr_sum = arr[i] + arr[j] 
-            curr_sum = arr[i] + arr[j]
-
-            # Check if X - curr_sum if present 
-            # in map 
-            if (X - curr_sum) in Map:
-                # Store pair having map value 
-                # X - curr_sum 
-                p = Map[X - curr_sum]
-
-                if (p[0] != i and p[1] != i and
-                    p[0] != j and p[1] != j):
-                    # Append the quadruplet to the result
-                    quadruplet = [arr[i], arr[j], arr[p[0]], arr[p[1]]]
-                    quadruplets.append(quadruplet)
-
-    return quadruplets
 
 # Function for two Sum 
 def twoSum(nums, N):
     Map = {}
-    
     for i in range(N - 1):
         for j in range(i + 1, N):
             Map[nums[i] + nums[j]] = (i, j)
-
     return Map
 
 # Driver code
