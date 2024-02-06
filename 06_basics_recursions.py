@@ -1,12 +1,15 @@
 # =============================================================================
 # 37	Majority element	https://leetcode.com/problems/majority-element/
-
 ### using counter ##O(n)
-
         frequency_dict = Counter(nums)
         return max(frequency_dict, key = frequency_dict.get)
-##################3
-#better code than below O(N)
+######leetcode best########### O(NlogN)
+def majority(nums):
+	nums.sort()
+	n = len(nums)
+	return nums[n//2]
+##################O(N)######
+#better code than below 
 class Solution:
     def majority(nums):
         count = {}
@@ -37,37 +40,29 @@ Solution.majority(nums)
 # =============================================================================
 # 38	Kadane's algo(super imp)	https://practice.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/1
 class Solution:
-    ##Complete this function
     #Function to find the sum of contiguous subarray with maximum sum.
     def maxSubArraySum(arr,N):
-         max_so_far=float()
-         max_end=0
-         for num in arr:
+        max_so_far = arr[0]
+        max_end = arr[0]
+        for num in arr[1:]:
             max_end=max(num,max_end+num)
             max_so_far=max(max_so_far,max_end)
-         return max_so_far
-
+        return max_so_far
 # Driver Code
 arr = [10,0, 1,2,1,1,-10,-10,10,1,1,1,3,7,8]
-
 Solution.maxSubArraySum(arr,4)
 # =============================================================================
 # =============================================================================
 # 39	Count inversions	https://practice.geeksforgeeks.org/problems/inversion-of-array-1587115620/1
 """
 The time complexity of the code is O(n log n), where n is the length of the input array arr. This is because the code uses the merge sort algorithm, which has a time complexity of O(n log n) for sorting the array and counting the inversions.
-
-
 The space complexity of the code is O(n), where n is the length of the input array. This is because the code uses additional space to store the merged subarrays during the merge process. In the worst case, when each element is a separate subarray, the space required is proportional to the length of the array
 """
 class Solution:
-    #User function Template for python3
-    
     # arr[]: Input Array
     # N : Size of the Array arr[]
     #Function to count inversions in the array.
     def inversionCount( arr, n):
-        # Your Code Here
         def merge(arr, low, mid, high):
             left = arr[low:mid + 1]
             right = arr[mid + 1:high + 1]
@@ -119,40 +114,41 @@ arr = [2, 4, 1, 3, 5]
 Solution.inversionCount(arr,5)
 
 ###########same 
-def merge_sort(arr):
-    if len(arr) <= 1:
-        return arr, 0
-    
-    mid = len(arr) // 2
-    left, inv_left = merge_sort(arr[:mid])
-    right, inv_right = merge_sort(arr[mid:])
-    
-    merged, inv_merge = merge(left, right)
-    
-    return merged, inv_left + inv_right + inv_merge
+class Solution:
+    def merge_sort(self, arr, n):
+        if n <= 1:
+            return arr, 0
 
-def merge(left, right):
-    merged = []
-    inversions = 0
-    i, j = 0, 0
-    
-    while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            merged.append(left[i])
-            i += 1
-        else:
-            merged.append(right[j])
-            j += 1
-            inversions += len(left) - i
-    
-    merged.extend(left[i:])
-    merged.extend(right[j:])
-    
-    return merged, inversions
+        mid = n // 2
+        left, inv_left = self.merge_sort(arr[:mid], mid)
+        right, inv_right = self.merge_sort(arr[mid:], n - mid)
 
-def getNumOfInversions(A):
-    _, inversions = merge_sort(A)    #_ as a variable name, it is a convention to indicate that the value is not being used or referenced 					further in the code. In this case, it is used to discard the sorted list and only capture the 						count of inversions in the given list A.
-    return inversions
+        merged, inv_merge = self.merge(left, right)
+
+        return merged, inv_left + inv_right + inv_merge
+
+    def merge(self, left, right):
+        merged = []
+        inversions = 0
+        i, j = 0, 0
+
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                merged.append(left[i])
+                i += 1
+            else:
+                merged.append(right[j])
+                j += 1
+                inversions += len(left) - i
+
+        merged.extend(left[i:])
+        merged.extend(right[j:])
+
+        return merged, inversions
+
+    def inversionCount(self, arr, n):
+        _, inversions = self.merge_sort(arr, n)
+        return inversions
 
 # Driver Code
 A = [4, 3, 2, 1]
@@ -197,22 +193,35 @@ def getNumOfInversions(A):
 	return result
 # =============================================================================
 # =============================================================================
-# 40	Merge intervals	https://leetcode.com/problems/merge-intervals/
+# 40	Merge intervals	https://leetcode.com/problems/merge-intervals/ 
+#####90ms 
 class Solution:
-    def mergeIntervals(intervals):
-        intervals = sorted(intervals, key=lambda x:x[0])
-        merged = [intervals[0]]
-        for interval in intervals:
-            # Normal case not overlaping
-                print(merged[-1][1],interval[0], intervals)
-                if merged[-1][1] < interval[0]:
-                    merged.append(interval)
-                else:
-                    merged[-1][1] = max(merged[-1][1], interval[1])
-        return merged
+    class Solution(object):
+    def merge(self, intervals):
+        stack = []
+        n = len(intervals)
+        intervals.sort(key=lambda x: x[0])
+      
+        stack.append(intervals[0])
+        for i in range(1, n):
+            x, y = intervals[i]
+            stX, stY = stack[-1]
+    
+            if x <= stY:
+                stack[-1][1] = max(stY, y)
+            else:
+                stack.append([x, y])
+    
+        ans = []
+        while stack:
+            ans.append(stack.pop())
+    
+        return ans[::-1]
+
+#Solution.mergeIntervals([[1,3],[8,10],[15,18],[3,6]])
 
 Solution.mergeIntervals([[1,3],[8,10],[15,18],[3,6]])
-##############3merge intervals using stack 
+##############3merge intervals using stack  - 108 ms
 class Solution:
     def mergeIntervals(intervals):
         intervals = sorted(intervals, key=lambda x: x[0])
@@ -241,8 +250,8 @@ Optimized code: The space complexity of the optimized code is O(n), where n is t
 # =============================================================================
 # =============================================================================
 # 41	Maximum product subarray	https://practice.geeksforgeeks.org/problems/maximum-product-subarray3604/1
-
 """dynamic programming approach: Instead of calculating the product of all possible subarrays, you can use a dynamic programming approach to keep track of the maximum product at each index."""
+#O(N)
 class Solution:
     def maxProduct(arr, n):
         if n == 0:
@@ -269,7 +278,7 @@ n = len(arr)
 max_product = Solution.maxProduct(arr, n)
 print("Maximum product:", max_product)
 
-###############
+############### O(N^2)
 class Solution:
     def maxProduct(arr, n):
         lis=[]
@@ -289,19 +298,35 @@ Solution.maxProduct([6, -3, -10, 0, 2],5)
 # =============================================================================
 # 42	Next permutation	https://leetcode.com/problems/next-permutation/
 class Solution:
-    def nextPermutation(nums):
-       for i in range(len(nums)-1, 0, -1):
+    def nextPermutation(self, nums):
+        for i in range(len(nums)-1, 0, -1):
            # find the index of the last peak
-           if nums[i - 1] < nums[i]:
-               nums[i:] = sorted(nums[i:])
-               # get the index before the last peak
-               j = i - 1
-               # swap the pre-last peak index with the value just large than it
-               for k in range(i, len(nums)):
-                   if nums[j] < nums[k]:
+            if nums[i - 1] < nums[i]:
+                nums[i:] = sorted(nums[i:])
+                # get the index before the last peak
+                j = i - 1
+                # swap the pre-last peak index with the value just large than it
+                for k in range(i, len(nums)):
+                    if nums[j] < nums[k]:
                        nums[k], nums[j] = nums[j], nums[k]
                        return nums
-       return nums.reverse()
+        return nums.reverse()
+##############33leetcode best solution ##############
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+
+        i = len(nums) - 2
+        while i >= 0 and nums[i] >= nums[i+1]: i -= 1
+        if i >= 0:
+            j = len(nums)-1
+            while nums[j] <= nums[i]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+        nums[:] = nums[:i+1] + nums[i+1:][::-1]
 # =============================================================================
 # =============================================================================
 # 43	Seive of eranthoses(Popular algo for prime numbers)	https://www.geeksforgeeks.org/problems/sieve-of-eratosthenes5242/1
