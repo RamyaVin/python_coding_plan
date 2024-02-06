@@ -1,5 +1,12 @@
 # =============================================================================
 # 64	Search element in sorted rotated array(With and without duplicate)	https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+########33leetcode best########
+def search(self, nums, target):
+	if target in nums:
+		    return True
+		else:
+		    return False
+#################
 class Solution(object):
     def search(self, nums, target):
         """
@@ -28,9 +35,8 @@ class Solution(object):
                     l = mid + 1
                 else:
                     r = mid - 1
-
         return False
- ### without sort 
+ ### without sort ########3if time is there check
 class Solution(object):
     def search(self, nums, target):
         """
@@ -98,13 +104,12 @@ class Solution:
 #also 
 return min(arr)
 ##or
-sort(arr)
+arr.sort()
 return arr[0]
 # =============================================================================
 # =============================================================================
 # 66	Number of times array is sorted	https://www.geeksforgeeks.org/problems/rotation4723/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
 def findKRotation(arr, n):
-        # code here
     low= 0
     high = n-1
     while (low<high):
@@ -114,7 +119,6 @@ def findKRotation(arr, n):
         else:
             high=mid
     return low 
-
 n = 4
 arr = [4, 5, 2, 3]
 findKRotation(arr, n)
@@ -122,30 +126,16 @@ findKRotation(arr, n)
 # =============================================================================
 # 67	Maximum element in sorted rotated array	
 # Function to return the maximum element
-def findMax(arr, low, high):
-
-	# If there is only one element left
-	if (high == low):
-		return arr[low]
-
-	# Find mid
-	mid = low + (high - low) // 2
-	# Check if mid reaches 0 ,it is greater than next element or not (removed in flowgpt optimisation - remove below step he code is missing a return statement for the case when none of the conditions are met. )
-	#if(mid==0 and arr[mid]>arr[mid+1]):
-	#	return arr[mid]
-	# Check if mid itself is maximum element
-	if (mid < high and arr[mid + 1] < arr[mid] and mid>0 and arr[mid]>arr[mid-1]):
-		return arr[mid]
-	
-# Decide whether we need to go to
-	# the left half or the right half
-	if (arr[low] > arr[mid]):
-		return findMax(arr, low, mid - 1)
-	else:
-		return findMax(arr, mid + 1, high)
-
-# Driver code
-arr = [6,5,4,3,2,1]
+def findMaximum(arr,low,high):
+    max = arr[low]
+    i = low
+    for i in range(high+1):
+        if arr[i] > max:
+            max = arr[i]
+    return max
+ 
+# Driver program to check above functions */
+arr = [1, 30, 40, 50, 60, 70, 23, 20]
 n = len(arr)
-print(findMax(arr, 0, n - 1))
-# =============================================================================
+print ("The maximum element is %d"%
+        findMaximum(arr, 0, n-1))
