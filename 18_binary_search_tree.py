@@ -340,6 +340,36 @@ def tour(lis, n):
 # 153	First non repeating char in stream	https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1?page=1&category=Queue&sortBy=submissions
 ################ O(N), O(N) The time complexity of the FirstNonRepeating method is O(N), where N is the length of the string A. This is because the code iterates through the string once and performs constant-time operations for each character.
 #The space complexity of the code is O(N), where N is the length of the string A. This is because the code uses a defaultdict to store the frequency of each character, a deque to store the characters in order, and a result list to store the output characters. The space usage grows linearly with the number of characters.
+
+import sys
+class Solution:
+	def FirstNonRepeating(self, A):
+        n = len(A)
+        d = dict()
+
+        ans = ""
+
+        for i in range(n):
+            c = A[i]
+
+            if c not in d:
+                d[c] = (1, i)
+            else:
+                count = d[c][0] + 1
+                d[c] = ((count, i))
+
+            pos = sys.maxsize
+            temp = "#"
+
+            for it in d:
+                if d[it][0] == 1 and d[it][1] < pos:
+                    temp = it
+                    pos = d[it][1]
+
+            ans += temp
+
+        return ans
+#####################################
 from collections import defaultdict, deque
 
 class Solution:
@@ -362,60 +392,24 @@ class Solution:
         return ''.join(result)
 """he time complexity of the FirstNonRepeating method is O(N^2), where N is the length of the string A. This is because for each character in the string, the code iterates through the dictionary to find the first non-repeating character, which takes O(N) time. Since this is done for each character in the string, the overall time complexity becomes O(N^2).
 The space complexity of the code is O(N), where N is the length of the string A. This is because the code uses a dictionary to store the count and position of each character encountered, and the space usage grows linearly with the number of characters."""
-from collections import OrderedDict
-
-class Solution:
-    def FirstNonRepeating(self, A):
-        n = len(A)
-        d = OrderedDict()
-        ans = ""
-        for i in range(n):
-            c = A[i]
-            if c not in d:
-                d[c] = (1, i, len(d))
-            else:
-                count, pos, order = d[c]
-                d[c] = (count + 1, pos, order)
-        for it in d:
-            count, pos, order = d[it]
-            if count == 1:
-                ans += it
-                break
-        ans += '#'
-        return ans
 ################ 
 #The time complexity of the FirstNonRepeating method is O(N^2), where N is the length of the string A. This is because the code iterates through the string once and performs operations such as adding to a dictionary, deleting from an OrderedDict, and retrieving the first key from the OrderedDict. The retrieval operation takes O(N) time as it involves converting the OrderedDict keys to a list and accessing the first element. Since these operations are performed for each character in the string, the overall time complexity becomes O(N^2).
 #The space complexity of the code is O(N), where N is the length of the string A. This is because the code uses a charCounter dictionary and a charOrder OrderedDict to store the frequency and order of characters encountered. The space usage grows linearly with the number of characters.
-from collections import OrderedDict
-
-class Solution:
-    def FirstNonRepeating(self, A):
-        charCounter = {}
-        charOrder = OrderedDict()
-        res = ''
-        for char in A:
-            if char not in charCounter:
-                charCounter[char] = 1
-                charOrder[char] = True
-                res += char
-            else:
-                charCounter[char] += 1
-                if char in charOrder:
-                    del charOrder[char]
-                res += next(iter(charOrder)) if charOrder else '#'
-        
-        return res
 # =============================================================================
 # =============================================================================
 # 154	Reverse first k elements in queue	https://www.geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/1?page=1&category=Queue&sortBy=submissions
 #Function to reverse first k elements of a queue.
 #The time complexity of the modifyQueue method is O(k), where k is the number of elements to be moved to the front of the queue. This is because the code iterates through the queue and appends the first k elements to the arr list, which takes O(k) time. Then, it iterates through the arr list and adds the elements back to the front of the queue using the appendleft method, which also takes O(k) time. Therefore, the overall time complexity is O(k).
 #The space complexity of the code is O(k), where k is the number of elements to be moved to the front of the queue. This is because the code uses a list arr to store the first k elements, and the space usage grows linearly with the number of elements.
-from collections import deque
 class Solution:
     def modifyQueue(self, q, k):
+        size = len(q)
+        arr = []
         for i in range(k):
-            q.appendleft(q.pop())
+            arr.append(q.popleft())
+        for i in range(k):
+            q.appendleft(arr[i])
+            
         return q
 # =============================================================================
 # =============================================================================
