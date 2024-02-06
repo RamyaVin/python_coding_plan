@@ -134,33 +134,6 @@ class stack:
 # =============================================================================
 # =============================================================================
 # 129	Next greater element 	https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1?page=1&category=Stack&sortBy=submissions	
-   class Stack:
-    class Node:
-        def __init__(self, val, mini):
-            self.val = val
-            self.mini = mini
-
-    def __init__(self):
-        self.s = []
-        self.minEle = float('inf')
-
-    def push(self, x):
-        if not self.s:
-            self.minEle = x
-        else:
-            self.minEle = min(self.minEle, x)
-        self.s.append(self.Node(x, self.minEle))
-
-    def pop(self):
-        if self.s:
-            return self.s.pop().val
-        return -1
-
-    def getMin(self):
-        if self.s:
-            return self.s[-1].mini
-        return -1
-        #############################
     def nextLargerElement(self,arr,n):
         stack = [0]
         res = [None]*n
@@ -177,20 +150,29 @@ class stack:
 # =============================================================================
 # =============================================================================
 # 130	Next greater element II	https://leetcode.com/problems/next-greater-element-ii/	
-
-def nextGreaterElements(self, nums: List[int]) -> List[int]:
-    n = len(nums)
-    stack = []
-    ans = [-1] * n
-
-    for i in range(2 * n - 1, -1, -1):
-        while stack and stack[-1] <= nums[i % n]:
-            stack.pop()
-        if i < n:
-            ans[i] = stack[-1] if stack else -1
-        stack.append(nums[i % n])
-
-    return ans
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        result = [-1] * n
+        stack = []
+        
+        # First iteration: find next greater element from left to right
+        for i in range(n):
+            while stack and nums[i] > nums[stack[-1]]:
+                result[stack.pop()] = nums[i]
+            stack.append(i)
+        
+        # Second iteration: find next greater element from right to left (circular)
+        for i in range(n):
+            while stack and nums[i] > nums[stack[-1]]:
+                result[stack.pop()] = nums[i]
+            # For circular array, search again from the beginning
+            if i == n - 1:
+                for j in range(n):
+                    while stack and nums[j] > nums[stack[-1]]:
+                        result[stack.pop()] = nums[j]
+        
+        return result
 # =============================================================================
 # =============================================================================
 # Basic and Easy patterns(Try to solve these once you learnt traversals)				
