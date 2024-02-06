@@ -126,21 +126,23 @@ class Solution:
 # 165	Longest subarray with given sum k(Same as above with slight modification)	https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1?page=1&category=sliding-window&sortBy=submissions 
 #O(N),O(N)
 class Solution:
-    def lenOfLongSubarr(self, arr, n, k):
-        curr_sum = 0
-        ans = -1
+    def lenOfLongSubarr (self, arr, nums, k) : 
+        #Complete the function
+        currsum = 0
+        ans = 0
         prefix = {}
         prefix[0] = 0
-
+        
         for i in range(n):
-            curr_sum += arr[i]
-            diff = curr_sum - k
+            currsum += arr[i]
+            diff = currsum - k
             if diff in prefix:
                 size = prefix[diff]
-                ans = max(ans, i + 1 - size)
-            if curr_sum not in prefix:
-                prefix[curr_sum] = i + 1
-
+                ans = max(ans,i+1-size)
+            if currsum in prefix:
+                continue
+            else:
+                prefix[currsum] = i + 1
         return ans
 # =============================================================================
 # =============================================================================
@@ -158,36 +160,36 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 167	Smallest window of distinct elements	https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1?page=1&category=sliding-window&sortBy=submissions O(N),O(1)
-from collections import Counter
-
+#User function Template for python3
 class Solution:
     def findSubString(self, s):
-        i = 0
-        j = 0
-        min_len = float('inf')
-        char_count = Counter(s)
-        distinct_chars = len(char_count)
-        
+        i=0
+        j=0
+        min1=1000000
+        dict1={}
+        for k in range(len(s)):
+            if s[k] not in dict1:
+                dict1[s[k]]=1
+        count = len(dict1)
+        # print(dict1)
         while j < len(s):
-            if s[j] in char_count:
-                char_count[s[j]] -= 1
-                if char_count[s[j]] == 0:
-                    distinct_chars -= 1
-            
-            if distinct_chars == 0:
-                while s[i] not in char_count or char_count[s[i]] < 0:
-                    if s[i] in char_count:
-                        char_count[s[i]] += 1
-                    i += 1
-                
-                min_len = min(min_len, j - i + 1)
-                char_count[s[i]] += 1
-                distinct_chars += 1
-                i += 1
-            
-            j += 1
-        
-        return min_len
+            if s[j] in dict1:
+                dict1[s[j]]-=1
+                if dict1[s[j]]==0:
+                    count-=1
+			
+            if count==0:
+                while s[i] not in dict1 or dict1[s[i]]<0 :
+                    if s[i] in dict1:
+                        dict1[s[i]]+=1
+                    i+=1
+
+		    min1=min(min1,j-i+1)
+                dict1[s[i]]+=1
+                count+=1
+                i+=1
+            j+=1
+        return min1    
 # =============================================================================
 # =============================================================================
 # 168	Smallest window containing 0,1,2	https://www.geeksforgeeks.org/problems/smallest-window-containing-0-1-and-2--170637/1?page=2&category=sliding-window&sortBy=submissions
@@ -211,11 +213,9 @@ class Solution:
             j += 1
         
         return res if res != float('inf') else -1
-# =============================================================================
-# =============================================================================
-# 169	Smallest window in string containing all chars of another string	https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?page=1&category=sliding-window&sortBy=submissions
-#The time complexity of the smallestSubstring method is O(n), where n is the length of the input string s. This is because the code iterates through the string using two pointers, i and j, which move towards the right. The code uses a dictionary d to keep track of the count of each distinct character in the current window. The while loop inside the if condition and the while loop at the end both move the pointers i and j and update the dictionary d. Each character in the string is visited at most twice, once by each pointer.
-#The space complexity of the code is O(1)
+
+##################################
+class Solution:
     def smallestSubstring(self, s):
         # Code here
         d = {}
@@ -231,6 +231,95 @@ class Solution:
                     j+=1
             i+=1
         return -1 if m >= 10**5 else m 
+# =============================================================================
+# =============================================================================
+# 169	Smallest window in string containing all chars of another string	https://www.geeksforgeeks.org/problems/smallest-window-in-a-string-containing-all-the-characters-of-another-string-1587115621/1?page=1&category=sliding-window&sortBy=submissions
+#The time complexity of the smallestSubstring method is O(n), where n is the length of the input string s. This is because the code iterates through the string using two pointers, i and j, which move towards the right. The code uses a dictionary d to keep track of the count of each distinct character in the current window. The while loop inside the if condition and the while loop at the end both move the pointers i and j and update the dictionary d. Each character in the string is visited at most twice, once by each pointer.
+#The space complexity of the code is O(1)
+class Solution:
+    def smallestWindow(self, s: str, p: str) -> str:
+        if not s or not t:
+            return ""
+        
+        countT = {}
+        for char in p:
+            if char in countT:
+                countT[char] += 1
+            else:
+                countT[char] = 1
+
+        required = len(countT)
+        l, r = 0, 0
+        formed = 0
+        window = {}
+        ans = float("inf"), None, None
+
+        while r < len(s):
+            character = s[r]
+            if character in window:
+                window[character] += 1
+            else:
+                window[character] = 1
+
+            if character in countT and window[character] == countT[character]:
+                formed += 1
+
+            while l <= r and formed == required:
+                character = s[l]
+
+                if r - l + 1 < ans[0]:
+                    ans = (r - l + 1, l, r)
+
+                window[character] -= 1
+                if character in countT and window[character] < countT[character]:
+                    formed -= 1
+
+                l += 1    
+            r += 1    
+        return -1 if ans[0] == float("inf") else s[ans[1] : ans[2] + 1]
+
+######################################
+class Solution:
+    def smallestWindow(self, string, pat):
+        no_of_chars = 256
+
+        len1 = len(string)
+        len2 = len(pat)
+
+        if len1 < len2:
+            return "-1"
+
+        hash_pat = [0] * no_of_chars
+        hash_str = [0] * no_of_chars
+
+        for i in range(len2):
+            hash_pat[ord(pat[i])] += 1
+
+        start, start_index, min_len = 0, -1, float('inf')
+        count = 0
+
+        for j in range(len1):
+            hash_str[ord(string[j])] += 1
+
+            if hash_str[ord(string[j])] <= hash_pat[ord(string[j])]:
+                count += 1
+
+            if count == len2:
+                while (hash_str[ord(string[start])] >
+                       hash_pat[ord(string[start])] or
+                       hash_pat[ord(string[start])] == 0):
+                    if hash_str[ord(string[start])] > hash_pat[ord(string[start])]:
+                        hash_str[ord(string[start])] -= 1
+                    start += 1
+
+                len_window = j - start + 1
+                if min_len > len_window:
+                    min_len = len_window
+                    start_index = start
+
+        if start_index == -1:
+            return "-1"
+        return string[start_index: start_index + min_len]
 # =============================================================================
 # =============================================================================
 # 170	Length of longest substring	https://www.geeksforgeeks.org/problems/length-of-the-longest-substring3036/1?page=1&category=sliding-window&sortBy=submissions
@@ -294,6 +383,23 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 173	Max consecutive ones III	https://leetcode.com/problems/max-consecutive-ones-iii/
+###################################leetocde fast code###########
+    def longestOnes(self, nums: List[int], k: int) -> int:
+
+        left = 0
+
+        for right in range(len(nums)):
+            if nums[right] == 0:
+                k -= 1
+            
+            if k < 0:
+                if nums[left] == 0:
+                    k += 1
+                left += 1
+        
+        return right - left + 1	
+
+#####################	
     def longestOnes(self, nums: List[int], k: int) -> int:
         left,right = 0,0
         for right in range(len(nums)):
@@ -366,31 +472,16 @@ class Solution:
 # =============================================================================
 # 175	Count number of nice subarrays	https://leetcode.com/problems/count-number-of-nice-subarrays/
 # A continuous subarray is called nice if there are k odd numbers on it.
+########leetcode best#################
 class Solution:
     def numberOfSubarrays(self, nums: List[int], k: int) -> int:
         ans = 0
         helper = [-1] + [i for i, el in enumerate(nums) if el % 2] + [len(nums)]
-	n = len(helper)
+        n = len(helper)
         for i in range(1, n - k):
             ans += (helper[i] - helper[i - 1]) * (helper[i + k] - helper[i + k - 1])
 
         return ans
-#############
-from typing import List
-class Solution:
-    def numberOfSubarrays(self, nums: List[int], k: int) -> int:
-        n = len(nums)
-        res = 0
-        odd_count = 0
-        odd_indices = [-1] + [i for i, num in enumerate(nums) if num % 2 == 1] + [n]
-        m = len(odd_indices)
-
-        for i in range(k, m - 1):
-            left = odd_indices[i - k]
-            right = odd_indices[i + 1]
-            res += (left - odd_indices[i - k - 1]) * (right - odd_indices[i])
-
-        return res
 # =============================================================================
 # =============================================================================
 # 176	Longest repeating char replacement	https://leetcode.com/problems/longest-repeating-character-replacement
@@ -399,6 +490,25 @@ class Solution:
 #Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
 #The substring "BBBB" has the longest repeating letters, which is 4.
 #There may exists other ways to achieve this answer too.
+########################3leet code best #######################
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        left = right = 0
+        freq_count = [0 for _ in range(26)]
+        longest = 0
+        m=0
+        while right<len(s):
+            freq_count[ord(s[right])-65] += 1
+            m = max(freq_count[ord(s[right])-65],m)
+            if (right-left+1)-m <= k:
+                longest = right-left +1
+                right+=1
+            else:
+                freq_count[ord(s[left])-65] -= 1
+                left+=1
+                right+=1
+        return longest
+###########################################################################	    
 from collections import defaultdict
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
@@ -490,7 +600,6 @@ class Solution:
 
 #### optimised version as per flowgpt
 import collections
-
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         if len(s) < len(t):
@@ -573,6 +682,7 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 179	Subarray with k diff integers	https://leetcode.com/problems/subarrays-with-k-different-integers/
+###########################################
 class Solution:
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
         def f(counts=[0] * (len(nums) + 1), low=0, high=0, k=k):
@@ -591,7 +701,7 @@ class Solution:
 
         return sum(f())     
 
-#############################3
+#################leet code ###############3
 class Solution:
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
         def f(counts=[0] * (len(nums) + 1), low=0, high=0, k=k):
