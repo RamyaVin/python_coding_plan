@@ -2,12 +2,90 @@
 # =============================================================================
 # 24_Basics and must solves		
 # 225	Construct Binary Tree from Preorder and Inorder Traversal ( First understand the concept of how to derive at the solution, then start coding it by yourself)	https://www.geeksforgeeks.org/problems/construct-tree-1/1?page=1&category=Tree&sortBy=submissions
+class Solution:
+    def buildtree(self, inorder, preorder, n):
+        # code here
+        if inorder:
+            ind = inorder.index(preorder.pop(0))
+            root = Node(inorder[ind])
+            root.left = self.buildtree(inorder[0:ind], preorder, n)
+            root.right = self.buildtree(inorder[ind+1:], preorder, n)
+            return root
+####In conclusion, although the time complexity is the same for both implementations in the worst case, the second code implementation is more efficient in the average case due to the optimized search operation.
+
+'''
+# Node class
+
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.right = None
+        self.left = None
+
+'''
+class Solution:
+    def buildtree(self, inorder, preorder, n):
+        def search(inorder, l, r, val):
+            for i in range(l, r + 1):
+                if inorder[i] == val:
+                    return i
+            return -1
+
+        def cal(inorder, preorder, l, r):
+            nonlocal ind
+            if l > r:
+                return None
+
+            ptr = Node(preorder[ind])
+            ind += 1
+
+            if l == r:
+                ptr.left = None
+                ptr.right = None
+                return ptr
+
+            inindex = search(inorder, l, r, ptr.data)
+            ptr.left = cal(inorder, preorder, l, inindex - 1)
+            ptr.right = cal(inorder, preorder, inindex + 1, r)
+
+            return ptr
+
+        ind = 0
+        return cal(inorder, preorder, 0, n - 1)
 # =============================================================================
 # =============================================================================
 # 226	Construct Binary Tree from Inorder and Postorder Traversal	https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+Example 1:
+         3
+        /  \
+      9     20
+           /   \
+          15    7
+Input: inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+Output: [3,9,20,null,null,15,7]
 # =============================================================================
 # =============================================================================
 # 227	Construct BST from given preorder traversal	https://www.geeksforgeeks.org/problems/construct-tree-from-preorder-traversal/1?page=7&category=Tree&sortBy=submissions
+from collections import deque
+
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        postorder = deque(postorder)
+        inorder_index = {val:i for i,val in enumerate(inorder)}
+        return self.constructTree(postorder, inorder_index, 0, len(postorder)-1)
+    
+    def constructTree(self, postorder, inorder_index, start, end):
+        if start > end:
+            return None
+        
+        val = postorder.pop()
+        root = TreeNode(val)
+        index = inorder_index[val]
+        
+        root.right = self.constructTree(postorder, inorder_index, index+1, end)
+        root.left = self.constructTree(postorder, inorder_index, start, index-1)
+        
+        return root
 # =============================================================================
 # =============================================================================
 # 228	Construct BT from parent array	https://www.geeksforgeeks.org/problems/construct-binary-tree-from-parent-array/1?page=5&category=Tree&sortBy=submissions
