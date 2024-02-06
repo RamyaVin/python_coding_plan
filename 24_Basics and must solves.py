@@ -15,13 +15,11 @@ class Solution:
 
 '''
 # Node class
-
 class Node:
     def __init__(self,val):
         self.data = val
         self.right = None
         self.left = None
-
 '''
 class Solution:
     def buildtree(self, inorder, preorder, n):
@@ -89,19 +87,141 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # 228	Construct BT from parent array	https://www.geeksforgeeks.org/problems/construct-binary-tree-from-parent-array/1?page=5&category=Tree&sortBy=submissions
+#User function Template for python3
+'''
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+'''
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+def construct(final,index):
+    if(index[0]>=len(final)):
+        return None
+    if(final[index[0]][1]=='L'):
+        node = Node(final[index[0]][0])
+        index[0]+=1
+        return node
+    root = Node(final[index[0]][0])
+    index[0]+=1
+    root.left = construct(final,index)
+    root.right = construct(final,index)
+    return root
+    
+def constructTree(pre, preln, n):
+    final = []
+    index = [0]
+    for i in range(len(pre)):
+        dum = [pre[i],preln[i]]
+        final.append(dum)
+    return construct(final,index)
 # =============================================================================
 # =============================================================================
 # Basic		
 # 229	Serialize and deserialize BT	https://www.geeksforgeeks.org/problems/serialize-and-deserialize-a-binary-tree/1?page=4&category=Tree&sortBy=submissions
+'''
+# A node structure
+class Node:
+    # A utility function to create a new node
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+'''
+class Solution:
+    #Function to construct binary tree from parent array.
+    def createTree(self,parent,N):
+        # your code here
+        nodes=[]
+        for i in range(N):
+            nodes.append(Node(i))
+        
+        root=None
+        for (i,value) in enumerate(parent):
+            curr_node=nodes[i]
+            if value==-1:
+                root=curr_node
+            else:
+                parent_node=nodes[value]
+                if not parent_node.left:
+                    parent_node.left=curr_node
+                else:
+                    parent_node.right=curr_node
+        return root       
 # =============================================================================
 # =============================================================================
 # 230	Largest subtree sum in a tree	https://www.geeksforgeeks.org/problems/largest-subtree-sum-in-a-tree/1?page=6&category=Tree&sortBy=submissions
+'''
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+def serialize(root, A):
+    def inoder(root):
+        if(root):
+            inorder(root.left)
+            print(root.data,end=" ")
+            inorder(root.right)
+    inorder(root)
+    return []
+
+#Function to deserialize a list and construct the tree.   
+def deSerialize(A):
+    return None
 # =============================================================================
 # =============================================================================
 # 231	Maximum sum of non adjacent nodes	https://www.geeksforgeeks.org/problems/maximum-sum-of-non-adjacent-nodes/1?page=3&category=Tree&sortBy=submissions
+class Solution:
+    def __init__(self):
+        self.mx = float('-inf')
+    
+    def solve(self,root):
+        if root is None:
+            return 0
+        
+        ls = self.solve(root.left) #left sum
+        rs = self.solve(root.right)  # right sum
+        s = ls+rs+root.data  # left sum + right sum + root's value
+        self.mx = max(self.mx,s)
+        return s
+    
+    def findLargestSubtreeSum(self, root : Optional['Node']) -> int:
+        # code here
+        self.solve(root)
+        return self.mx
 # =============================================================================
 # =============================================================================
 # 232	Duplicate subtree 	https://www.geeksforgeeks.org/problems/duplicate-subtrees/1?page=4&category=Tree&sortBy=submissions
+'''
+# Node Class:
+class Node:
+    def __init__(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+class Solution:
+    #Function to return the maximum sum of non-adjacent nodes.
+    def getMaxSum(self,root):
+        def helper(root):
+            if not root:
+                return [0,0]
+            left=helper(root.left)
+            right=helper(root.right)
+            res=[0,0]
+            res[0]=root.data+right[1]+left[1]
+            res[1]=max(left[0],left[1])+max(right[0],right[1])
+            return res
+        return max(helper(root)[0],helper(root)[1])
 # =============================================================================
 # =============================================================================
 # 233	Flatten BT to linked list	https://www.geeksforgeeks.org/problems/flatten-binary-tree-to-linked-list/1?page=5&category=Tree&sortBy=submissions
