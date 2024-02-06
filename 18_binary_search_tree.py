@@ -285,23 +285,36 @@ def Pop(stack1, stack2):
 """he time complexity of the pop function is O(1), as it simply dequeues and returns the front element of queue_1. This is a constant-time operation regardless of the number of elements in the queue.
 The space complexity of the code is O(N), where N is the total number of elements in both queue_1 and queue_2"""
 #One optimization we can make is to avoid swapping the names of the queues after each push operation. Instead, we can maintain a consistent naming convention for the queues and use a single queue for pushing elements onto the stack. This reduces the number of operations and improves the efficiency of the code.
+from queue import Queue
+queue_1 = Queue()
+queue_2 = Queue()
 
+# Function to push an element into stack using two queues.
 def push(x):
-    global queue
-    # Adding the new element to the queue
-    queue.put(x)
-    # Rearranging the elements in the queue
-    for _ in range(queue.qsize() - 1):
-        queue.put(queue.get())
+    global queue_1
+    global queue_2
+    
+    # Adding the new element to queue_2
+    queue_2.put(x)
+    
+    # Moving all elements from queue_1 to queue_2
+    while not queue_1.empty():
+        queue_2.put(queue_1.get())
+        
+    # Swapping the names of the queues
+    queue_1, queue_2 = queue_2, queue_1
 
-# Function to pop an element from stack using a single queue.
+# Function to pop an element from stack using two queues.
 def pop():
-    global queue
-    # If the queue is empty, return -1
-    if queue.empty():
+    global queue_1
+    global queue_2
+    
+    # If queue_1 is empty, return -1
+    if queue_1.empty():
         return -1
-    # Remove and return the front element of the queue
-    return queue.get()
+    
+    # Otherwise, remove and return the front element of queue_1
+    return queue_1.get()
 # =============================================================================
 # =============================================================================
 # 151	Reverse a queue	https://www.geeksforgeeks.org/problems/queue-reversal/1?page=1&category=Queue&sortBy=submissions
@@ -324,17 +337,29 @@ def rev(q):
 #the complete circle without exhausting its petrol in between.
 """The time complexity of the tour method is O(N), where N is the number of petrol pumps in the list. This is because the method iterates through the list once and performs constant-time operations for each petrol pump.
 The space complexity of the code is O(1),"""
-def tour(lis, n):
-    left_petrol = 0
-    start = 0
-    for i, (p, d) in enumerate(lis):
-        left_petrol += p - d
-        if left_petrol < 0:
-            start = i + 1
-            left_petrol = 0
-    if left_petrol < 0 or start >= n:
-        return -1
-    return start
+'''
+    lis[][0]:Petrol
+    lis[][1]:Distance
+'''
+
+class Solution:
+    
+    #Function to find starting point where the truck can start to get through
+    #the complete circle without exhausting its petrol in between.
+    def tour(self,lis, n):
+        #Code here
+        total_petrol, left_petrol = 0, 0
+        start = 0
+        for i, (p, d) in enumerate(lis):
+            tmp = p - d
+            total_petrol += tmp
+            left_petrol += tmp
+            if left_petrol < 0:
+                start = i + 1
+                left_petrol = 0
+        if total_petrol < 0 or start >= n:
+            return -1
+        return start
 # =============================================================================
 # =============================================================================
 # 153	First non repeating char in stream	https://www.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream1216/1?page=1&category=Queue&sortBy=submissions
@@ -474,31 +499,35 @@ import heapq
 class Solution:
     #Function to return the minimum cost of connecting the ropes.
     def minCost(self,arr,n) :
-    
-        # code here
         heapq.heapify(arr)
         ans = 0
-        for _ in range(n-1):
-            a = heapq.heappop(arr)
-            b = heapq.heappop(arr)
-            res = a+b
-            heapq.heappush(arr,res)
-            ans += res
-        return ans
+	while n>1:
+		a = heapq.heappop(arr)
+		b = heapq.heappop(arr)
+		res = a+b
+		heapq.heappush(arr,res)
+		ans += res
+		n-=1
+	return ans
 # =============================================================================
 # =============================================================================
 # 157	Nearly sorted(Learn priority queue for sure)	https://www.geeksforgeeks.org/problems/nearly-sorted-1587115620/1?page=3&category=Arrays&difficulty=Medium
 # Connected component(After traversal, this will be easy to solve)		
-import heapq
+from heapq import heappush,heappop
 class Solution:
-    def nearlySorted(self, a, n, k):
-        heap = []
+    #Function to return the sorted array.
+    def nearlySorted(self,a,n,k):
+        heap=[]
+        v=[]
         for i in a:
-            heapq.heappush(heap, i)
-            if len(heap) > k:
-                yield heapq.heappop(heap)
-        while heap:
-            yield heapq.heappop(heap)
+            heappush(heap,i)
+            if len(heap)>k:
+                v.append(heap[0])
+                heappop(heap)
+        while len(heap)!=0:
+            v.append(heap[0])
+            heappop(heap)
+        return v
 # Bipartite		
 # =============================================================================
 # =============================================================================
@@ -606,47 +635,44 @@ class Solution:
 # =============================================================================
 # 162	Count substring of length k with k-1 distinct elements	https://www.geeksforgeeks.org/problems/substrings-of-length-k-with-k-1-distinct-elements/1?page=1&category=sliding-window&sortBy=submissions
 #overall time complexity is O(n).The space complexity of the code is O(k),
-import collections
+#User function Template for python3
 
 class Solution:
-    def max_of_subarrays(self, arr, n, k):
-        output = []
-        queue = collections.deque()  # (num, index)
-        i = 0
-        for j in range(n):
-            if queue:
-                if queue[-1][0] < arr[j]:
-                    while queue and queue[-1][0] < arr[j]:
-                        queue.pop()
-            queue.append((arr[j], j))
-
-            if j - i + 1 > k:
-                if queue[0][1] == i:
-                    queue.popleft()
-                i += 1
-
-            if j - i + 1 == k:
-                if queue:
-                    output.append(queue[0][0])
-
-        return output
+    def countOfSubstrings(self, arr, k):
+        n=len(arr)
+        d={}
+        res=0
+        f=0
+        for r in range(n):
+            if arr[r] not in d:
+                d[arr[r]]=0
+            d[arr[r]]+=1
+            if r-f+1>k:
+                d[arr[f]]-=1
+                if d[arr[f]]==0:
+                    del d[arr[f]]
+                f+=1
+            if r-f+1==k:
+                if len(d)==k-1:
+                    res+=1
+        return res
 # =============================================================================
 # =============================================================================
 # 163	Maximum of minimum for every window(Imp)	https://www.geeksforgeeks.org/problems/maximum-of-minimum-for-every-window-size3453/1?page=1&category=sliding-window&sortBy=submissions
     #Function to find maximum of minimums of every window size. O(N), O(N)
-    class Solution:
-    def maxOfMin(self, arr, N):
+class Solution:
+   def maxOfMin(self,arr,N):
         left = [-1] * N
         right = [N] * N
         stack = []
-
+    
         for i in range(N):
             while stack and arr[stack[-1]] >= arr[i]:
                 stack.pop()
             if stack:
                 left[i] = stack[-1]
             stack.append(i)
-
+    
         stack = []
         for i in range(N - 1, -1, -1):
             while stack and arr[stack[-1]] >= arr[i]:
@@ -654,10 +680,15 @@ class Solution:
             if stack:
                 right[i] = stack[-1]
             stack.append(i)
-
+    
         result = [0] * (N + 1)
         for i in range(N):
-            for length in range(right[i] - left[i] - 1, 0, -1):
-                result[length]
+            length = right[i] - left[i] - 1
+            result[length] = max(result[length], arr[i])
+
+        for i in range(N - 1, 0, -1):
+            result[i] = max(result[i], result[i + 1])
+
+        return result[1:]
 # =============================================================================
 # =============================================================================
