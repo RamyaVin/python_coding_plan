@@ -3,13 +3,19 @@
 # =============================================================================
 # =============================================================================
 # Search in a matrix	https://leetcode.com/problems/search-a-2d-matrix/
+#######leetcode best time #################3
+   def searchMatrix(self,matrix,target):
+        n=len(matrix)
+        m=len(matrix[0])
+        for i in range(n):
+            for j in range(m):
+                if matrix[i][j]==target:
+                    return True
+
+        return False  
+####################
 """ The original code and the optimized code have the same time complexity of O(m * n), where m is the number of rows and n is the number of columns in the matrix. This is because both codes iterate through each row and perform a binary search within each row. The binary search has a time complexity of O(log n), and it is performed for each of the m rows. O(1) since they both use a constant amount of additional space for variables."""
 def searchMatrix(matrix, target):
-        """
-        :type matrix: List[List[int]]
-        :type target: int
-        :rtype: bool
-        """
         m = len(matrix)
         n = len(matrix[0])
         for i in range(m):
@@ -32,9 +38,8 @@ def searchMatrix(matrix, target):
                 if matrix[i][mid] < target:
                     start = mid + 1
         return False
-##################################3
+##################################
 from bisect import bisect_left
-
 def searchMatrix(matrix, target):
     m = len(matrix)
     n = len(matrix[0])
@@ -56,7 +61,6 @@ class Solution:
         # code here
         for row in matrix:
             row.reverse()
-            print(row)
         for i in range(n):
             for j in range(i+1,n):
                 matrix[i][j],matrix[j][i]= matrix[j][i],matrix[i][j]
@@ -69,20 +73,6 @@ Solution.rotateby90([[1,3,5],[10,11,16],[23,30,34]], 3)
 In terms of time complexity, both the original code and the optimized code have a time complexity of O(n^2), where n is the size of the matrix. This is because both codes iterate through each element of the matrix to reverse the rows and transpose the matrix.
 The space complexity of both the original code and the optimized code is O(n^2) since they both create a new matrix to store the rotated matrix.
 """
-class Solution:
-    def rotateby90(matrix, n): 
-        # Reverse each row
-        matrix = [row[::-1] for row in matrix]
-        
-        # Transpose the matrix
-        matrix = [list(row) for row in zip(*matrix)]
-        
-        return matrix
-
-rotated_matrix = Solution.rotateby90([[1, 3, 5], [10, 11, 16], [23, 30, 34]], 3)
-print("Rotated matrix:")
-for row in rotated_matrix:
-    print(row)
 # =============================================================================
 # =============================================================================
 # Maximum num of 1's row	https://www.geeksforgeeks.org/problems/row-with-minimum-number-of-1s5430/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
@@ -111,17 +101,6 @@ In terms of time complexity, both the original code and the optimized code have 
 
 The space complexity of both the original code and the optimized code is O(N * M) since they both create a new matrix to store the rotated matrix.
 """
-class Solution:
-    def rotateMatrix(self,N,M,K,Mat):
-        K=K%M
-        if K==0:
-            return Mat
-        rotated_matrix=[]
-        for row in Mat:
-            rotated_row=row[K:]+row[:K]
-            rotated_matrix.append(rotated_row)
-        return rotated_matrix
-##################
 class Solution:
     def rotateMatrix(self, N, M, K, Mat):
         K = K % M
@@ -174,40 +153,66 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # Set matrix zeros	https://leetcode.com/problems/set-matrix-zeroes/
+#######################leetcode optimised################################3
+def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        zeros = []
+        y = len(matrix)
+        x = len(matrix[0])
+        for row in range(len(matrix)):
+            for num in range(len(matrix[row])):
+                if matrix[row][num] == 0:
+                    zeros.append((row, num))
+
+        for (r, n) in zeros:
+            tr = r
+            while tr < y-1:
+                matrix[tr+1][n] = 0
+                tr +=1
+            tr = r
+            while tr > 0:
+                matrix[tr-1][n] = 0
+                tr -= 1
+            tn = n
+            while tn < x-1:
+                matrix[r][tn+1] = 0
+                tn += 1
+            tn = n
+            while tn > 0:
+                matrix[r][tn-1] = 0
+                tn -= 1
+############
 """ The time complexity of the code is O(m * n), where m is the number of rows and n is the number of columns in the matrix. This is because the code iterates through each element in the matrix twice.
 The space complexity of the code is O(1) because it does not use any additional data structures that grow with the size of the input."""
-class Solution:
-    def setZeroes(matrix):
 
-        m = len(matrix)
-        n = len(matrix[0])
-		
-        first_row_has_zero = False
-        first_col_has_zero = False
-        # iterate through matrix to mark the zero row and cols
-        for row in range(m): #1st element of row 0
-            for col in range(n):
-                if matrix[row][col] == 0:
-                    if row == 0:
-                        first_row_has_zero = True
-                    if col == 0:
-                        first_col_has_zero = True
-                    matrix[row][0] = matrix[0][col] = 0
-        print(matrix)
-        # iterate through matrix to update the cell to be zero if it's in a zero row or col
-        for row in range(1, m):  #1st element of col = 0 then entire col =0
-            for col in range(1, n):
-                matrix[row][col] = 0 if matrix[0][col] == 0 or matrix[row][0] == 0 else matrix[row][col]
-        print(matrix)
-        # update the first row and col if they're zero
-        print(first_row_has_zero,"first_row_has_zero")
-        if first_row_has_zero: # if True "0"
-            for col in range(n):
-                matrix[0][col] = 0
-        
-        if first_col_has_zero:
-            for row in range(m):
-                matrix[row][0] = 0
-        return matrix
+def setZeroes(self, matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: None Do not return anything, modify matrix in-place instead.
+    """
+    rows = set()
+    cols = set()
+    
+    y = len(matrix)
+    x = len(matrix[0])
+    
+    # Find the rows and columns containing zeros
+    for row in range(y):
+        for col in range(x):
+            if matrix[row][col] == 0:
+                rows.add(row)
+                cols.add(col)
+    
+    # Modify the matrix by setting rows and columns to zero
+    for row in rows:
+        for col in range(x):
+            matrix[row][col] = 0
+    
+    for col in cols:
+        for row in range(y):
+            matrix[row][col] = 0
 Solution.setZeroes([[1,0,14],[10,31,40],[60,15,50]])
 # =============================================================================
