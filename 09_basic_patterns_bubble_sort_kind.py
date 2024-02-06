@@ -50,7 +50,6 @@ class Solution:
 # =============================================================================
 # 59	Find floor and ceil in sorted array	https://www.geeksforgeeks.org/problems/floor-in-a-sorted-array-1587115620/1
 def findFloor(A,N,K):
-        #Your code here
         low = 0
         high = N-1
         count = 0 
@@ -100,27 +99,19 @@ class Solution:
                 l=m+1
             if(arr[m]==x):
                 ans=m
-        return ans
-        
-                
+        return ans                       
     def find(self, arr, n, x):
         f=self.f1(arr,0,n-1,x)
         s=self.s1(arr,0,n-1,x)
         return [s,f]
-        
 ####
 import bisect
-
 def find(arr, n, x):
-    
-    # code here
     first = bisect.bisect_left(arr, x)
     if arr[first] != x:
         return [-1, -1]
     last = bisect.bisect_right(arr, x) - 1
-    return [first, max(last, 0)]
-
-            
+    return [first, max(last, 0)]            
 x = 5
 n = 8
 arr= [2, 4, 5, 5, 7, 8, 9, 10]
@@ -128,15 +119,18 @@ find(arr, n, x)
 # =============================================================================
 # =============================================================================
 # 61	Find missing num from 1 to N	https://leetcode.com/problems/missing-number/
-
 def missingNumber(self, nums):
     n = len(nums)
     return ((n * (n+1)) // 2 ) - sum(nums)
 # =============================================================================
 # =============================================================================
 # 62	Find square root	https://www.geeksforgeeks.org/problems/square-root/1?itm_source=geeksforgeeks&itm_medium=Article&itm_campaign=bottom_sticky_on_Article
-def p(x):
-    return pow(x,0.5
+import math
+class Solution:
+    def floorSqrt(self, n): 
+        if n>0: flag=1
+        else: flag=-1
+        return math.floor(flag*(n**(1/2)))
 p(4)
 # =============================================================================
 # =============================================================================
