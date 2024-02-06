@@ -92,29 +92,66 @@ def fourSum(nums, target):
     temp = []  # Temporary list to store combinations.
     helper(nums, target, 0, res, temp, 4)  # Call the helper function to find quadruplets.
     return [list(quadruplet) for quadruplet in res]  # Convert the set of tuples to a list of lists.
-       #############
-    # Python3 program to find four 
-    # elements with the given sum
+       ############# leetcode best answer ####
+class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        if (len(nums) < 4):
+            return []
+        
+        nums.sort()
+        min_sum = nums[0]+nums[1]+nums[2]+nums[3]
+        max_sum = nums[-1]+nums[-2]+nums[-3]+nums[-4]
 
-# Function for two Sum 
-def twoSum(nums, N):
-    Map = {}
-    for i in range(N - 1):
-        for j in range(i + 1, N):
-            Map[nums[i] + nums[j]] = (i, j)
-    return Map
+        if target < min_sum or target > max_sum:
+            return []
+        
+        res = []
+        num_map = {}
+        num_list = []
+        sum_map = {}
+        for n in nums:
+            if n not in num_map:
+                num_map[n] = 1
+                num_list.append(n)
+            else:
+                num_map[n] += 1
+        
+        for i in range(len(num_list)):
+            for j in range(i, len(num_list)):
+                n = num_list[i]
+                m = num_list[j]
+                if n != m or num_map[n] >= 2:
+                    s = m + n
+                    if s not in sum_map:
+                        sum_map[s] = []
+                    sum_map[s].append((n, m))
+        
+        for k in sum_map.keys():
+            d = target - k
 
-# Driver code
-arr = [10, 20, 30, 40, 1, 2]
-X = 91
-n = len(arr)
-Map = twoSum(arr, n)
+            if d in sum_map and k < d:
+                for x, y in sum_map[k]:
+                    for m, l in sum_map[d]:
+                        if x == y and y == m and m < l and num_map[x] >= 3:
+                            res.append([x, x, x, l])
+                        elif x < y and y == m and m == l and num_map[l] >= 3:
+                            res.append([x, l, l, l])
+                        elif x < y and y == m and m < l and num_map[y] >= 2:
+                            res.append([x, y, y, l])
+                        elif y < m:
+                            res.append([x, y, m, l])
 
-# Function call 
-result = fourSum(X, arr, Map, n)
-for quadruplet in result:
-    print(quadruplet)
+        if target % 4 == 0:
+            n = target // 4 
+            if n in num_map and num_map[n] >= 4:
+                res.append([n, n, n, n])
 
+        return sorted(list(res))
 # =============================================================================
 # =============================================================================
 # Find triplets with zero sum
@@ -146,56 +183,6 @@ if len(triplets) > 0:
 else:
     print("No Triplet Found")
 
-###triples print sum =0 in array 
-class Solution():
-    @staticmethod
-    def fourSum(X, arr, Map, N):
-        quadruplets = []
-        count = 0
-        
-        # Iterate from 0 to length of arr 
-        for i in range(N - 1):
-            # Iterate from i + 1 to length of arr
-            for j in range(i + 1, N):
-                # Store curr_sum = arr[i] + arr[j] 
-                curr_sum = arr[i] + arr[j]
-
-                # Check if X - curr_sum if present in map 
-                if (X - curr_sum) in Map:
-                    # Store pair having map value X - curr_sum 
-                    p = Map[X - curr_sum]
-
-                    if (p[0] != i and p[1] != i and
-                        p[0] != j and p[1] != j):
-                        # Append the quadruplet to the result
-                        quadruplet = [arr[i], arr[j], arr[p[0]], arr[p[1]]]
-                        quadruplets.append(quadruplet)
-                        count += 1
-
-        return quadruplets, count
-
-    # Function for two Sum 
-    @staticmethod
-    def twoSum(nums, N):
-        Map = {}
-
-        for i in range(N - 1):
-            for j in range(i + 1, N):
-                Map[nums[i] + nums[j]] = (i, j)
-
-        return Map
-
-# Driver code
-arr = [10, 20, 30, 40, 1, 2]
-X = 91
-n = len(arr)
-Map = Solution.twoSum(arr, n)
-
-# Function call 
-result, count = Solution.fourSum(X, arr, Map, n)
-for quadruplet in result:
-    print(quadruplet)
-print("Count of triplet sets:", count)
 # =============================================================================
 # =============================================================================
 # Find count of triplets
@@ -220,17 +207,14 @@ print("Count of triplets:", count)
 def getUnion(a, n, b, m):
 	# Use set comprehension to get the union set directly
 	s = set(a)|set(b)
-	return s
+	return len(s)
 	
 # Driver Code
 if __name__ == '__main__':
 	a = [1, 2, 5, 6, 2, 3, 5, 7, 3]
 	b = [2, 4, 5, 6, 8, 9, 4, 6, 5, 4]
-
 	getUnion(a, 9, b, 10)
-
 #### hashing
-
 class Solution:
     def printUnion(a, n, b, m):
     	mp = {}
@@ -240,18 +224,15 @@ class Solution:
     
         for i, num in enumerate(b):
             mp[num] = i
-    
+	return(len(mp)) 
+    """
     	print("The union set of both arrays is : ")
     	for key in mp.keys():
-    		print(key, end=" ")
-    
-
+    		print(key, end=" ")"""
 # Driver Code
 a = [1, 2, 5, 6, 2, 3, 5]
 b = [2, 4, 5, 6, 8, 9, 4, 6, 5]
-
 Solution.printUnion(a, 7, b, 9)
-
 # =============================================================================
 # =============================================================================
 # Intersection of two arrays
@@ -265,88 +246,28 @@ print(intersection_length)
 ########
  def ArrayIntersection(self,a, b, n, m):
         #return: expected length of the intersection array.
-        common = set(a).intersection(set(b))
-        return len(common)
-
+         return len(set(a)&set(b))
 intersection_length = ArrayIntersection([1,2,3],[1,2],3,2)
 print(intersection_length)
-
-#####
-class Solution:
-    def printIntersection(arr1, arr2, m, n):
-        arr1.sort()
-        arr2.sort()
-        i = 0
-        j = 0
-        while(i < m and j < n):
-            if(arr1[i] < arr2[j]):
-                i += 1
-            elif(arr2[j] < arr1[i]):
-                j += 1
-            else:
-                print(arr2[j])
-                j += 1
-                i += 1
-               
-# Driver Code
-a = [1, 2, 5, 6, 2, 3, 5]
-b = [2, 4, 5, 6, 8, 9, 4, 6, 5]
-
-Solution.printIntersection(a, b,7,9)
 # =============================================================================
 # =============================================================================
 # Remove duplicates from array(Quite diff from above, try to solve on own, this actually shows that not always you will have pointers at start and end)
-class Solution:
-    def printIntersection(a,  n):
-        a.sort()
-        duplicates = set()
-        for i in range(len(a) - 1):
-            if a[i] == a[i + 1]:
-                duplicates.add(a[i])
-        distinct = set(a) - duplicates
-        return distinct, duplicates
-# Driver Code
-a = [1, 2, 5, 6, 2, 3, 5]
-Solution.printIntersection(a, 7)
-###########
-def binary_search(nums, low, high, val):
-	n = len(nums)
-	res = -1
-	while low <= high:
-		mid = low + (high - low) // 2
-		if nums[mid] <= val:
-			low = mid + 1
-		else:
-			res = mid
-			high = mid - 1
-	if res == -1:
-		return n
-	return res
+class Solution:    
+    def remove_duplicate(self, A, N):
+	A.append(0)
+        if N == 1:
+            return N
+        i = 0
+        j = 1
+        while A[j] != 0:
+            if A[i]!=A[j]:
+                i+=1
+                j+=1
+            if A[i]==A[j]:
+                A.pop(j)
+        A.remove(0)
+        return len(A)
 
-def remove_duplicates(nums):
-	n = len(nums)
-	idx = 0 # It stores the indexing of unique elements.
-
-	while idx != n:
-		i = binary_search(nums, idx + 1, n - 1, nums[idx]) # It finds the upper bound of the element.
-
-		if i == n: # Means we are not able to find the upper bound of the element.
-			return idx + 1
-		idx += 1
-		nums[idx] = nums[i]
-	
-	return idx + 1
-
-# Driver code
-if __name__ == "__main__":
-	arr = [1, 2, 2, 3, 4, 4, 4, 5, 5]
-
-	# remove_duplicates() returns the new size of the array.
-	n = remove_duplicates(arr)
-
-	# Print the updated array
-	for i in range(n):
-		print(arr[i], end=" ")
 ################
 from bisect import bisect_right
 
@@ -386,6 +307,7 @@ class Solution:
 # =============================================================================
 # =============================================================================
 # Length of longest subarray with sum k
+from collections import defaultdict 
 class Solution:
     def lenOfLongSubarr (self, arr, nums, k) : 
         #Complete the function
@@ -409,7 +331,7 @@ class Solution:
 # =============================================================================
 # Trapping rain water
 class Solution:
-    def rainTrap(height):
+     def trappingWater(self, height,n):
         if not height: return 0
         l, r = 0, len(height)-1 
         leftMax, rightMax = height[l], height[r]
