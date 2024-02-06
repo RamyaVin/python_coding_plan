@@ -73,24 +73,6 @@ Tree =
 K = 3
 Output: 2
 Explanation:Path 1 : 1 + 2 = 3 Path 2 : only leaf node 3"""
-#User function Template for python3
-
-'''
-class Node:
-    def __init__(self, val):
-        self.right = None
-        self.data = val
-        self.left = None
-'''
-#User function Template for python3
-
-'''
-class Node:
-    def __init__(self, val):
-        self.right = None
-        self.data = val
-        self.left = None
-'''
 class Solution:
     def __init__(self):
         self.c=0
@@ -111,7 +93,6 @@ class Solution:
             f[x]=f[x]-1
         call(r,k,f,0)
         return self.c
-
 # =============================================================================
 # =============================================================================
 # 206	Nodes at given distance	https://www.geeksforgeeks.org/problems/nodes-at-given-distance-in-binary-tree/1?page=3&category=Tree&sortBy=submissions
@@ -126,7 +107,6 @@ class Solution:
 Target Node = 8 , K = 2
 Output: 10 14 22 , Explanation: The three nodes at distance 2 from node 8 are 10, 14, 22."""
 from collections import deque
-
 class Solution:
     def find_target(self,root,target):
         if root:
@@ -217,8 +197,6 @@ class Solution:
         f(root,0,n1,0)            
         f(root,0,n2,1)
         return l[0]+l[1]
-                
-            
 # =============================================================================
 # =============================================================================
 # 209	Maximum distance between node and ancestor(Must solve though distance pattern is covered)	https://www.geeksforgeeks.org/problems/maximum-difference-between-node-and-its-ancestor/1?page=3&category=Tree&sortBy=submissions
@@ -237,9 +215,7 @@ def maxDiff(root):
 
         left_val = find_min_value(root.left)
         right_val = find_min_value(root.right)
-
         max_diff = max(max_diff, root.data - min(left_val, right_val))
-
         return min(root.data, left_val, right_val)
 
     find_min_value(root)
